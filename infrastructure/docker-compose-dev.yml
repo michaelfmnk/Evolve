@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  nginx:
+    build: ./balancer
+    restart: always
+    links:
+      - "api:api"
+    ports:
+    - "80:80"
+
+  postgres:
+    image: sameersbn/postgresql:9.6-2
+    ports:
+    - "5433:5432"
+    command: '-N 500'
+    environment:
+    - DEBUG=false
+    - PG_TRUST_LOCALNET=true
+    - PG_PASSWORD=postgres
+    - DB_NAME=api_db
+
+  api:
+    image:  registry.gitlab.com/dnu-dreamteam/dolgov/api
+    restart: always
+    environment:
+    - JVM_MEMORY_OPTS=-Dspring.datasource.url=jdbc:postgresql://postgres:5432/api_db -Dspring.datasource.username=postgres -Dspring.datasource.password=postgres -Dserver.port=8080
+    links:
+    - "postgres:postgres"
+    ports:
+    - "8080"
+
+
