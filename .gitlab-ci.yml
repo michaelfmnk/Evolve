@@ -1,0 +1,29 @@
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+- docker:dind
+
+stages:
+- build-api
+
+build-api:
+  image: docker:latest
+  stage: build-api
+  before_script:
+  - cd ./api/
+  script:
+  - >
+    docker run -t --rm
+    -v /var/run/docker.sock:/var/run/docker.sock
+    -v "$(pwd)":"$(pwd)"
+    -w "$(pwd)"
+    -u 0:0
+    maven:3-jdk-8
+    mvn clean package -q
+  after_script:
+  - cd /
+  artifacts:
+    paths:
+    - ./api/target/api-0.0.1-SNAPSHOT.jar
+    when: always
