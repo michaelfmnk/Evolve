@@ -2,7 +2,7 @@ variables:
   DOCKER_DRIVER: overlay2
 
 variables:
-  DOCKER_IMAGE: registry.gitlab.com/dnu-dreamteam/dolgov/api:$CI_COMMIT_REF_NAME
+  DOCKER_IMAGE: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
 
 services:
 - docker:dind
@@ -24,7 +24,7 @@ build-api:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -DdockerImageTags=$DOCKER_IMAGE
+    mvn clean package -Pdocker
   after_script:
   - cd /
   artifacts:
