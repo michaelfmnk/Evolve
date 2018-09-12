@@ -22,7 +22,7 @@ build-api:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker
+    mvn clean package -Dmaven.test.skip=true -Pdocker
   after_script:
   - cd /
   artifacts:
@@ -35,7 +35,7 @@ pushing-containers:
   stage: pushing-containers
   image: docker:latest
   before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
   - docker push $DOCKER_IMAGE_API
   after_script:
