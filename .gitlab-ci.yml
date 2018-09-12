@@ -7,13 +7,13 @@ services:
 
 stages:
 - build-api
-- pushing-containers
 
 build-api:
   image: docker:latest
   stage: build-api
   before_script:
   - cd ./api/
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
   - >
     docker run -t --rm
@@ -22,25 +22,14 @@ build-api:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Dmaven.test.skip=true -Pdocker
+    mvn clean package  -Dmaven.test.skip=true -Pdocker
+  - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
   artifacts:
     paths:
     - ./api/target/api-0.0.1-SNAPSHOT.jar
     when: always
-
-
-pushing-containers:
-  stage: pushing-containers
-  image: docker:latest
-  before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  script:
-  - docker push $DOCKER_IMAGE_API
-  after_script:
-  - docker logout
-
 
 #deploy:
 #  stage: deploy
