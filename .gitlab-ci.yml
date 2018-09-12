@@ -1,8 +1,6 @@
 variables:
   DOCKER_DRIVER: overlay2
-
-variables:
-  DOCKER_IMAGE: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
+  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
 
 services:
 - docker:dind
@@ -36,10 +34,10 @@ deploy:
   stage: deploy
   before_script:
   - apt-get update -y && apt-get install sshpass
+  - docker login registry.example.com -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD}
   script:
-  - docker push $DOCKER_IMAGE
-  - sshpass -p "${DEPLOYMENT_SERVER_PASSWORD}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./environment.env ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
-  - sshpass -p "${DEPLOYMENT_SERVER_PASSWORD}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./infrastructure/docker-compose-dev.yml ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
-  - sshpass -p $DEPLOYMENT_SERVER_PASS ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP "echo ${$DEPLOYMENT_SERVER_PASSWORD} | sudo -S ls && docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}; sudo docker-compose -f docker-compose-dev.yml stop; sudo docker-compose -f docker-compose-dev.yml rm web --force; sudo docker pull ${CI_REGISTRY}/${CI_API}:latest; sudo docker-compose -f docker-compose-dev.yml up -d"
+  - docker push $DOCKER_IMAGE_API
+  after_script:
+  - docker logout
 #  only:
 #  - master
