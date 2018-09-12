@@ -35,7 +35,7 @@ pushing-containers:
   stage: pushing-containers
   image: docker:latest
   before_script:
-  - docker login registry.example.com -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD}
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   script:
   - docker push $DOCKER_IMAGE_API
   after_script:
