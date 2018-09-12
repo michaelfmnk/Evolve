@@ -7,7 +7,7 @@ services:
 
 stages:
 - build-api
-- deploy
+- pushing-containers
 
 build-api:
   image: docker:latest
@@ -30,15 +30,27 @@ build-api:
     - ./api/target/api-0.0.1-SNAPSHOT.jar
     when: always
 
-deploy:
-  stage: deploy
+
+pushing-containers:
+  stage: pushing-containers
   image: docker:latest
   before_script:
-  - apt-get update -y && apt-get install sshpass
   - docker login registry.example.com -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD}
   script:
   - docker push $DOCKER_IMAGE_API
   after_script:
   - docker logout
+
+
+#deploy:
+#  stage: deploy
+#  image: docker:latest
+#  before_script:
+#  - apt-get update -y && apt-get install sshpass
+#  - docker login registry.example.com -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD}
+#  script:
+#  - docker push $DOCKER_IMAGE_API
+#  after_script:
+#  - docker logout
 #  only:
 #  - master
