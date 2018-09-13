@@ -27,7 +27,7 @@ build-api-with-containers:
     -u 0:0
     maven:3-jdk-8
     mvn clean package -Pdocker -DdockerImageTags=$VERSION
-  - docker push $DOCKER_IMAGE_API:$VERSION -P
+  - docker push $DOCKER_IMAGE_API:$VERSION
   after_script:
   - cd /
   artifacts:
