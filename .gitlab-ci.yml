@@ -17,7 +17,7 @@ build-api-with-containers:
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-  - export VERSION=$(date +%y.%m)
+  - export VERSION=$(date +%y.%m.%d.%H.%M)
   - echo $VERSION
   - >
     docker run -t --rm
