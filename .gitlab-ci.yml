@@ -14,11 +14,11 @@ build-api-with-containers:
   stage: build-api-with-containers
   before_script:
   - apk update && apk add git
-  - export VERSION=$(date +%y.%m)
-  - echo $VERSION
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
+  - export VERSION=$(date +%y.%m)
+  - echo $VERSION
   - >
     docker run -t --rm
     -v /var/run/docker.sock:/var/run/docker.sock
