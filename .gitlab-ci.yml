@@ -1,6 +1,6 @@
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api
+  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
 
 services:
 - docker:dind
@@ -17,8 +17,6 @@ build-api-with-containers:
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-  - export VERSION=$(date +%y.%m.%d.%H.%M)
-  - echo $VERSION
   - >
     docker run -t --rm
     -v /var/run/docker.sock:/var/run/docker.sock
@@ -26,8 +24,8 @@ build-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -DdockerImageTags=$VERSION
-  - docker push $DOCKER_IMAGE_API:$VERSION
+    mvn clean package -Pdocker
+  - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
   artifacts:
