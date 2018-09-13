@@ -13,8 +13,7 @@ build-api-with-containers:
   image: docker:latest
   stage: build-api-with-containers
   before_script:
-  - ls -a
-  - apt-get install git
+  - apk update && apk add git
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
