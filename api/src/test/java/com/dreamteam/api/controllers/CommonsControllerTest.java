@@ -20,6 +20,6 @@ public class CommonsControllerTest extends BaseTest {
                 .get("/api/version")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body(equalTo("@timestamp@"));
+                .body(equalTo("latest"));
     }
 }

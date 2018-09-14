@@ -15,7 +15,7 @@ import java.io.IOException;
 @RequestMapping(Api.ROOT)
 public class CommonsController {
 
-    @Value("${build.time:unknown}")
+    @Value("${app.version:unknown}")
     private String version;
 
     @GetMapping(value = Api.Commons.GIT_LOG, produces = MediaType.TEXT_HTML_VALUE)

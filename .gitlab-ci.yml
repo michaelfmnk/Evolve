@@ -40,8 +40,20 @@ deploy:
   before_script:
   - apt-get update -y && apt-get install sshpass
   script:
+  - export VERSION=$(date +%y.%m.%d.%H.%M)
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./infrastructure/docker-compose.yml ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
-  - sshpass -p $DEPLOYMENT_SERVER_PASS ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP "sudo docker-compose -f docker-compose.yml stop; sudo docker-compose -f docker-compose.yml rm web --force; sudo docker-compose -f docker-compose.yml build; sudo docker-compose -f docker-compose.yml pull; sudo docker-compose -f docker-compose.yml up -d;"
+  - >
+    sshpass -p $DEPLOYMENT_SERVER_PASS ssh
+    -o StrictHostKeyChecking=no
+    -o PreferredAuthentications=password
+    -o PubkeyAuthentication=no
+    $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP
+    "sudo docker-compose -f docker-compose.yml stop;
+    sudo docker-compose -f docker-compose.yml rm web --force;
+    sudo docker-compose -f docker-compose.yml build;
+    sudo docker-compose -f docker-compose.yml pull;
+    docker tag ${DOCKER_IMAGE_API}:latest ${DOCKER_IMAGE_API}:${VERSION};
+    sudo docker-compose -f docker-compose.yml up -d;"
 #  only:
 #  - master
