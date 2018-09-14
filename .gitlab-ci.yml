@@ -1,6 +1,6 @@
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
+  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api
 
 services:
 - docker:dind
@@ -25,7 +25,7 @@ build-api-with-containers:
     -u 0:0
     maven:3-jdk-8
     mvn clean package -Pdocker
-  - docker push $DOCKER_IMAGE_API
+  - docker push $DOCKER_IMAGE_API:latest
   after_script:
   - cd /
   artifacts:
@@ -51,9 +51,11 @@ deploy:
     $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP
     "sudo docker-compose -f docker-compose.yml stop;
     sudo docker-compose -f docker-compose.yml rm web --force;
+    docker rmi $(docker images -q ${DOCKER_IMAGE_API});
     sudo docker-compose -f docker-compose.yml build;
     sudo docker-compose -f docker-compose.yml pull;
     docker tag ${DOCKER_IMAGE_API}:latest ${DOCKER_IMAGE_API}:${VERSION};
+    docker rmi $(docker images -q ${DOCKER_IMAGE_API}:latest);
     sudo docker-compose -f docker-compose.yml up -d;"
 #  only:
 #  - master
