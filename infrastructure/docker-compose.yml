@@ -5,8 +5,15 @@ services:
     restart: always
     links:
       - "api:api"
+      - "ui:ui"
     ports:
     - "80:80"
+
+  ui:
+    image:  registry.gitlab.com/dnu-dreamteam/dolgov/ui
+    restart: always
+    ports:
+    - "3000"
 
   api:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/api

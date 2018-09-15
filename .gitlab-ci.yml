@@ -1,19 +1,32 @@
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api
+  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
+  DOCKER_IMAGE_UI: registry.gitlab.com/dnu-dreamteam/dolgov/ui:latest
 
 services:
 - docker:dind
 
 stages:
+- build-ui-with-containers
 - build-api-with-containers
 - deploy
+
+build-ui-with-containers:
+  image: docker:latest
+  stage: build-ui-with-containers
+  before_script:
+  - cd ./ui/
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  script:
+  - docker build -t $DOCKER_IMAGE_UI .
+  - docker push $DOCKER_IMAGE_API
+  after_script:
+  - cd ../
 
 build-api-with-containers:
   image: docker:latest
   stage: build-api-with-containers
   before_script:
-  - apk update && apk add git
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
@@ -25,7 +38,7 @@ build-api-with-containers:
     -u 0:0
     maven:3-jdk-8
     mvn clean package -Pdocker
-  - docker push $DOCKER_IMAGE_API:latest
+  - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
   artifacts:
@@ -40,22 +53,16 @@ deploy:
   before_script:
   - apt-get update -y && apt-get install sshpass
   script:
-  - export VERSION=$(date +%y.%m.%d.%H.%M)
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./infrastructure/docker-compose.yml ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - >
     sshpass -p $DEPLOYMENT_SERVER_PASS ssh
-    -o StrictHostKeyChecking=no
-    -o PreferredAuthentications=password
+    -o StrictHostKeyChecking=no -o PreferredAuthentications=password
     -o PubkeyAuthentication=no
-    $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP
-    "sudo docker-compose -f docker-compose.yml stop;
+    $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP "sudo docker-compose -f docker-compose.yml stop;
     sudo docker-compose -f docker-compose.yml rm web --force;
-    docker rmi $(docker images -q ${DOCKER_IMAGE_API});
     sudo docker-compose -f docker-compose.yml build;
     sudo docker-compose -f docker-compose.yml pull;
-    docker tag ${DOCKER_IMAGE_API}:latest ${DOCKER_IMAGE_API}:${VERSION};
-    docker rmi $(docker images -q ${DOCKER_IMAGE_API}:latest);
     sudo docker-compose -f docker-compose.yml up -d;"
 #  only:
 #  - master
