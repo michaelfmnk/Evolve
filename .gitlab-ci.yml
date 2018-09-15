@@ -17,7 +17,14 @@ build-ui-with-containers:
   before_script:
   - cd ./ui/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - apk update
+  - apk add --nocache git
+  - apk add --update nodejs nodejs-npm && node -v
+  - apk add maven && mvn --version
+  - npm install -g yarn
+  - yarn --version
   script:
+  - yarn
   - docker build -t $DOCKER_IMAGE_UI .
   - docker push $DOCKER_IMAGE_UI
   after_script:
