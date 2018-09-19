@@ -29,6 +29,8 @@ build-ui-with-containers:
   - docker push $DOCKER_IMAGE_UI
   after_script:
   - cd ../
+  only:
+  - master
 
 build-api-with-containers:
   image: docker:latest
@@ -52,8 +54,8 @@ build-api-with-containers:
     paths:
     - ./api/target/api-0.0.1-SNAPSHOT.jar
     when: always
-#  only:
-#  - master
+  only:
+  - master
 
 deploy:
   stage: deploy
@@ -71,5 +73,5 @@ deploy:
     sudo docker-compose -f docker-compose.yml build;
     sudo docker-compose -f docker-compose.yml pull;
     sudo docker-compose -f docker-compose.yml up -d;"
-#  only:
-#  - master
+  only:
+  - master
