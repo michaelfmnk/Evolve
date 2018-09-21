@@ -20,7 +20,6 @@ build-ui-with-containers:
   - apk update
   - apk add --nocache git
   - apk add --update nodejs nodejs-npm && node -v
-  - apk add maven && mvn --version
   - npm install -g yarn
   - yarn --version
   script:
