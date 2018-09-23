@@ -23,7 +23,8 @@ build-ui-with-containers:
   - npm install -g yarn
   - yarn --version
   script:
-  - yarn
+  - npm install
+  - npm rebuild node-sass
   - docker build -t $DOCKER_IMAGE_UI .
   - docker push $DOCKER_IMAGE_UI
   after_script:

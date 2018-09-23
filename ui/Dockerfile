@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:8.11.4
 
 ADD yarn.lock /yarn.lock
 ADD package.json /package.json
