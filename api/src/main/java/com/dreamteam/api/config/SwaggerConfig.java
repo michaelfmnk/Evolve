@@ -1,6 +1,5 @@
 package com.dreamteam.api.config;
 
-import com.google.common.base.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,14 +22,11 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(paths())
+                .paths(regex("/api.*"))
                 .build()
                 .useDefaultResponseMessages(false);
     }
 
-    private Predicate<String> paths() {
-        return regex("/api.*");
-    }
 }
 
 
