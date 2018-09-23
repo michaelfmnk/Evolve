@@ -24,6 +24,7 @@ build-ui-with-containers:
   - yarn --version
   script:
   - yarn
+  - npm rebuild node-sass
   - docker build -t $DOCKER_IMAGE_UI .
   - docker push $DOCKER_IMAGE_UI
   after_script:
