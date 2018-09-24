@@ -1,3 +1,5 @@
+@import "../design/fonts.css";
+
 //Variables:
     //Colors:
     $border-color: #b8b8b8;
@@ -11,6 +13,8 @@
 
     //Fonts:
     $base-font: "Montserrat";
+
+
 
 body, html {
     margin: 0; padding: 0;
@@ -59,7 +63,7 @@ body {
     border-top-right-radius: 5px;
 
     .att{
-        font-size: 10px;
+        font-size: 12px;
         margin-top: 0;
         color: red;
         font-weight: bold;
@@ -200,8 +204,8 @@ body {
             transform: rotateZ(45deg) translateX(5px) translateY(-5px);
             border-left-style: none;
             border-top-style: none;
-            width: 10px;
-            height: 18px;
+            width: 6px;
+            height: 14px;
         }
         
         .apply_button {
