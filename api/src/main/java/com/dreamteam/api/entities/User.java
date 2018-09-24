@@ -1,15 +1,17 @@
 package com.dreamteam.api.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "users")
@@ -20,9 +22,10 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private LocalDateTime lastPasswordResetDate;
+    private Date lastPasswordResetDate;
     private String password;
     private UUID avatarId;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "owner")
     private List<Board> ownBoards;
