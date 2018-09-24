@@ -164,6 +164,10 @@ body {
             border-color: red;
         }
 
+        input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .att, input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .att {
+            display: block;
+        }       
+
         input[type=text]:valid, input[type=password]:valid {
             border-color: $apply-color;
         }

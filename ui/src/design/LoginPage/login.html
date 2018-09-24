@@ -20,12 +20,13 @@
                     <label for="sign_in_email">
                         E-mail<br>
                         <input required type="text" placeholder=" " id="sign_in_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                        <p class="unvisible att">* e-mail should look like this: example@gmail.com</p>
                     </label><br>
 
                     <label for="sign_in_password">
                         Password<br>
-                        <input required type="password" placeholder=" " id="sign_in_password" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"><br>
-                        <p class="unvisible att">* password must be at least 8 characters long</p>
+                        <input required type="password" placeholder=" " id="sign_in_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+                        <p class="unvisible att">* password must be at least 8 characters long<br>* password must contain at least 1 number, 1 uppercase and lowercase letter</p>
                     </label><br>
                     
                     <input type="checkbox" id="remember_me_checkbox">

@@ -176,6 +176,10 @@ body input, body button {
   border-color: red;
 }
 
+.regform #regform_content input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .att, .regform #regform_content input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .att {
+  display: block;
+}
+
 .regform #regform_content input[type=text]:valid, .regform #regform_content input[type=password]:valid {
   border-color: #39913d;
 }
