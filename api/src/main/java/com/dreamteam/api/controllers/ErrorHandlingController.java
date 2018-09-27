@@ -2,7 +2,7 @@ package com.dreamteam.api.controllers;
 
 import com.dreamteam.api.dtos.ErrorDetailDto;
 import com.dreamteam.api.exceptions.BadRequestException;
-import com.dreamteam.api.services.TimeProvider;
+import com.dreamteam.api.utils.TimeProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.dreamteam.api.services;
+package com.dreamteam.api.utils;
 
 import org.springframework.stereotype.Component;
 

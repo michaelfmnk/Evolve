@@ -35,9 +35,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         try {
             userId = jwtTokenUtil.getUserIdFromToken(authToken);
         } catch (IllegalArgumentException e) {
-            logger.error("an error occurred during getting user_id from token", e);
+            logger.warn("an error occurred during getting user_id from token");
         } catch (ExpiredJwtException e) {
-            logger.warn("the token is expired and not valid anymore", e);
+            logger.warn("the token is expired and not valid anymore");
         }
 
         logger.info(String.format("checking authentication for user_id=%s", userId));

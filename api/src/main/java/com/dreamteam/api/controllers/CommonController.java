@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(Api.ROOT)
-public class CommonsController {
+public class CommonController {
 
     @Value("${app.version:unknown}")
     private String version;

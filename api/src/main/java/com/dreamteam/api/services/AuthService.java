@@ -11,6 +11,7 @@ import com.dreamteam.api.repositories.UsersRepository;
 import com.dreamteam.api.security.JwtTokenUtil;
 import com.dreamteam.api.security.JwtUser;
 import com.dreamteam.api.security.JwtUserFactory;
+import com.dreamteam.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
