@@ -1,0 +1,237 @@
+@import "../design/fonts.css";
+
+//Variables:
+    //Colors:
+    $border-color: #b8b8b8;
+    $active-color: rgb(76, 178, 236);
+    $apply-color: rgb(57, 145, 61);
+
+    //Animations:
+    $a_short-duration: 0.2s;
+    $a-duration: 0.5s;
+    $a_long_duration: 1s;
+
+    //Fonts:
+    $base-font: "Montserrat";
+
+
+
+body, html {
+    margin: 0; padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    font-family: $base-font;
+
+    ul {
+        margin: 0; padding: 0;
+        list-style: none;
+        li{
+            list-style-type: none;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    input, button {
+        outline: none;
+        border: none;
+        background: transparent;
+    }
+}
+
+.unvisible {
+    display: none;
+}
+
+.inline {
+    li {
+        display: inline-block;
+    }
+}
+
+.divideline {
+    display: block;
+    margin: 5px 5%;
+    width: 90%; height: 1px;
+    background-color: rgb(0, 0, 0);
+}
+
+.regform {
+    margin-top: 100px;
+    display: grid;
+    grid-template-rows: 60px auto;
+    justify-self: center;
+    width: 350px;
+    border: 2px solid $border-color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    .att{
+        font-size: 12px;
+        margin-top: 0;
+        color: red;
+        font-weight: bold;
+    }
+
+    #switcher {
+        height: auto;
+        border-bottom: 2px solid $border-color;
+        display: flex;
+        li {
+            transition: 0.3s;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            position: relative;
+            background: transparent;
+            a {
+                transition: 0.3s;
+                flex: 1;
+                padding: 10px;
+                font-size: 18px;
+                line-height: 38px;
+                white-space: nowrap;
+                color: rgb(53, 53, 53);
+            }
+        }
+
+        a::before, a::after {
+            transition: 0.3s;
+            content: "";
+            position: absolute;
+            background: transparent;
+            width: 0%;
+            bottom: 0px;
+            height: 3px;
+            background: $active-color;
+        }
+
+        a::before {
+            right: 50%;
+        }
+
+        a::after {
+            left: 50%;
+        }
+
+        li:hover {
+            a::before, a::after {
+                width: 49%;
+            }
+        }
+
+        li:first-child {
+            border: none;
+            border-top-left-radius: 5px;
+        }
+        li:last-child {
+            border-top-right-radius: 5px;
+        }
+    }
+
+    #regform_content{
+        padding: 15px;
+
+        a {
+            font-size: 14px;
+        }
+
+        a#forgot {
+            margin-left: 20px;
+        }
+
+        label {
+            display: inline-block;
+            margin: 5px 0;
+            width: 100%;
+            font-size: 14px;
+            color: #000;
+        }
+
+        label[for=remember_me_checkbox] {
+            margin-left: 30px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        input{
+            transition: 0.3s;
+            margin: 5px 0;
+            font-size: 16px;
+            width: calc(100% - 20px); height: 25px;
+            padding: 3px 10px;
+            border: 1px solid $border-color;
+            border-radius: 3px;
+        }
+
+        input[type=text]:not(:focus), input[type=password]:not(:focus) {
+            border-color: $border-color;
+        }
+
+        input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown) {
+            border-color: red;
+        }
+
+        input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .att, input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .att {
+            display: block;
+        }       
+
+        input[type=text]:valid, input[type=password]:valid {
+            border-color: $apply-color;
+        }
+
+        input:focus{
+            border: 3px solid $active-color;
+            padding: 3px 8px;
+            margin: 3px 0;
+        }
+
+        input[type=checkbox]{
+            position: absolute;
+            left: 0; top: 0;
+            width: 20px; height: 20px;
+            opacity: 0;
+        }
+
+        label[for=remember_me_checkbox]::before {
+            content: "";
+            position: absolute;
+            display: block;
+            left: -30px; top: -3px;
+            width: 14px; height: 14px;
+            border: 3px solid $border-color;
+            transition: 0.3s;
+        }
+
+        input[type=checkbox]:checked + label[for=remember_me_checkbox]::before {
+            border: 3px solid rgb(43, 112, 47);
+            transform: rotateZ(45deg) translateX(5px) translateY(-5px);
+            border-left-style: none;
+            border-top-style: none;
+            width: 6px;
+            height: 14px;
+        }
+        
+        .apply_button {
+            transition: 0.3s;
+            margin: 25px 0 0 0; 
+            padding: 10px 10px;
+            width: calc(100%); 
+            background-color: $apply-color;
+            font-size: 14px;
+            color: #fff;
+            border-radius: 5px;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .apply_button:hover {
+            background-color: rgb(43, 112, 47);
+        }
+    }
+}

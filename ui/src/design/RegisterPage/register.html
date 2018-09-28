@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+<body>
+        <div class="content">
+            <div class="regform">
+                <ul id="switcher">
+                    <li class="active inline"><a>Register</a></li>
+                </ul>
+    
+                <div id="regform_content">
+                    <!--Registration fields-->
+                    <div>
+                        <label for="register_email">
+                            E-mail
+                            <input required type="text" id="register_email" placeholder=" " pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"><br>
+                            <p class="unvisible att">* e-mail should look like this: example@gmail.com</p>
+                        </label><br>
+                        <label for="register_fname">
+                            First name
+                            <input required type="text" placeholder=" " id="register_fname"><br>
+                        </label><br>
+                        <label for="register_lname">
+                            Last name
+                            <input required type="text" placeholder=" " id="register_lname"><br>
+                        </label><br>
+                        <label for="register_password">
+                            Password
+                            <input required type="password" placeholder=" " id="register_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                            <p class="unvisible att">* password must be at least 8 characters long<br>* password must contain at least 1 number, 1 uppercase and lowercase letter</p>
+                        </label><br>
+                        <label for="register_password_1">
+                            Confirm your password
+                            <input required type="password" placeholder=" " id="register_password_1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                            <p class="unvisible att">* password must be at least 8 characters long<br>* password must contain at least 1 number, 1 uppercase and lowercase letter</p>
+                        </label><br>
+                        <button class="apply_button" id="register_button">Register</button>
+                    </div>
+                </div>
+    
+                
+            </div>
+        </div>
+    </body>
+</html>

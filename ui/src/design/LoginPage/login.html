@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+<body>
+    <div class="content">
+        <div class="regform">
+            <ul id="switcher">
+                <li class="active inline"><a>Sign in</a></li>
+            </ul>
+
+            <div id="regform_content">
+                <!--Sign in fields-->
+                <div>
+                    <label for="sign_in_email">
+                        E-mail<br>
+                        <input required type="text" placeholder=" " id="sign_in_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                        <p class="unvisible att">* e-mail should look like this: example@gmail.com</p>
+                    </label><br>
+
+                    <label for="sign_in_password">
+                        Password<br>
+                        <input required type="password" placeholder=" " id="sign_in_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+                        <p class="unvisible att">* password must be at least 8 characters long<br>* password must contain at least 1 number, 1 uppercase and lowercase letter</p>
+                    </label><br>
+                    
+                    <input type="checkbox" id="remember_me_checkbox">
+                    <label for="remember_me_checkbox">
+                        Remember me
+                        <a href="#" id="forgot">Forgot your password?</a><br>
+                    </label>
+                    
+                    <button class="apply_button" id="sign_in_button">Sign in</button>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</body>
+</html>
