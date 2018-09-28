@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @SqlGroup(value = {})
-public class CommonsControllerTest extends BaseTest {
+public class CommonControllerTest extends BaseTest {
 
     @Test
     public void testVersion() {

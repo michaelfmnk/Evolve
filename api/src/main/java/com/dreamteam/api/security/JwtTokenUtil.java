@@ -1,7 +1,7 @@
 package com.dreamteam.api.security;
 
 import com.dreamteam.api.properties.AuthProperties;
-import com.dreamteam.api.services.TimeProvider;
+import com.dreamteam.api.utils.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,4 +1,4 @@
-package com.dreamteam.api.services;
+package com.dreamteam.api.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;

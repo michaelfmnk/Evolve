@@ -3,6 +3,7 @@ package com.dreamteam.api.services;
 import com.dreamteam.api.entities.User;
 import com.dreamteam.api.repositories.UsersRepository;
 import com.dreamteam.api.security.JwtUserFactory;
+import com.dreamteam.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
