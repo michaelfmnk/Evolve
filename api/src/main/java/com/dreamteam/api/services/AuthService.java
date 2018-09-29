@@ -53,7 +53,7 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final JwtUser jwtUser = JwtUserFactory.create(user);
         final String token = jwtTokenUtil.generateToken(jwtUser);
-        return new TokenContainer(token);
+        return new TokenContainer(token, user.getUserId());
     }
 
     public UserDto signUp(SignUpDto request) {
