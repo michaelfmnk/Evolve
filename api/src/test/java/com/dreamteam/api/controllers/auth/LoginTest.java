@@ -29,7 +29,8 @@ public class LoginTest extends BaseTest {
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("token", notNullValue());
+                .body("token", notNullValue())
+                .body("user_id", equalTo(1));
 
     }
 
