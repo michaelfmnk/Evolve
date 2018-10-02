@@ -2,10 +2,7 @@ module.exports = {
     "extends": ["standard", "standard-react"],
     "parser": "babel-eslint",
     "rules": {
-        "indent": [
-            "error",
-            2
-        ],
+        "indent": "off",
         "no-console": "warn",
         "no-extra-semi": "error",
         "jsx-quotes": "off",
@@ -21,6 +18,8 @@ module.exports = {
          ],
          "arrow-spacing": "error",
          "generator-star-spacing": "error",
+         "no-mixed-spaces-and-tabs": "off",
+         "no-tabs": "off"
     },
     "globals": { "fetch": false , "localStorage": true, "process": true, "it": true },
 };

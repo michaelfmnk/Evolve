@@ -1,0 +1,9 @@
+.regform {
+  width: 400px;
+  border: 2px solid #b8b8b8;
+  border-radius: 5px;
+  padding-top: 15px;
+  background-color: white; }
+  .regform .regform_content {
+    padding: 20px;
+    padding-bottom: 2rem; }

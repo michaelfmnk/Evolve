@@ -1,0 +1,32 @@
+.form_header {
+  height: auto;
+  border-bottom: 2px solid #b8b8b8;
+  transition: 0.3s;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  position: relative;
+  background: white; }
+  .form_header span {
+    transition: 0.3s;
+    flex: 1;
+    padding: 10px;
+    font-size: 20px;
+    line-height: 38px;
+    white-space: nowrap;
+    color: #353535; }
+    .form_header span:before, .form_header span:after {
+      transition: 0.3s;
+      content: "";
+      position: absolute;
+      background: transparent;
+      width: 0%;
+      bottom: 0px;
+      height: 3px;
+      background: #4cb2ec; }
+    .form_header span:before {
+      right: 50%; }
+    .form_header span:after {
+      left: 50%; }
+  .form_header:hover span::before, .form_header:hover span::after {
+    width: 45%; }

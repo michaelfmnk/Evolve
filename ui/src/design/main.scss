@@ -1,4 +1,5 @@
-@import "../design/fonts.css";
+@charset "UTF-8";
+@import url('src/design/fonts.css');
 
 //Variables:
     //Colors:
@@ -12,7 +13,7 @@
     $a_long_duration: 1s;
 
     //Fonts:
-    $base-font: "Montserrat";
+    $base-font: "Montserrat-Regular";
 
 
 

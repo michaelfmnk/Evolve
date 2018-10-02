@@ -1,0 +1,14 @@
+
+.login_page{
+	display: flex;
+	justify-content: center;
+	padding-top: 100px;
+		&_background{
+				position: fixed;
+				left: 0; top:0; 
+				width: 100vw;
+				height: 100vh;
+				background-image: url('../../resources/images/auth_background.jpg');
+				z-index: -100000;
+		}
+}

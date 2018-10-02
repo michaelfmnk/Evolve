@@ -1,0 +1,53 @@
+@import 'commonStyles/variables.scss';
+
+.login_form {
+  width: 350px;
+  border: 2px solid $border-color;
+  border-radius: 5px;
+  padding-top: 15px;
+	background-color: white;
+
+  a.forgot_password{
+    padding-left: 0.5rem;
+  }
+
+  .login_form_content{
+   
+    padding: 20px;
+    padding-bottom: 2rem;
+      
+    input[type=checkbox]{
+      position: absolute;
+      left: 0; top: 0;
+      width: 20px; height: 20px;
+      opacity: 0;
+    }
+
+    label[for=remember_me_checkbox] {
+      
+      margin-left: 30px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    label[for=remember_me_checkbox]::before {
+      content: "";
+      position: absolute;
+      display: block;
+      left: -30px; top: -3px;
+      width: 14px; height: 14px;
+      border: 3px solid $border-color;
+      transition: 0.3s;
+    }
+
+    input[type=checkbox]:checked + label[for=remember_me_checkbox]::before {
+      border: 3px solid rgb(43, 112, 47);
+      transform: rotateZ(45deg) translateX(5px) translateY(-5px);
+      border-left-style: none;
+      border-top-style: none;
+      width: 6px;
+      height: 14px;
+    }
+  }
+}
+
