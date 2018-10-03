@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
   handleInput = (input) => {
     this.setState({
       [input.name]: input.value
-    }, () => console.log(this.state))
+    })
   }
 
   handleLoginFormSubmit = (event) => {

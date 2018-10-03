@@ -14,8 +14,8 @@ class VerifyAccountForm extends React.Component {
 
   handleInput = (input) => {
     this.setState({
-      [input.nane]: input.value
-    }, () => console.log(this.state))
+      [input.name]: input.value
+    })
   }
 
   handleSubmit = () => {
