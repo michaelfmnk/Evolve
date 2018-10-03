@@ -19,7 +19,7 @@ export default function authReducer (state = initialState, action) {
 
       case types.VERIFY_ACCOUNT_SUCCESS: {
         return {
-          userId: action.payload.userId,
+          ...state,
           token: action.payload.token
         }
       }
