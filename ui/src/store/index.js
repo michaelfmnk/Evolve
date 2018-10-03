@@ -25,7 +25,6 @@ export default function configureStore (history) {
 
     const store = createStore(
         connectRouter(history)(rootReducer),
-        rootReducer,
         composedEnhancers
     )
 
