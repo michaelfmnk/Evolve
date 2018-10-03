@@ -7,7 +7,7 @@
 /coverage
 
 # ignore css
-./src/**/*.css
+*.css
 
 # production
 /build
