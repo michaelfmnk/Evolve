@@ -11,4 +11,15 @@ public class Api {
         public final String VERSION = "/version";
         public final String GIT_LOG = "/gitlog";
     }
+
+    @UtilityClass
+    public class Auth {
+        public final String LOGIN = "/auth/login";
+        public final String SIGN_UP = "/auth/sign-up";
+    }
+
+    @UtilityClass
+    public class Boards {
+        public final String BOARDS = "/boards";
+    }
 }

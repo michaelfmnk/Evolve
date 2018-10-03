@@ -50,7 +50,16 @@ body {
 }
 
 .inline {
-    display: inline;
+    li {
+        display: inline-block;
+    }
+}
+
+.divideline {
+    display: block;
+    margin: 5px 5%;
+    width: 90%; height: 1px;
+    background-color: rgb(0, 0, 0);
 }
 
 .regform {
