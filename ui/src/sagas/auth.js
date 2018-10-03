@@ -1,6 +1,7 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, select } from 'redux-saga/effects'
 import * as actions from 'actions/auth'
 import * as actionTypes from 'actionsTypes/auth'
+import { userIdSelector } from 'selectors/auth'
 import saveAuthIdentifiersToStorage from 'helpers/saveAuthIdentifiersToStorage'
 import AuthService from 'services/auth'
 
@@ -17,12 +18,14 @@ function * signUp (action) {
 
 function * verifyUserAccount (action) {
   try {
-    const authIdentifiers = yield AuthService.verifyUserAccount(action.payload)
+    const userId = yield select(userIdSelector)
+    const authIdentifiers = yield AuthService.verifyUserAccount({ code: action.payload, userId })
 
     saveAuthIdentifiersToStorage(authIdentifiers)
 
     yield put(actions.verifyAccountSuccess(authIdentifiers))
   } catch (e) {
+    console.log(e)
     yield put(actions.verifyAccountError(e))
   }
 }

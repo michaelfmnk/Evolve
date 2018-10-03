@@ -16,9 +16,9 @@ export const signUpError = (error) => ({
   payload: error
 })
 
-export const verifyAccountRequest = (codeAndUserId) => ({
+export const verifyAccountRequest = (secretCode) => ({
   type: types.VERIFY_ACCOUNT_REQUEST,
-  payload: codeAndUserId
+  payload: secretCode
 })
 
 export const verifyAccountSuccess = (tokenAndUserId) => ({

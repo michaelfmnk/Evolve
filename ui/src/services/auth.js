@@ -18,10 +18,11 @@ class AuthService {
     })
   }
 
-  verifyAccount (userId) {
+  verifyUserAccount ({userId, code}) {
     return callApi({
-      method: 'GET',
-      url: endpoints.verifyAccount(userId)
+      method: 'POST',
+      url: endpoints.verifyAccount(userId),
+      body: { code }
     })
   }
 }

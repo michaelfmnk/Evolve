@@ -18,8 +18,9 @@ class VerifyAccountForm extends React.Component {
     })
   }
 
-  handleSubmit = () => {
-    this.props.handleSubmit && this.props.handleSubmit(this.state)
+  handleSubmit = (event) => {
+    event.preventDefault()
+    this.props.handleSubmit && this.props.handleSubmit(this.state.code)
   }
 
   render () {
@@ -37,12 +38,12 @@ class VerifyAccountForm extends React.Component {
           placeholder="Enter your secret code"
           name='code'
           id="secret_code"
-          onInput={({target}) => this.handleInput(target)}
+          onInput={ ({target}) => this.handleInput(target) }
           />
 
         <ApplyFormBtn
           text='Verify'
-          onClick={this.handleLoginFormSubmit}
+          onClick={ (event) => this.handleSubmit(event) }
           />
 
       </form>

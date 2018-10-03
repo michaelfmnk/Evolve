@@ -91,7 +91,6 @@ class RegisterForm extends React.Component {
 
           <ApplyFormBtn
             text='Register'
-            classNames='margin-top-2-rem'
             onClick={(event) => this.handleRegisterFormSubmit(event)}
           />
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import VerifyAccountForm from 'components/VerifyAccountForm'
 import RegisterForm from 'components/RegisterForm'
-import { isVerifying } from 'selectors/auth'
+import { isVerifyingSelector } from 'selectors/auth'
 import { signUpRequest, verifyAccountRequest } from 'actions/auth'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,11 +10,11 @@ import './RegisterPage.css'
 
 class RegisterPage extends React.Component {
   render () {
-    const {isVerifying, actions} = this.props
+    const { isVerifying, actions} = this.props
     return (
       <div className='register_page' >
         {
-          isVerifying
+            isVerifying
           ? <VerifyAccountForm handleSubmit={actions.verifyAccountRequest} />
           : <RegisterForm handleSubmit={actions.signUpRequest} />
         }
@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isVerifying: isVerifying(state)
+  isVerifying:   isVerifyingSelector(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
