@@ -5,22 +5,22 @@ import PropTypes from 'prop-types'
 import './VerifyAccountForm.css'
 
 class VerifyAccountForm extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state = {
-			code: ''
-		}
-	}
+  constructor (props) {
+    super(props)
+    this.state = {
+      code: ''
+    }
+  }
 
-	handleInput = (input) => {
-		this.setState({
-			[input.nane]: input.value
-		}, () => console.log(this.state))
-	}
+  handleInput = (input) => {
+    this.setState({
+      [input.nane]: input.value
+    }, () => console.log(this.state))
+  }
 
-	handleSubmit = () => {
-		this.props.handleSubmit && this.props.handleSubmit(this.state)
-	}
+  handleSubmit = () => {
+    this.props.handleSubmit && this.props.handleSubmit(this.state)
+  }
 
   render () {
     return (
@@ -46,7 +46,7 @@ class VerifyAccountForm extends React.Component {
           />
 
       </form>
-		)
+    )
   }
 }
 
