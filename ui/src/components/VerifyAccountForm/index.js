@@ -38,12 +38,12 @@ class VerifyAccountForm extends React.Component {
           placeholder="Enter your secret code"
           name='code'
           id="secret_code"
-          onInput={ ({target}) => this.handleInput(target) }
+          onInput={({target}) => this.handleInput(target)}
         />
 
         <ApplyFormBtn
           text='Verify'
-          onClick={ (event) => this.handleSubmit(event) }
+          onClick={(event) => this.handleSubmit(event)}
         />
 
       </form>

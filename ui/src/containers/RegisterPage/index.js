@@ -10,7 +10,7 @@ import './RegisterPage.css'
 
 class RegisterPage extends React.Component {
   render () {
-    const { isVerifying, actions} = this.props
+    const { isVerifying, actions } = this.props
     return (
       <div className='register_page' >
         {
@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isVerifying:   isVerifyingSelector(state)
+  isVerifying: isVerifyingSelector(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
