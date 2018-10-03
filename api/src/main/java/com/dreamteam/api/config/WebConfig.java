@@ -1,7 +1,11 @@
 package com.dreamteam.api.config;
 
+import com.dreamteam.api.controllers.Api;
+import com.dreamteam.api.properties.AuthProperties;
 import com.dreamteam.api.security.JwtAuthenticationEntryPoint;
 import com.dreamteam.api.security.JwtAuthenticationTokenFilter;
+import com.dreamteam.api.security.JwtTokenUtil;
+import com.dreamteam.api.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +22,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -26,11 +34,29 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final UserDetailsService userDetailsService;
-    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private UserService userService;
+    private JwtTokenUtil jwtTokenUtil;
+    private AuthProperties authProperties;
+
+    private static final List<String> EXCLUDED_PATHS = Stream.of(
+            Api.ROOT + "/auth/*",
+            Api.ROOT + "/version",
+            Api.ROOT + "/users/*/verify"
+    ).collect(Collectors.toList());
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthenticationTokenFilter jwtFilter() {
+        return new JwtAuthenticationTokenFilter(
+                userService,
+                jwtTokenUtil,
+                authProperties,
+                EXCLUDED_PATHS
+        );
     }
 
     @Bean
@@ -48,16 +74,15 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] paths = EXCLUDED_PATHS.toArray(new String[]{});
+
         http
                 .cors().and()
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and() // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(
-                        "/api/auth/**",
-                        "/api/version"
-                ).permitAll()
+                .antMatchers(paths).permitAll()
                 .antMatchers(
                         "/v2/api-docs",
                         "/configuration/ui",
@@ -67,7 +92,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**"
                 ).permitAll()
                 .anyRequest().authenticated();
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.headers().cacheControl();
     }
 

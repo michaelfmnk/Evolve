@@ -10,4 +10,5 @@ public class AuthProperties {
     private String headerName;
     private String privateKey;
     private String publicKey;
+    private Integer codeLen;
 }
