@@ -39,12 +39,12 @@ class VerifyAccountForm extends React.Component {
           name='code'
           id="secret_code"
           onInput={ ({target}) => this.handleInput(target) }
-          />
+        />
 
         <ApplyFormBtn
           text='Verify'
           onClick={ (event) => this.handleSubmit(event) }
-          />
+        />
 
       </form>
     )
