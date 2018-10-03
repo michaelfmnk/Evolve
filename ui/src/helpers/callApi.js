@@ -23,7 +23,7 @@ function extendFetchArgs ({ method, body, headers = {} }) {
   const token = localStorage.getItem('token')
 
   if (token !== null) {
-    headers['Authorization'] = `Bearer ${token}`
+    headers['Authorization'] = token
   }
 
   return {
