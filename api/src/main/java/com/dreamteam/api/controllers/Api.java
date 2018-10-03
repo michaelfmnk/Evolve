@@ -22,4 +22,9 @@ public class Api {
     public class Boards {
         public final String BOARDS = "/boards";
     }
+
+    @UtilityClass
+    public class Users {
+        public final String VERIFY = "/users/{user_id}/verify";
+    }
 }
