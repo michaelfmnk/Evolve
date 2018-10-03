@@ -6,36 +6,37 @@ import PropTypes from 'prop-types'
 import './RegisterForm.css'
 
 class RegisterForm extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state = {
-			email: '',
-			first_name: '',
-			last_name: '',
-			password: '',
-			password_confirm: ''
-		}
-	}
+  constructor (props) {
+    super(props)
+    this.state = {
+      email: '',
+      first_name: '',
+      last_name: '',
+      password: '',
+      password_confirm: ''
+    }
+  }
 
-	handleInput = (input) => {
-		this.setState({
-			[input.nane]: input.value
-		})
-	}
+  handleInput = (input) => {
+    this.setState({
+      [input.name]: input.value
+    })
+  }
 
-	handleRegisterFormSubmit = () => {
-		this.props.handleSubmit && this.props.handleSubmit(this.state)
-	}
+  handleRegisterFormSubmit = (event) => {
+    event.preventDefault()
+    this.props.handleSubmit && this.props.handleSubmit(this.state)
+  }
 
   // TODO : 1. Rewrite error validation from css rules to react way validation
   //        2. Add validation for password confirmation ( should match with password input )
-	checkForError = (target, type) => {
+  checkForError = (target, type) => {
     console.log('CHECKING FOR ERRORS')
-		if (!target.value) return
-		if (new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/).test(target.value)) {
-			return false
-		}
-	}
+    if (!target.value) return
+    if (new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/).test(target.value)) {
+      return false
+    }
+  }
 
   render () {
     return (
@@ -91,12 +92,12 @@ class RegisterForm extends React.Component {
           <ApplyFormBtn
             text='Register'
             classNames='margin-top-2-rem'
-            onClick={this.handleRegisterFormSubmit}
-					/>
+            onClick={(event) => this.handleRegisterFormSubmit(event)}
+          />
 
         </div>
       </form>
-		)
+    )
   }
 }
 

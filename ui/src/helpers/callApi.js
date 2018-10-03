@@ -1,24 +1,34 @@
 export default async function (args) {
-	try {
-		return await fetch(args.url, extendFetchArgs(args))
-	} catch (e) {
-		throw e
-	}
+  try {
+    console.log(extendFetchArgs(args))
+    const result = await fetch(args.url, extendFetchArgs(args))
+    if (result.status >= 400) {
+      throw new Error(result.status + ' ' + result.statusText)
+    }
+    return result.json()
+  } catch (e) {
+    throw e
+  }
 }
 
 function extendFetchArgs ({ method, body, headers = {} }) {
-	body && (body = JSON.stringify(body))
+  body && (body = JSON.stringify(body))
 
-	headers = {
-			...headers,
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${localStorage.getItem('token')}`
-	}
+  headers = {
+      ...headers,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+  }
 
-	return {
-		method,
+  const token = localStorage.getItem('token')
+
+  if (token !== null) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+
+  return {
+    method,
     headers,
     body
-	}
+  }
 }

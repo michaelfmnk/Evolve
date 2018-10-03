@@ -6,7 +6,8 @@ import AuthService from 'services/auth'
 
 function * signUp (action) {
   try {
-    const user = yield AuthService.signUp(action.payload.userUnfo)
+    const user = yield AuthService.signUp(action.payload)
+
     yield put(actions.signUpSuccess(user))
   } catch (e) {
     console.log(e)
@@ -28,7 +29,7 @@ function * verifyUserAccount (action) {
 
 function * signIn (action) {
   try {
-    const authIdentifiers = yield AuthService.signIn(action.payload.userUnfo)
+    const authIdentifiers = yield AuthService.signIn(action.payload)
 
     saveAuthIdentifiersToStorage(authIdentifiers)
 

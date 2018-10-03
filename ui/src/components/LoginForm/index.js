@@ -6,24 +6,25 @@ import PropTypes from 'prop-types'
 import './LoginForm.css'
 
 class LoginForm extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state = {
-			email: '',
+  constructor (props) {
+    super(props)
+    this.state = {
+      email: '',
       password: '',
       remember_me: false
-		}
-	}
+    }
+  }
 
-	handleInput = (input) => {
-		this.setState({
-			[input.nane]: input.value
-		}, () => console.log(this.state))
-	}
+  handleInput = (input) => {
+    this.setState({
+      [input.name]: input.value
+    }, () => console.log(this.state))
+  }
 
-	handleLoginFormSubmit = () => {
-		this.props.handleSubmit && this.props.handleSubmit(this.state)
-	}
+  handleLoginFormSubmit = (event) => {
+    event.preventDefault()
+    this.props.handleSubmit && this.props.handleSubmit(this.state)
+  }
 
   render () {
     return (
@@ -65,12 +66,12 @@ class LoginForm extends React.Component {
 
           <ApplyFormBtn
             text='Login'
-            onClick={this.handleLoginFormSubmit}
+            onClick={(event) => this.handleLoginFormSubmit(event)}
           />
 
         </div>
       </form>
-		)
+    )
   }
 }
 

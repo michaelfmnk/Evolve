@@ -1,4 +1,4 @@
 export default function (authIdentifiers) {
-	localStorage.serItem('userId', authIdentifiers.user_id)
-  localStorage.serItem('token', authIdentifiers.token)
+  localStorage.setItem('userId', authIdentifiers.user_id)
+  localStorage.setItem('token', authIdentifiers.token)
 }
