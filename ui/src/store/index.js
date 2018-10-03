@@ -1,4 +1,3 @@
-import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction'
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
@@ -17,8 +16,10 @@ export default function configureStore (history) {
         sagaMiddleware
     ]
 
-    const composedEnhancers = compose(
-        composeWithDevTools(applyMiddleware(...middleware)),
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+    const composedEnhancers = composeEnhancers(
+        applyMiddleware(...middleware),
         ...enhancers
     )
 

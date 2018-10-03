@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
   render () {
     return (
       <form className='login_form'>
-        <FormHeader text="Logging" />
+        <FormHeader text="Log in" />
 
         <div className="login_form_content">
 
