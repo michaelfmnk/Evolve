@@ -13,7 +13,7 @@
     $a_long_duration: 1s;
 
     //Fonts:
-    $base-font: "Montserrat-Regular";
+    $base-font: "Montserrat";
 
 
 
@@ -22,8 +22,6 @@ body, html {
 }
 
 body {
-    display: flex;
-    justify-content: center;
     font-family: $base-font;
 
     ul {
@@ -49,6 +47,10 @@ body {
     display: none;
 }
 
+.hidden {
+    opacity: 0;
+}
+
 .inline {
     li {
         display: inline-block;
@@ -60,6 +62,11 @@ body {
     margin: 5px 5%;
     width: 90%; height: 1px;
     background-color: rgb(0, 0, 0);
+}
+
+.wrap {
+    width: 80%;
+    margin: 0 auto;
 }
 
 .regform {
@@ -233,6 +240,215 @@ body {
 
         .apply_button:hover {
             background-color: rgb(43, 112, 47);
+        }
+    }
+}
+
+.page-header {
+    display: grid;
+    grid-template-columns: 160px auto 160px;
+
+    width: calc(100% - 30px);
+    height:  40px;
+    padding: 15px;
+    background-color: rgb(190, 190, 190);
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.4);
+    a {
+        color: #fff;
+    }
+
+    .menu {
+        margin: 0 auto;
+
+        li {
+            background-color: $active-color;
+            border-radius: 6px;
+
+            a {
+                display: inline-block;
+                padding: 10px 12px;
+            }
+        }
+    }
+
+    .logo {
+        margin: 0 auto;
+        color: rgb(255, 255, 255);
+        line-height: 40px;
+        font-size: 1.5em;
+        transition: $a_short-duration;
+        .logo-img {
+            display: block;
+            float: left;
+            margin-right: 10px;
+            background: $active-color url("");
+            background-size: cover;
+            width: 1.8em;
+            height: 1.5em;
+            
+        }
+    }
+
+    .logo:hover {
+        color: $active-color;
+        letter-spacing: 0.4em;
+    }
+
+    .dropdownmenu {
+        position: absolute;
+        top: 45px;
+
+        padding: 10px;
+        background-color: $active-color;
+        border-radius: 5px;
+        box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
+        transition: $a-duration;
+        opacity: 0;
+        .divideline {
+            background-color: #fff;
+        }
+
+        .usinfo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                color: #fff;
+            }
+
+            .useravatar {
+                width: 55px; height: 40px;
+                border-radius: 50%;
+                background-color: red;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+        }
+
+        li {
+            display: block;
+            position: relative;
+            border-radius: 0;
+            background-color: $active-color;
+            width: 90%;
+            margin: 0 auto;
+            transition: $a_duration;
+
+            a {
+                position: relative;
+                color: #fff;
+                z-index: 5;
+                transition: $a_short_duration;
+            }
+        }
+
+        li::before {
+            content:"";
+            z-index: 0;
+            position: absolute;
+            width: 0;
+            top: 0; left: 0; bottom: 0;
+            background-color: #fff;
+            transition: $a_duration;
+        }
+
+        li:hover {
+            &::before {
+                width: 100%;
+            }
+
+            a {
+                color: $active-color;
+                font-weight: bold;
+            }
+        }
+    }
+
+    #boardm {
+        position: relative;
+
+        .dropdownmenu {
+            width: 170px;
+        }
+    }
+
+    #user{
+        position: relative;
+
+        .dropdownmenu {
+            right: 0;
+            width: 200px;
+        }
+    }
+
+    #user:hover, #boardm:hover {
+
+        .dropdownmenu{
+            opacity: 1;
+        }
+    }
+}
+
+.page-main{
+    //display: grid;
+    padding-top: 100px;
+    
+    .wrap{
+        
+    }
+
+    .boards {
+        p {
+            font-size: 1.3em;  
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            
+
+            .board-block {
+                p {
+                    margin: 5px 0;
+                    font-size: 0.9em;
+                }
+
+                .name {
+                    margin-bottom: 45px;
+                }
+
+                width: 200px;
+                height: 120px;
+                margin: 15px;
+                background-color: rgb(206, 206, 206);
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: $a-duration;
+                li {
+                    display: inline-block;
+                    border-radius: 50%;
+                    width: 20px; height: 20px;
+                    background: rgb(92, 92, 92);
+                    margin: 3px;  
+                }
+                
+            }
+
+            .add-board {
+                p {
+                    text-align: center;
+                    line-height: 110px;
+                }
+            }
+
+            .board-block:hover {
+                transform: translate(-5px, -5px);
+                box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.3);
+                opacity: 0.9;
+            }
         }
     }
 }
