@@ -15,6 +15,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Service
 @AllArgsConstructor
 public class ConverterService {
@@ -32,10 +34,10 @@ public class ConverterService {
                 .email(entity.getEmail())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
-                .ownBoards(entity.getOwnBoards().stream()
+                .ownBoards(emptyIfNull(entity.getOwnBoards()).stream()
                         .map(this::toBriefDto)
                         .collect(Collectors.toList()))
-                .joinedBoards(entity.getJoinedBoards().stream()
+                .joinedBoards(emptyIfNull(entity.getJoinedBoards()).stream()
                         .map(this::toBriefDto)
                         .collect(Collectors.toList()))
                 .build();
