@@ -41,7 +41,7 @@ public class GetUserByIdTest extends BaseTest {
     }
 
     @Test
-    public void shouldFailGetUserInfoOnNotFound() throws IOException {
+    public void shouldFailGetUserInfoOnNotFound() {
         given()
                 .accept(ContentType.JSON)
                 .headers(headers)
