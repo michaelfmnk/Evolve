@@ -12,37 +12,63 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 
 public class GetUserByIdTest extends BaseTest {
-    private UserService userService;
-    private ConverterService converterService;
 
     @Test
-    public void shouldGetUserInfo() throws IOException {
-
-        String json = given()
+    public void shouldGetUserInfo() {
+        given()
                 .accept(ContentType.JSON)
                 .headers(headers)
                 .when()
-                .get("/api/users/{user_id}")
+                .get("/api/users/1")
                 .then()
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", equalTo(1))
-                .body("firstName", equalTo("Kateryna"))
-                .body("lastName", equalTo("Kanivets"))
+                .body("first_name", equalTo("Kateryna"))
+                .body("last_name", equalTo("Kanivets"))
                 .body("email", notNullValue())
-                //something else
-                .extract().response().body().asString();
+                .body("own_boards", hasSize(1))
+                .body("own_boards[0].name", equalTo("board first"))
+                .body("joined_boards", hasSize(2))
+                .body("joined_boards[0].name", equalTo("board first"))
+                .body("joined_boards[1].name", equalTo("board second"));
+    }
 
-        UserDto response = objectMapper.readValue(json, UserDto.class);
-        System.out.println(response);
+    @Test
+    public void shouldFailGetUserInfoOnNotFound() throws IOException {
+        given()
+                .accept(ContentType.JSON)
+                .headers(headers)
+                .when()
+                .get("/api/users/2000")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .body("detail", equalTo("User was not found"));
     }
 
     @Test
     public void shouldGetUserBriefInfo() {
-
+        given()
+                .accept(ContentType.JSON)
+                .headers(headers)
+                .when()
+                .get("/api/users/2")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("id", equalTo(2))
+                .body("first_name", equalTo("Nick"))
+                .body("last_name", equalTo("Brown"))
+                .body("own_boards", nullValue())
+                .body("joined_boards", nullValue());
     }
 }
