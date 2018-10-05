@@ -1,5 +1,7 @@
 package com.dreamteam.api.services;
 
+import com.dreamteam.api.dtos.UserBriefDto;
+import com.dreamteam.api.dtos.UserDto;
 import com.dreamteam.api.entities.User;
 import com.dreamteam.api.repositories.UsersRepository;
 import com.dreamteam.api.security.JwtUserFactory;
@@ -17,6 +19,7 @@ import javax.persistence.EntityNotFoundException;
 public class UserService implements UserDetailsService {
     private final UsersRepository usersRepository;
     private final MessagesService messagesService;
+    private final ConverterService converterService;
 
     public User findValidUserById(Integer userId) {
         return usersRepository.findById(userId)
@@ -31,5 +34,13 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return JwtUserFactory.create(findValidUserByEmail(username));
+    }
+
+    public UserDto getUserInfo(Integer userId) {
+        return converterService.toDto(findValidUserById(userId));
+    }
+
+    public UserBriefDto getUserBriefInfo(Integer userId) {
+        return converterService.toBriefDto(findValidUserById(userId));
     }
 }
