@@ -20,4 +20,5 @@ public class BoardDto {
     private String name;
     private Integer ownerId;
     private UUID backgroundId;
+    //columns
 }

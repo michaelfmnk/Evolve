@@ -26,5 +26,6 @@ public class Api {
     @UtilityClass
     public class Users {
         public final String VERIFY = "/users/{user_id}/verify";
+        public final String USER = "/users/{user_id}";
     }
 }
