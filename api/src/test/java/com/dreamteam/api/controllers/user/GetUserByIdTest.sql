@@ -39,9 +39,14 @@ values (1, 'board first', 1, null),
 
 insert into boards_users (board_id, user_id)
 values (1, 1),
-       (1, 2),
        (1, 3),
        (2, 1),
        (2, 2),
        (3, 2),
        (3, 3);
+
+INSERT INTO users_authorities (user_id, authority_id) VALUES
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2);

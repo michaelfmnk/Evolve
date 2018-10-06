@@ -37,4 +37,12 @@ public class User {
             inverseJoinColumns = { @JoinColumn(name = "board_id") }
     )
     private List<Board> joinedBoards;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private List<Authority> authorities;
 }
