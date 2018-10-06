@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 /**
- * use as @PreAuthorize("hasPermission(#id, 'OWN_BOARD')")
+ * use as @PreAuthorize("hasPermission(#id, 'OWN_BOARD', 'USER')")
  */
 
 @Component
