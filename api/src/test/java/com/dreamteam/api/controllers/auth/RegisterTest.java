@@ -43,6 +43,7 @@ public class RegisterTest extends BaseTest {
 
         verify(mailjetClient, times(1)).post(any(MailjetRequest.class));
 
+
         assertThat(new Request(dataSource,
                 "SELECT enabled, last_password_reset_date FROM users " +
                         "WHERE email='meteormf99@gmail.com' AND " +
@@ -53,6 +54,9 @@ public class RegisterTest extends BaseTest {
                 .value("last_password_reset_date").isNotNull()
                 .value("enabled").isFalse();
 
+        assertThat(new Request(dataSource,
+                "SELECT * FROM users_authorities WHERE user_id=1000 AND authority_id=2"))
+                .hasNumberOfRows(1);
         assertThat(new Request(dataSource,
                 "SELECT * FROM verification_codes WHERE user_id=1000"))
                 .hasNumberOfRows(1)

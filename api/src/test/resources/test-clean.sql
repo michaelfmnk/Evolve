@@ -1,3 +1,4 @@
+DELETE FROM users_authorities;
 DELETE FROM users;
 DELETE FROM boards;
 DELETE FROM boards_users;
