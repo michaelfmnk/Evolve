@@ -7,3 +7,10 @@ insert into users (user_id, email, first_name, last_name, password, last_passwor
 INSERT INTO verification_codes (verification_code, user_id) VALUES
 ('123321', 4),
 ('222333', 2);
+
+
+INSERT INTO users_authorities (user_id, authority_id) VALUES
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2);

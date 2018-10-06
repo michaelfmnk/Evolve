@@ -2,7 +2,6 @@ package com.dreamteam.api.controllers;
 
 import com.dreamteam.api.dtos.TokenContainer;
 import com.dreamteam.api.dtos.VerificationCodeDto;
-import com.dreamteam.api.entities.User;
 import com.dreamteam.api.security.UserAuthentication;
 import com.dreamteam.api.services.AuthService;
 import com.dreamteam.api.services.UserService;

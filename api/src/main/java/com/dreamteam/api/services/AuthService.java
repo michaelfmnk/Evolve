@@ -1,6 +1,7 @@
 package com.dreamteam.api.services;
 
 import com.dreamteam.api.dtos.*;
+import com.dreamteam.api.entities.Authority;
 import com.dreamteam.api.entities.User;
 import com.dreamteam.api.entities.VerificationCode;
 import com.dreamteam.api.exceptions.BadRequestException;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
@@ -70,6 +72,7 @@ public class AuthService {
                 .lastName(request.getLastName())
                 .enabled(false)
                 .lastPasswordResetDate(new Date())
+                .authorities(Collections.singletonList(Authority.Type.USER.getInstance()))
                 .build();
 
         user = userRepository.save(user);
