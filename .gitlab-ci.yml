@@ -2,11 +2,10 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
   DOCKER_IMAGE_UI: registry.gitlab.com/dnu-dreamteam/dolgov/ui:latest
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2"
 
 cache:
   paths:
-  - .m2/
+  - ./api/.m2/
   - ./ui/node_modules/
 
 
@@ -53,7 +52,7 @@ build-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker
+    mvn clean package -Pdocker -Dmaven.repo.local=.m2
   - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
