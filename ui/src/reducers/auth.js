@@ -7,6 +7,8 @@ const initialState = {
 
 export default function authReducer (state = initialState, action) {
   switch (action.type) {
+    
+    case types.REFRESH_AUTH_FROM_STORE:
     case types.SIGN_IN_SUCCESS:
       return action.payload
 
@@ -24,6 +26,7 @@ export default function authReducer (state = initialState, action) {
         }
       }
 
+        
       default: return state
   }
 }

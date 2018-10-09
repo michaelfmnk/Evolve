@@ -49,3 +49,9 @@ export const signInError = (error) => ({
   type: types.SIGN_IN_ERROR,
   payload: error
 })
+
+// FROM STORE
+export const refreshAuth = (tokenWithUserIdObj) => ({
+  type: types.REFRESH_AUTH_FROM_STORE,
+  payload: tokenWithUserIdObj
+})
