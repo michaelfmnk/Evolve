@@ -7,7 +7,7 @@ const WelcomeSection = ({onGetStartedClick}) => (
     <div className="welcome-section-head-text">
       <h1>Evolve</h1>
       <h2>Multiwork Helper</h2>
-      <button  onClick={onGetStartedClick} >
+      <button onClick={onGetStartedClick} >
         Get Started
       </button>
     </div>
@@ -18,4 +18,4 @@ WelcomeSection.propTypes = {
   onGetStartedClick: PropTypes.func.isRequired
 }
 
-export default WelcomeSection 
+export default WelcomeSection

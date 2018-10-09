@@ -14,7 +14,6 @@ import RequireAuth from 'containers/RequireAuth'
 import refreshAuthFromStorage from 'helpers/refreshAuthFromStorage'
 import './index.css'
 
-
 const history = createBrowserHistory()
 const store = configureStore(history)
 
@@ -27,7 +26,7 @@ ReactDOM.render(
         <Route path='/welcome' component={WelcomePage} />
         <Route path='/login' component={LoginPage} />
         <Route path='/register' component={RegisterPage} />
-        <Route path="/" render={ () => <RequireAuth Component={App}/>} />
+        <Route path="/" render={() => <RequireAuth Component={App} />} />
       </Switch>
     </ConnectedRouter>
   </Provider>,
