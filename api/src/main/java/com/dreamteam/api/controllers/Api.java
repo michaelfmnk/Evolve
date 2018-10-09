@@ -23,4 +23,10 @@ public class Api {
         public final String BOARDS = "/boards";
         public final String BOARD_COLUMNS = "/boards/{board_id}/columns";
     }
+
+    @UtilityClass
+    public class Users {
+        public final String VERIFY = "/users/{user_id}/verify";
+        public final String USER = "/users/{user_id}";
+    }
 }

@@ -1,0 +1,48 @@
+@import 'commonStyles/variables.scss';
+
+.form_header {
+  height: auto;
+  border-bottom: 2px solid $border-color;
+  transition: 0.3s;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  position: relative;
+  background: white;
+
+  span {
+    transition: 0.3s;
+    flex: 1;
+    padding: 10px;
+    font-size: 20px;
+    line-height: 38px;
+    white-space: nowrap;
+    color: rgb(53, 53, 53);
+
+    &:before, &:after{
+      transition: 0.3s;
+      content: "";
+      position: absolute;
+      background: transparent;
+      width: 0%;
+      bottom: 0px;
+      height: 3px;
+      background: $active-color;
+    }
+
+    &:before{
+      right: 50%;
+    }
+
+    &:after{
+      left: 50%;
+    }
+
+  }
+
+  &:hover {
+    span::before, span::after {
+      width: 45%;
+    }
+  }
+}

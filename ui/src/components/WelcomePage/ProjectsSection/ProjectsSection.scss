@@ -1,0 +1,177 @@
+.projects-section {
+  background-color: rgb(248, 249, 250) ;
+  padding: 5rem 0px;
+  display: block;
+  box-sizing: border-box;
+  .projects-section {
+    margin-bottom: 3rem ;
+    align-items: center ;
+    margin-right: 0px;
+    margin-left: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    .projects-big-img {
+      padding-right: 0px;
+      padding-left: 0px;
+      max-width: 66.6667%;
+      flex: 0 0 66.6667%;
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      box-sizing: border-box;
+      display: block;
+      img {
+        margin-bottom: 0px ;
+        max-width: 100%;
+        height: auto;
+        vertical-align: middle;
+        border-style: none;
+        box-sizing: border-box;
+      }
+    }
+    .projects-big-text {
+      padding-right: 0;
+      padding-left: 0;
+      flex: 0 0 33.333333%;
+      max-width: 33.333333%;
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      box-sizing: border-box;
+      display: block;
+      .projects-text {
+        padding: 0 0 0 2rem;
+        border-left: 0.5rem solid #64a19d;
+        text-align: left ;
+        h2 {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+          font-family: inherit;
+          font-weight: 500;
+          line-height: 1.2;
+          color: inherit;
+          margin-top: 0;
+          display: block;
+          margin-block-start: 1.33em;
+          margin-block-end: 1.33em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          text-align: left ;
+        }
+        p {
+          color: rgba(0, 0, 0, 0.5) ;
+          margin-bottom: 0 ;
+          margin-top: 0;
+          display: block;
+          margin-block-start: 1em;
+          margin-block-end: 1em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          text-align: left ;
+        }
+      }
+    }
+  }
+  .projects-line {
+    margin-bottom: 0 ;
+    justify-content: center ;
+    margin-right: 0;
+    margin-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    .projects-line-img {
+      padding-right: 0;
+      padding-left: 0;
+      flex: 0 0 50%;
+      max-width: 50%;
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      img {
+        max-width: 100%;
+        height: auto;
+        vertical-align: middle;
+        border-style: none;
+      }
+    }
+    .projects-big-div {
+      padding-right: 0;
+      padding-left: 0;
+      flex: 0 0 50%;
+      max-width: 50%;
+      .projects-mid-div {
+        text-align: center ;
+        height: 100% ;
+        background-color: #161616 ;
+        .projects-small-div {
+          height: 100% ;
+          display: flex ;
+          .projects-line-final-text {
+            padding: 5rem;
+            font-size: 90%;
+            text-align: left ;
+            margin-bottom: auto ;
+            margin-top: auto ;
+            width: 100% ;
+          }
+        }
+      }
+    }
+    
+    h2 {
+      color: #fff ;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-top: 0;
+      display: block;
+      margin-block-start: 1.33em;
+      margin-block-end: 1.33em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.5) ;
+      margin-bottom: 0 ;
+      margin-top: 0;
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-size: 90%;
+      text-align: left ;
+    }
+    hr {
+      border-color: #64a19d;
+      border-width: 0.2rem;
+      width: 30%;
+      margin-left: 0;
+      margin-bottom: 0 ;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+  .ch {
+    p {
+      text-align: right ;
+    }
+    hr {
+      margin-left: auto;
+      margin-right: 0;
+    }
+    .projects-big-div{
+      order: -1;
+      .projects-mid-div {
+        .projects-small-div {
+          .projects-line-final-text {
+            text-align: right ;
+          }
+        }
+      }
+    }
+  }
+}

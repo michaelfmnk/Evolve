@@ -1,0 +1,86 @@
+.contacts-section {
+  background-color: #161616 ;
+  // padding: 15rem 0 13rem;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    .contacts-box {
+      margin-bottom: 0 ;
+      flex: 0 0 33.333333%;
+      max-width: 33.333333%;
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+      box-sizing: border-box;
+      .contacts-box-mid {
+        border: 0;
+        border-bottom: 0.25rem solid #64a19d;
+        padding-bottom: 1.5rem ;
+        padding-top: 1.5rem ;
+        height: 100% ;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border-radius: 0.25rem;
+        .foot-textbox {
+          text-align: center ;
+          flex: 1 1 auto;
+          padding: 1.25rem;
+          h2 {
+            font-size: 0.8rem;
+            font-family: "Varela Round";
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+            margin: 0 ;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit;
+          }
+          hr {
+            border-color: #64a19d;
+            border-width: 0.2rem;
+            width: 3rem;
+            margin-bottom: 1.5rem  ;
+            margin-top: 1.5rem ;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
+        .text-small {
+          color: rgba(0, 0, 0, 0.5) ;
+          font-size: 80%;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  .contacts-low {
+    margin-top: 8rem;
+    justify-content: center ;
+    display: flex ;
+    box-sizing: border-box;
+    a {
+      text-align: center;
+      height: 3rem;
+      width: 3rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 100%;
+      line-height: 3rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-left: 0.5rem ;
+      margin-right: 0.5rem;
+      text-decoration: none;
+      box-sizing: border-box;
+    }
+  }
+}

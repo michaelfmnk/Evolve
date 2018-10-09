@@ -1,0 +1,60 @@
+@import 'commonStyles/variables.scss';
+
+label.label_with_input{
+
+  display: inline-block;
+  margin: 5px 0;
+  width: 100%;
+  font-size: 14px;
+  color: #000;
+
+  p.unvisible {
+    display: none;
+  }
+
+
+  p.att{
+      font-size: 12px;
+      margin-top: 0;
+      color: red;
+      font-weight: bold;
+  }
+
+  p.error_text{
+    white-space: pre-line;
+  }
+   
+  input{
+    transition: 0.3s;
+    margin: 5px 0;
+    font-size: 16px;
+    width: calc(100% - 20px); height: 25px;
+    padding: 3px 10px;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+  }
+  
+  input[type=text]:not(:focus), input[type=password]:not(:focus) {
+      border-color: $border-color;
+  }
+  
+  input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown) {
+      border-color: red;
+  }
+  
+  input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .att, input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .att {
+      display: block;
+  }       
+  
+  input[type=text]:valid, input[type=password]:valid {
+      border-color: $apply-color;
+  }
+  
+  input:focus{
+      border: 3px solid $active-color;
+      padding: 3px 8px;
+      margin: 3px 0;
+  }
+  
+}
+
