@@ -1,0 +1,85 @@
+
+.about-section {
+  text-align: center ;
+  padding-top: 15rem;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #161616 0%,
+    rgba(22, 22, 22, 0.9) 75%,
+    rgba(22, 22, 22, 0.8) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-left: 15%;
+  padding-right: 15%;
+    .about-big {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      // margin-right: -15px;
+      // margin-left: -15px;
+      box-sizing: border-box;
+      display: block;
+      text-align: center ;
+      .about-text {
+        margin-left: auto ;
+        margin-right: auto ;
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+        box-sizing: border-box;
+        display: block;
+        text-align: center ;
+        h2 {
+          color: #fff ;
+          margin-bottom: 1.5rem ;
+          font-size: 2rem;
+          font-family: inherit;
+          font-weight: 500;
+          line-height: 1.2;
+          margin-top: 0;
+          box-sizing: border-box;
+          display: block;
+          margin-block-start: 0.83em;
+          margin-block-end: 0.83em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          text-align: center ;
+        }
+        p {
+          margin-bottom: 5rem;
+          color: rgba(255, 255, 255, 0.5) ;
+          margin-top: 0;
+          box-sizing: border-box;
+          display: block;
+          margin-block-start: 1em;
+          margin-block-end: 1em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          text-align: center ;
+          a {
+            color: #007bff;
+            text-decoration: none;
+            background-color: transparent;
+            box-sizing: border-box;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+      border-style: none;
+      box-sizing: border-box;
+    }
+}

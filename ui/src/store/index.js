@@ -16,7 +16,7 @@ export default function configureStore (history) {
         sagaMiddleware
     ]
 
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
     const composedEnhancers = composeEnhancers(
         applyMiddleware(...middleware),
