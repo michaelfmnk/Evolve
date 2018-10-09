@@ -1,4 +1,4 @@
-insert into users (user_id, email, first_name, last_name, password, last_password_reset_date, avatar_id, enabled) VALUES
+insert into users (user_id, email, first_name, last_name, password, last_password_reset_date, avatar_id, enabled) values
 (1, 'michaelfmnk@gmail.com', 'Michael', 'Fomenko', '$2a$10$noFrZfy.dxossQlZ4WqX2.U66nRVUeGkjQtNFP7298bcqKmd.amsK', '2017-07-16 14:40:14.518000', '0485de66-c013-11e8-a355-529269fb1459', true), --test
 (2, 'someoneelse@gmail.com', 'Nick', 'Brown', '$2a$10$noFrZfy.dxossQlZ4WqX2.U66nRVUeGkjQtNFP7298bcqKmd.amsK', '2007-07-16 14:40:14.518000', '0485de66-c013-11e8-a355-529269fb1459', false), --test
 (3, 'admin@gmail.com', 'admin', 'admin', '$2a$10$noFrZfy.dxossQlZ4WqX2.U66nRVUeGkjQtNFP7298bcqKmd.amsK', '2007-07-16 14:40:14.518000', '0485de66-c013-11e8-a355-529269fb1459', true),

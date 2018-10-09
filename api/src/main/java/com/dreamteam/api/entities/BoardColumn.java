@@ -18,6 +18,7 @@ public class BoardColumn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer columnId;
     private String name;
+    @Column(name = "\"order\"")
     private Integer order;
 
     @ManyToOne
