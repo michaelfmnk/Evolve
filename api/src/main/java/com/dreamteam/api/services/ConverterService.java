@@ -4,11 +4,15 @@ import com.dreamteam.api.dtos.BoardBriefDto;
 import com.dreamteam.api.dtos.BoardDto;
 import com.dreamteam.api.dtos.UserBriefDto;
 import com.dreamteam.api.dtos.UserDto;
+import com.dreamteam.api.dtos.BoardColumnDto;
 import com.dreamteam.api.entities.Board;
 import com.dreamteam.api.entities.User;
+import com.dreamteam.api.entities.BoardColumn;
 import com.dreamteam.api.repositories.UsersRepository;
+import com.dreamteam.api.repositories.BoardsRepository;
 import com.dreamteam.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,6 +26,7 @@ import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 public class ConverterService {
 
     private UsersRepository usersRepository;
+    private BoardsRepository boardsRepository;
     private MessagesService messagesService;
 
     public UserDto toDto(User entity) {
@@ -93,4 +98,26 @@ public class ConverterService {
                 .build();
     }
 
+    public BoardColumnDto toDto(BoardColumn entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return BoardColumnDto.builder()
+                .id(entity.getColumnId())
+                .name(entity.getName())
+                .order(entity.getOrder())
+                .boardId(entity.getBoard().getBoardId())
+                .build();
+    }
+
+    public BoardColumn toEntity(BoardColumnDto dto) {
+        Board board = boardsRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        return BoardColumn.builder()
+                .name(dto.getName())
+                .order(dto.getOrder())
+                .board(board)
+                .build();
+    }
 }
