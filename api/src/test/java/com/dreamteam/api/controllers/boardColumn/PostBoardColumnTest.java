@@ -42,4 +42,36 @@ public class PostBoardColumnTest  extends BaseTest{
                 .row(0).value("name").isEqualTo("NEW COLUMN")
                 .value("board_id").isEqualTo(1);
     }
+
+    @Test
+    public void shouldNotCreateColumn() throws IOException {
+        BoardColumnDto column = new BoardColumnDto();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .headers(headers)
+                .body(objectMapper.writeValueAsBytes(column))
+                .when()
+                .post("/api/boards/1/columns")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
+                .body("detail", equalTo("name: must not be blank"));
+    }
+
+    @Test
+    public void shouldNotCreateColumnOnUnauthorized() throws IOException {
+        BoardColumnDto column = new BoardColumnDto();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsBytes(column))
+                .when()
+                .post("/api/boards/1/columns")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_UNAUTHORIZED);
+    }
 }
