@@ -56,7 +56,7 @@ public abstract class BaseTest {
                         .id(-1)
                         .email("fake@fake.com")
                         .build());
-        badHeaders = new Headers(new Header(authProperties.getHeaderName(), userToken));
+        badHeaders = new Headers(new Header(authProperties.getHeaderName(), badToken));
     }
 
 }

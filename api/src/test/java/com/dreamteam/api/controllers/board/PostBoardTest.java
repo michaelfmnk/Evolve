@@ -62,7 +62,8 @@ public class PostBoardTest extends BaseTest {
                 .then()
                 .extract().response().prettyPeek()
                 .then()
-                .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY);
+                .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
+                .body("detail", equalTo("name: must not be blank"));
     }
 
     @Test
