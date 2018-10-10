@@ -74,4 +74,23 @@ public class PostBoardColumnTest  extends BaseTest{
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
     }
+
+    @Test
+    public void shouldNotCreateColumnWithoutBorder() throws IOException {
+        BoardColumnDto column = BoardColumnDto.builder()
+                .name("NEW COLUMN")
+                .build();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .headers(headers)
+                .body(objectMapper.writeValueAsBytes(column))
+                .when()
+                .post("/api/boards/5/columns")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .body("detail", equalTo("Board was not found"));
+    }
 }

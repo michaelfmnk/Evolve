@@ -25,8 +25,9 @@ public class BoardController {
     }
 
     @PostMapping(Api.Boards.BOARD_COLUMNS)
-    public BoardColumnDto createColumn (@Validated @RequestBody BoardColumnDto column, @PathVariable Integer board_id) {
-        column.setBoardId(board_id);
+    public BoardColumnDto createColumn (@Validated @RequestBody BoardColumnDto column,
+                                        @PathVariable(name = "board_id") Integer boardId) {
+        column.setBoardId(boardId);
         return boardColumnService.createColumn(column);
     }
 
