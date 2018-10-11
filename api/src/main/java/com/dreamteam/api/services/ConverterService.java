@@ -5,6 +5,8 @@ import com.dreamteam.api.dtos.BoardDto;
 import com.dreamteam.api.dtos.UserBriefDto;
 import com.dreamteam.api.dtos.UserDto;
 import com.dreamteam.api.dtos.BoardColumnDto;
+import com.dreamteam.api.dtos.LabelDto;
+import com.dreamteam.api.entities.Label;
 import com.dreamteam.api.entities.Board;
 import com.dreamteam.api.entities.User;
 import com.dreamteam.api.entities.BoardColumn;
@@ -102,7 +104,6 @@ public class ConverterService {
         if (Objects.isNull(entity)) {
             return null;
         }
-
         return BoardColumnDto.builder()
                 .id(entity.getColumnId())
                 .name(entity.getName())
@@ -117,6 +118,28 @@ public class ConverterService {
         return BoardColumn.builder()
                 .name(dto.getName())
                 .order(dto.getOrder())
+                .board(board)
+                .build();
+    }
+
+    public LabelDto toDto(Label entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return LabelDto.builder()
+                .id(entity.getLabelId())
+                .name(entity.getName())
+                .color(entity.getColor())
+                .boardId(entity.getBoard().getBoardId())
+                .build();
+    }
+
+    public Label toEntity(LabelDto dto) {
+        Board board = boardsRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        return Label.builder()
+                .name(dto.getName())
+                .color(dto.getColor())
                 .board(board)
                 .build();
     }

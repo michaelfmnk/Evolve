@@ -22,6 +22,7 @@ public class Api {
     public class Boards {
         public final String BOARDS = "/boards";
         public final String BOARD_COLUMNS = "/boards/{board_id}/columns";
+        public final String BOARD_LABELS = "boards/{board_id}/labels";
     }
 
     @UtilityClass
