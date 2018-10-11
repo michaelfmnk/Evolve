@@ -35,7 +35,7 @@ public class PostLabelTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", notNullValue())
-                .body("name", equalTo("NEW COLUMN"))
+                .body("name", equalTo("NEW LABEL"))
                 .body("name", equalTo("#d10cc3"))
                 .extract().response().body().asString();
         LabelDto response = objectMapper.readValue(json, LabelDto.class);
