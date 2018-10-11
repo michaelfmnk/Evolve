@@ -1,0 +1,264 @@
+//Variables:
+    //Colors:
+    $border-color: #b8b8b8;
+    $active-color: rgb(76, 178, 236);
+    $apply-color: rgb(57, 145, 61);
+    $dark-color: rgba(22, 22, 22, 0.7);
+    $light-color: rgba(255, 255, 255, 0.7);
+
+
+    //Animations:
+    $a_short-duration: 0.2s;
+    $a-duration: 0.5s;
+    $a_long_duration: 1s;
+
+    //Fonts:
+    $base-font: "Montserrat-Regular";
+
+
+.page-header {
+    display: grid;
+    grid-template-columns: 160px auto 160px;
+
+    width: calc(100% - 30px);
+    height:  40px;
+    padding: 15px;
+    background-color: $dark-color;
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.4);
+    a {
+        color: $light-color;
+    }
+
+    .menu {
+        margin: 0 auto;
+
+        li {
+            background-color: transparent;
+            border-radius: 6px;
+
+            a {
+                display: inline-block;
+                padding: 10px 12px;
+            }
+
+            >a, >i {
+                transition: $a_short-duration;
+            }
+        }
+
+        li:hover {
+            >i, >a {
+                color: $dark-color;
+            }
+        }
+    }
+
+    .logo {
+        margin: 0 auto;
+        color: $light-color;
+        line-height: 40px;
+        font-size: 1.5em;
+        transition: $a_short-duration;
+        .logo-img {
+            display: block;
+            float: left;
+            margin-right: 10px;
+            background: $dark-color url("");
+            background-size: cover;
+            width: 1.8em;
+            height: 1.5em;
+            
+        }
+    }
+
+    .logo:hover {
+        color: $dark-color;
+        letter-spacing: 0.4em;
+    }
+
+    .dropdownmenu {
+        position: absolute;
+        top: 0px;
+
+        padding: 10px;
+        padding-bottom: 15px;
+        background-color: $dark-color;
+        border-radius: 5px;
+        box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
+        transition: $a-duration;
+        opacity: 0;
+        .divideline {
+            background-color: $light-color;
+        }
+
+        .usinfo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                color: $light-color;
+            }
+
+            .useravatar {
+                width: 55px; height: 40px;
+                border-radius: 50%;
+                background-color: red;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+        }
+
+        li {
+            display: block;
+            position: relative;
+            border-radius: 0;
+            background-color: transparent;
+            width: 90%;
+            margin: 0 auto;
+            transition: $a_duration;
+
+            a {
+                position: relative;
+                color: $light-color;
+                z-index: 5;
+                transition: $a_duration;
+            }
+        }
+
+        li::before {
+            content:"";
+            z-index: 0;
+            position: absolute;
+            width: 0;
+            top: 0; left: 0; bottom: 0;
+            background-color: rgb(206, 206, 206);
+            transition: $a_duration;
+        }
+
+        li:hover {
+            &::before {
+                width: 100%;
+            }
+
+            a {
+                color: $dark-color;
+                font-weight: bold;
+            }
+        }
+    }
+
+    #boardm {
+        position: relative;
+
+        .dropdownmenu {
+            width: 170px;
+            right: 0;
+            padding-top: 15px;
+        }
+    }
+
+    #user {
+        position: relative;
+
+        .dropdownmenu {
+            right: 0;
+            width: 200px;
+        }
+    }
+
+    #user:hover, #boardm:hover {
+
+        .dropdownmenu{
+            opacity: 1;
+            top: 60px;
+        }
+    }
+}
+
+.page-main{
+    //display: grid;
+    padding-top: 100px;
+    
+    .wrap{
+        
+    }
+
+    .boards {
+        p {
+            font-size: 1.3em;  
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            
+
+            .board-block {
+                p {
+                    margin: 5px 0;
+                    font-size: 0.9em;
+                }
+
+                .name {
+                    margin-bottom: 45px;
+                }
+
+                width: 200px;
+                height: 120px;
+                margin: 15px;
+                overflow: hidden;
+                background-color: rgb(206, 206, 206);
+                background-size: contain;
+                background-position: center;
+                padding: 10px;
+                border-radius: 5px;
+                transition: $a-duration;
+                .party {
+                    li {
+                        transition: $a_short-duration;
+                        display: inline-block;
+                        border-radius: 50%;
+                        width: 20px; height: 20px;
+                        background: $dark-color;
+                        margin: 3px; 
+                        cursor: pointer; 
+                    }
+                } 
+            }
+
+            .add-board {
+                p {
+                    text-align: center;
+                                       
+
+                    i {
+                        font-size: 3em;
+                        color: $dark-color;
+                        line-height: 110px;
+                        transition: $a_short-duration;
+                        cursor: pointer; 
+                    }
+
+                    i:hover {
+                        transform: translate(-2px, -2px);
+                        text-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+                    }
+                }
+            }
+
+            .board-block:hover {
+                transform: translate(-5px, -5px);
+                box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.3);
+            }
+
+            .party {
+                li:hover {
+                    transform: translate(-3px, -3px);
+                    box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.3);
+                }
+            }
+        }
+    }
+}
