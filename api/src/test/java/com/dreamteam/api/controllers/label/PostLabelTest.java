@@ -19,15 +19,14 @@ public class PostLabelTest extends BaseTest {
 
     @Test
     public void shouldCreateLabel() throws IOException {
-        LabelDto column = LabelDto.builder()
-                .name("NEW LABEL")
+        LabelDto label = LabelDto.builder()
                 .color("#d10cc3")
                 .build();
         String json = given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .headers(headers)
-                .body(objectMapper.writeValueAsBytes(column))
+                .body(objectMapper.writeValueAsBytes(label))
                 .when()
                 .post("/api/boards/1/labels")
                 .then()
@@ -35,13 +34,12 @@ public class PostLabelTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", notNullValue())
-                .body("name", equalTo("NEW LABEL"))
-                .body("name", equalTo("#d10cc3"))
+                .body("color", equalTo("#d10cc3"))
                 .extract().response().body().asString();
         LabelDto response = objectMapper.readValue(json, LabelDto.class);
-        assertThat(new Request(dataSource, format("SELECT * FROM LABELS WHERE column_id=%s", response.getId())))
+        assertThat(new Request(dataSource, format("SELECT * FROM LABELS WHERE label_id=%s", response.getId())))
                 .hasNumberOfRows(1)
-                .row(0).value("name").isEqualTo("NEW LABEL")
+                .row(0).value("color").isEqualTo("#d10cc3")
                 .value("board_id").isEqualTo(1);
     }
 
@@ -59,6 +57,25 @@ public class PostLabelTest extends BaseTest {
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
-                .body("detail", equalTo("name: must not be blank"));
+                .body("detail", equalTo("color: must not be blank"));
+    }
+
+    @Test
+    public void shouldNotCreateLabelWithoutPermission() throws IOException {
+        LabelDto label = LabelDto.builder()
+                .color("#d10cc3")
+                .build();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .headers(headers)
+                .body(objectMapper.writeValueAsBytes(label))
+                .when()
+                .post("/api/boards/4/labels")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_FORBIDDEN)
+                .body("detail", equalTo("Access is denied"));
     }
 }

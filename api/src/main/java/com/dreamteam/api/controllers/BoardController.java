@@ -36,7 +36,7 @@ public class BoardController {
     }
 
     @PostMapping(Api.Boards.BOARD_LABELS)
-    @PreAuthorize("hasPermission('board_id', 'OWN_BOARD', 'USER')")
+    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
     public LabelDto createLabel (@Validated @RequestBody LabelDto label,
                                  @PathVariable(name = "board_id") Integer boardId) {
         label.setBoardId(boardId);
