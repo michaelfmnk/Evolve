@@ -28,11 +28,6 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<BoardColumn> columns;
 
-    @ManyToMany
-    @JoinTable(
-            name = "boards_labels",
-            joinColumns = { @JoinColumn(name = "board_id") },
-            inverseJoinColumns = { @JoinColumn(name = "label_id") }
-    )
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Label> presentLabels;
 }
