@@ -5,8 +5,8 @@ import com.dreamteam.api.dtos.BoardDto;
 import com.dreamteam.api.dtos.LabelDto;
 import com.dreamteam.api.security.UserAuthentication;
 import com.dreamteam.api.services.BoardColumnService;
-import com.dreamteam.api.services.LabelService;
 import com.dreamteam.api.services.BoardService;
+import com.dreamteam.api.services.LabelService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -43,4 +43,9 @@ public class BoardController {
         return labelService.createLabel(label);
     }
 
+    @GetMapping(Api.Boards.BOARD)
+    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    public BoardDto getBoardById(@PathVariable(name = "board_id") Integer boardId) {
+        return boardService.getBoardById(boardId);
+    }
 }

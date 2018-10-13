@@ -1,6 +1,7 @@
 package com.dreamteam.api.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.util.List;
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "cards")
 public class Card {
     @Id
@@ -24,6 +26,9 @@ public class Card {
 
     @CreationTimestamp
     private LocalDateTime createdTime;
+
+    @Column(name = "order_num")
+    private Integer order;
 
     @ManyToOne
     @JoinColumn(name = "column_id")
@@ -50,4 +55,14 @@ public class Card {
             inverseJoinColumns = { @JoinColumn(name = "attachment_id") }
     )
     private List<Attachment> attachments;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "cards_users",
+            joinColumns = { @JoinColumn(name = "card_id")},
+            inverseJoinColumns = { @JoinColumn(name =  "user_id")}
+    )
+    private List<User> users;
+
 }

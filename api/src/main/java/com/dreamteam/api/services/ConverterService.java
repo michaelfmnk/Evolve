@@ -1,23 +1,15 @@
 package com.dreamteam.api.services;
 
-import com.dreamteam.api.dtos.BoardBriefDto;
-import com.dreamteam.api.dtos.BoardDto;
-import com.dreamteam.api.dtos.UserBriefDto;
-import com.dreamteam.api.dtos.UserDto;
-import com.dreamteam.api.dtos.BoardColumnDto;
-import com.dreamteam.api.dtos.LabelDto;
-import com.dreamteam.api.entities.Label;
-import com.dreamteam.api.entities.Board;
-import com.dreamteam.api.entities.User;
-import com.dreamteam.api.entities.BoardColumn;
-import com.dreamteam.api.repositories.UsersRepository;
+import com.dreamteam.api.dtos.*;
+import com.dreamteam.api.entities.*;
 import com.dreamteam.api.repositories.BoardsRepository;
+import com.dreamteam.api.repositories.UsersRepository;
 import com.dreamteam.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -74,6 +66,9 @@ public class ConverterService {
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
                 .backgroundId(entity.getBackgroundId())
+                .columns(emptyIfNull(entity.getColumns()).stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -104,11 +99,15 @@ public class ConverterService {
         if (Objects.isNull(entity)) {
             return null;
         }
+
         return BoardColumnDto.builder()
                 .id(entity.getColumnId())
                 .name(entity.getName())
                 .order(entity.getOrder())
                 .boardId(entity.getBoard().getBoardId())
+                .cards(emptyIfNull(entity.getCards()).stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -141,6 +140,24 @@ public class ConverterService {
                 .name(dto.getName())
                 .color(dto.getColor())
                 .board(board)
+                .build();
+    }
+
+    public CardDto toDto(Card entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return CardDto.builder()
+                .id(entity.getCardId())
+                .content(entity.getContent())
+                .title(entity.getTitle())
+                .labels(emptyIfNull(entity.getLabels()).stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList()))
+                .users(emptyIfNull(entity.getUsers()).stream()
+                        .map(this::toBriefDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

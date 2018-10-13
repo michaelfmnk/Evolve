@@ -1,14 +1,9 @@
 package com.dreamteam.api.controllers.user;
 
 import com.dreamteam.api.BaseTest;
-import com.dreamteam.api.dtos.UserDto;
-import com.dreamteam.api.services.ConverterService;
-import com.dreamteam.api.services.UserService;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
-
-import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;

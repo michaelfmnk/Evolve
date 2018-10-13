@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,4 +20,5 @@ public class BoardColumnDto {
     private String name;
     private Integer boardId;
     private Integer order;
+    private List<CardDto> cards;
 }
