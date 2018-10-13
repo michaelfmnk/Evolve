@@ -6,7 +6,6 @@ import com.dreamteam.api.security.UserAuthentication;
 import com.dreamteam.api.services.BoardColumnService;
 import com.dreamteam.api.services.BoardService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -18,6 +17,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final BoardColumnService boardColumnService;
+    private final LabelService labelService;
 
     @PostMapping(Api.Boards.BOARDS)
     public BoardDto createBoard(@Validated @RequestBody BoardDto board, @ApiIgnore UserAuthentication auth) {
@@ -30,6 +30,14 @@ public class BoardController {
                                         @PathVariable(name = "board_id") Integer boardId) {
         column.setBoardId(boardId);
         return boardColumnService.createColumn(column);
+    }
+
+    @PostMapping(Api.Boards.BOARD_LABELS)
+    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    public LabelDto createLabel (@Validated @RequestBody LabelDto label,
+                                 @PathVariable(name = "board_id") Integer boardId) {
+        label.setBoardId(boardId);
+        return labelService.createLabel(label);
     }
 
     @GetMapping(Api.Boards.BOARD)

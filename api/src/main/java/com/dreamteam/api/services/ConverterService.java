@@ -2,10 +2,11 @@ package com.dreamteam.api.services;
 
 import com.dreamteam.api.dtos.*;
 import com.dreamteam.api.entities.*;
-import com.dreamteam.api.repositories.BoardsRepository;
 import com.dreamteam.api.repositories.UsersRepository;
+import com.dreamteam.api.repositories.BoardsRepository;
 import com.dreamteam.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -103,9 +104,6 @@ public class ConverterService {
                 .id(entity.getColumnId())
                 .name(entity.getName())
                 .order(entity.getOrder())
-                .cards(emptyIfNull(entity.getCards()).stream()
-                        .map(this::toDto)
-                        .collect(Collectors.toList()))
                 .boardId(entity.getBoard().getBoardId())
                 .build();
     }
@@ -116,6 +114,28 @@ public class ConverterService {
         return BoardColumn.builder()
                 .name(dto.getName())
                 .order(dto.getOrder())
+                .board(board)
+                .build();
+    }
+
+    public LabelDto toDto(Label entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return LabelDto.builder()
+                .id(entity.getLabelId())
+                .name(entity.getName())
+                .color(entity.getColor())
+                .boardId(entity.getBoard().getBoardId())
+                .build();
+    }
+
+    public Label toEntity(LabelDto dto) {
+        Board board = boardsRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        return Label.builder()
+                .name(dto.getName())
+                .color(dto.getColor())
                 .board(board)
                 .build();
     }
@@ -135,18 +155,6 @@ public class ConverterService {
                 .users(emptyIfNull(entity.getUsers()).stream()
                         .map(this::toBriefDto)
                         .collect(Collectors.toList()))
-                .build();
-    }
-
-    public LabelDto toDto(Label entity) {
-        if (Objects.isNull(entity)) {
-            return null;
-        }
-
-        return LabelDto.builder()
-                .labelId(entity.getLabelId())
-                .name(entity.getName())
-                .color(entity.getColor())
                 .build();
     }
 }
