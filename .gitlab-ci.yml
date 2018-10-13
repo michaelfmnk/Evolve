@@ -13,13 +13,12 @@ services:
 - docker:dind
 
 stages:
-- build-ui-with-containers
-- build-api-with-containers
+- build-with-containers
 - deploy
 
 build-ui-with-containers:
   image: docker:latest
-  stage: build-ui-with-containers
+  stage: build-with-containers
   before_script:
   - cd ./ui/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
@@ -40,7 +39,7 @@ build-ui-with-containers:
 
 build-api-with-containers:
   image: docker:latest
-  stage: build-api-with-containers
+  stage: build-with-containers
   before_script:
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
