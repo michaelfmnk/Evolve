@@ -105,6 +105,9 @@ public class ConverterService {
                 .name(entity.getName())
                 .order(entity.getOrder())
                 .boardId(entity.getBoard().getBoardId())
+                .cards(emptyIfNull(entity.getCards()).stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -123,7 +126,7 @@ public class ConverterService {
             return null;
         }
         return LabelDto.builder()
-                .id(entity.getId())
+                .id(entity.getLabelId())
                 .name(entity.getName())
                 .color(entity.getColor())
                 .boardId(entity.getBoard().getBoardId())
@@ -137,6 +140,24 @@ public class ConverterService {
                 .name(dto.getName())
                 .color(dto.getColor())
                 .board(board)
+                .build();
+    }
+
+    public CardDto toDto(Card entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return CardDto.builder()
+                .id(entity.getCardId())
+                .content(entity.getContent())
+                .title(entity.getTitle())
+                .labels(emptyIfNull(entity.getLabels()).stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList()))
+                .users(emptyIfNull(entity.getUsers()).stream()
+                        .map(this::toBriefDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

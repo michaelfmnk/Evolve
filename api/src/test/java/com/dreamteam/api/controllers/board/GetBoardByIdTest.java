@@ -24,7 +24,13 @@ public class GetBoardByIdTest extends BaseTest {
                 .body("id", equalTo(1))
                 .body("name", equalTo("SUPERMEGA BOARD"))
                 .body("owner_id", equalTo(1))
-                .body("columns", hasSize(3));
+                .body("columns", hasSize(3))
+                .body("columns[0].name", equalTo("column 1"))
+                .body("columns[0].cards", hasSize(2))
+                .body("columns[0].cards[0].labels[1].color", equalTo("#ba3c3c"))
+                .body("columns[0].cards[0].labels", hasSize(2))
+                .body("columns[0].cards[0].users", hasSize(1))
+                .body("columns[0].cards[0].users[0].first_name", equalTo("Michael"));
     }
 
     @Test
