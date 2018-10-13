@@ -50,4 +50,14 @@ public class Card {
             inverseJoinColumns = { @JoinColumn(name = "attachment_id") }
     )
     private List<Attachment> attachments;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = " ",
+            joinColumns = { @JoinColumn(name = "card_id")},
+            inverseJoinColumns = { @JoinColumn(name =  " ")}
+    )
+    private List<User> users;
+
 }

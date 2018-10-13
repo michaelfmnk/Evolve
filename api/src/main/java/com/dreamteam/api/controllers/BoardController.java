@@ -6,6 +6,7 @@ import com.dreamteam.api.security.UserAuthentication;
 import com.dreamteam.api.services.BoardColumnService;
 import com.dreamteam.api.services.BoardService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -31,4 +32,9 @@ public class BoardController {
         return boardColumnService.createColumn(column);
     }
 
+    @GetMapping(Api.Boards.BOARD)
+    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    public BoardDto getBoardById(@PathVariable(name = "board_id") Integer boardId) {
+        return boardService.getBoardById(boardId);
+    }
 }

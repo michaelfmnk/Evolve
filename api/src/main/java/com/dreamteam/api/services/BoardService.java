@@ -18,4 +18,9 @@ public class BoardService {
         boardEntity = boardsRepository.save(boardEntity);
         return converter.toDto(boardEntity);
     }
+
+    public BoardDto getBoardById(Integer boardId) {
+        Board boardEntity = boardsRepository.getOne(boardId);
+        return converter.toDto(boardEntity);
+    }
 }
