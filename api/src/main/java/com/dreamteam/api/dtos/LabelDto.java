@@ -16,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LabelDto {
     private Integer id;
-    @NotBlank
     private String name;
     @NotBlank
     @Pattern(regexp="#[0-9a-fA-F]+")
