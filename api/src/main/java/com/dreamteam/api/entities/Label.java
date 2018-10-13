@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer labelId;
+    private Integer id;
     private String name;
     private String color;
 

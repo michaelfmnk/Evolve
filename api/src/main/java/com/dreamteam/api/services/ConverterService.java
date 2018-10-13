@@ -123,7 +123,7 @@ public class ConverterService {
             return null;
         }
         return LabelDto.builder()
-                .labelId(entity.getLabelId())
+                .id(entity.getId())
                 .name(entity.getName())
                 .color(entity.getColor())
                 .boardId(entity.getBoard().getBoardId())

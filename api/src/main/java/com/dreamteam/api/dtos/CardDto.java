@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CardDto {
-    private Integer cardId;
+    private Integer id;
     private String content;
     private String title;
     private List<UserBriefDto> users;

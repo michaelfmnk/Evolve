@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LabelDto {
-    private Integer labelId;
+    private Integer id;
     @NotBlank
     private String name;
     @NotBlank

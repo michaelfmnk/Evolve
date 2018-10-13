@@ -2,10 +2,13 @@ package com.dreamteam.api.controllers;
 
 import com.dreamteam.api.dtos.BoardColumnDto;
 import com.dreamteam.api.dtos.BoardDto;
+import com.dreamteam.api.dtos.LabelDto;
 import com.dreamteam.api.security.UserAuthentication;
 import com.dreamteam.api.services.BoardColumnService;
 import com.dreamteam.api.services.BoardService;
+import com.dreamteam.api.services.LabelService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
