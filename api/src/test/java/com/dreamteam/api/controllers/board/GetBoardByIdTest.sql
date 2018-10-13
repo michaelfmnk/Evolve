@@ -44,7 +44,7 @@ VALUES (1, 2),
        (3, 2),
        (4, 2);
 
-INSERT INTO columns (column_id, board_id, name, "order")
+INSERT INTO columns (column_id, board_id, name, order_num)
 VALUES (1, 1, 'column 1', 1),
        (2, 1, 'column 2', 2),
        (3, 1, 'column 3', 3);

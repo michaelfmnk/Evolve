@@ -16,6 +16,7 @@ public class CheckboxItem {
     private Integer itemId;
     private String content;
     private Boolean done;
+    @Column(name = "order_num")
     private Integer order;
 
     @ManyToOne

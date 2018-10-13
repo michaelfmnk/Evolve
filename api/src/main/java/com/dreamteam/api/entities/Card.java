@@ -27,6 +27,9 @@ public class Card {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
+    @Column(name = "order_num")
+    private Integer order;
+
     @ManyToOne
     @JoinColumn(name = "column_id")
     private BoardColumn column;
