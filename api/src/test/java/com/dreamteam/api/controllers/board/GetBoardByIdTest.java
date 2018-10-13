@@ -38,6 +38,6 @@ public class GetBoardByIdTest extends BaseTest {
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN)
-                .body("detail", equalTo("You are not a collaborator"));
+                .body("detail", equalTo("Access is denied"));
     }
 }

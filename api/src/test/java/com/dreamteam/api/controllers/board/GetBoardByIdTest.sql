@@ -38,7 +38,7 @@ VALUES (1, 'SUPERMEGA BOARD', 1),
        (3, 'FPECS FOREVER', 3),
        (4, 'PIU-PIU-PIU', 2);
 
-INSERT INTO user_authorities (user_id, authority_id)
+INSERT INTO users_authorities (user_id, authority_id)
 VALUES (1, 2),
        (2, 2),
        (3, 2),
