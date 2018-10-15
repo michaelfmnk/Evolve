@@ -49,11 +49,11 @@ VALUES (1, 1, 'column 1', 1),
        (2, 1, 'column 2', 2),
        (3, 1, 'column 3', 3);
 
-INSERT INTO cards (card_id, column_id, title, content, author_id, created_time)
-VALUES (1, 1, 'card 1', 'card 1 from col 1', 1, '2017-07-16 14:40:14.518000'),
-       (2, 1, 'card 2', 'card 2 from col 1', 2, '2017-08-14 14:30:19.258000'),
-       (3, 2, 'card 3', 'card 3 from col 2', 3, '2018-08-15 14:20:11.557000'),
-       (4, 3, 'card 4', 'card 4 from col 3', 4, '2018-09-17 16:30:10.527000');
+INSERT INTO cards (card_id, column_id, title, content, author_id, created_time, order_num)
+VALUES (1, 1, 'card 1', 'card 1 from col 1', 1, '2017-07-16 14:40:14.518000', 1),
+       (2, 1, 'card 2', 'card 2 from col 1', 2, '2017-08-14 14:30:19.258000', 2),
+       (3, 2, 'card 3', 'card 3 from col 2', 3, '2018-08-15 14:20:11.557000', 3),
+       (4, 3, 'card 4', 'card 4 from col 3', 4, '2018-09-17 16:30:10.527000', 4);
 
 INSERT INTO labels (label_id, name, color, board_id)
 VALUES (1, 'orange label', '#fb5f09', 1),
@@ -70,6 +70,7 @@ VALUES (1, 1),
        (3, 4),
        (3, 5),
        (4, 6);
+
 INSERT INTO cards_users (card_id, user_id)
 VALUES (1, 1),
        (2, 2),

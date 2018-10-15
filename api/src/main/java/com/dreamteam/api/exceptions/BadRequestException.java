@@ -6,7 +6,4 @@ public class BadRequestException extends RuntimeException {
         super(msg);
     }
 
-    public BadRequestException() {
-
-    }
 }

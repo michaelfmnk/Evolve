@@ -21,7 +21,6 @@ public class VerificationCode {
     @EmbeddedId
     private VerificationCodePK verificationCodePK;
 
-
     @Data
     @Builder
     @Embeddable

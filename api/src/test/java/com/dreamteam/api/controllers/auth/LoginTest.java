@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -29,7 +30,6 @@ public class LoginTest extends BaseTest {
                 .statusCode(HttpStatus.SC_OK)
                 .body("token", notNullValue())
                 .body("user_id", equalTo(1));
-
     }
 
     @Test

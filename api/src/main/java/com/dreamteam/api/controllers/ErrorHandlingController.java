@@ -37,12 +37,11 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDetailDto exceptionHandler(Exception e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
@@ -60,45 +59,41 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetailDto exceptionHandler(BadRequestException e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorDetailDto exceptionHandler(EntityNotFoundException e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErrorDetailDto exceptionHandler(AccessDeniedException e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.FORBIDDEN)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorDetailDto exceptionHandler(BadCredentialsException e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.UNAUTHORIZED)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @ExceptionHandler(DisabledException.class)
@@ -115,12 +110,11 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErrorDetailDto exceptionHandler(ValidationException e) {
-        ErrorDetailDto errorDetailDto = ErrorDetailDto.builder()
+        return ErrorDetailDto.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
-        return errorDetailDto;
     }
 
     @Override

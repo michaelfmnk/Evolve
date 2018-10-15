@@ -18,6 +18,7 @@ public class CardDto {
     private Integer id;
     private String content;
     private String title;
+    private Integer order;
     private List<UserBriefDto> users;
     private List<LabelDto> labels;
 }

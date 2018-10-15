@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,6 +41,8 @@ public abstract class BaseTest {
     protected AuthProperties authProperties;
     @MockBean
     protected MailjetClient mailjetClient;
+    @SpyBean
+    protected PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void prepare() {
