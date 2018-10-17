@@ -125,6 +125,7 @@ public class ConverterService {
         if (Objects.isNull(entity)) {
             return null;
         }
+
         return LabelDto.builder()
                 .id(entity.getLabelId())
                 .name(entity.getName())
@@ -151,6 +152,7 @@ public class ConverterService {
         return CardDto.builder()
                 .id(entity.getCardId())
                 .content(entity.getContent())
+                .order(entity.getOrder())
                 .title(entity.getTitle())
                 .labels(emptyIfNull(entity.getLabels()).stream()
                         .map(this::toDto)

@@ -12,8 +12,7 @@ import java.io.IOException;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 public class PostLabelTest extends BaseTest {
 
@@ -58,6 +57,22 @@ public class PostLabelTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
                 .body("detail", equalTo("color: must not be blank"));
+
+        label = LabelDto.builder()
+                .color("badColor")
+                .build();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .headers(headers)
+                .body(objectMapper.writeValueAsBytes(label))
+                .when()
+                .post("/api/boards/1/labels")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
+                .body("detail", containsString("color: must match"));
     }
 
     @Test

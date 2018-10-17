@@ -27,6 +27,5 @@ public class BoardService {
         Board boardEntity = boardsRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
         return converter.toDto(boardEntity);
-
     }
 }

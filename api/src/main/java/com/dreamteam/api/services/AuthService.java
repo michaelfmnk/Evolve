@@ -13,6 +13,7 @@ import com.dreamteam.api.security.JwtUser;
 import com.dreamteam.api.security.JwtUserFactory;
 import com.dreamteam.api.utils.CodeGenerator;
 import com.dreamteam.api.utils.MessagesService;
+import com.dreamteam.api.utils.TimeProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -42,6 +44,7 @@ public class AuthService {
     private final MessagesService messagesService;
     private final MailjetService mailjetService;
     private final VerificationCodeRepository verificationCodeRepository;
+    private final TimeProvider timeProvider;
 
     @Transactional
     public TokenContainer createToken(AuthRequest request) {
@@ -62,18 +65,28 @@ public class AuthService {
     }
 
     public UserDto signUp(SignUpDto request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        Optional<User> foundUser = userRepository.findUserByEmail(request.getEmail());
+
+        if (foundUser.isPresent() && foundUser.get().isEnabled()) {
             throw new BadRequestException(messagesService.getMessage("user.already.exists"));
         }
-        User user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .enabled(false)
-                .lastPasswordResetDate(new Date())
-                .authorities(Collections.singletonList(Authority.Type.USER.getInstance()))
-                .build();
+
+        User user = foundUser.map(found -> {
+            found.setPassword(passwordEncoder.encode(request.getPassword()));
+            found.setFirstName(request.getFirstName());
+            found.setLastName(request.getLastName());
+            found.setLastPasswordResetDate(timeProvider.getDate());
+            return found;
+        })
+                .orElseGet(() -> User.builder()
+                        .email(request.getEmail())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .firstName(request.getFirstName())
+                        .lastName(request.getLastName())
+                        .enabled(false)
+                        .lastPasswordResetDate(timeProvider.getDate())
+                        .authorities(Collections.singletonList(Authority.Type.USER.getInstance()))
+                        .build());
 
         user = userRepository.save(user);
 

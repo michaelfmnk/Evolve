@@ -1,5 +1,6 @@
 package com.dreamteam.api.dtos;
 
+import com.dreamteam.api.validation.ValidHexColor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,7 @@ import javax.validation.constraints.Pattern;
 public class LabelDto {
     private Integer id;
     private String name;
-    @NotBlank
-    @Pattern(regexp="#[0-9a-fA-F]+")
+    @ValidHexColor
     private String color;
     private Integer boardId;
 }
