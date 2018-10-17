@@ -9,6 +9,7 @@ cache:
   paths:
   - ./api/.m2/
   - ./docs-api/.m2/
+  - ./ui/.m2/
   - ./ui/node_modules/
 
 
@@ -25,7 +26,7 @@ build-ui-with-containers:
   before_script:
   - cd ./ui/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
+  - BUILD_TIME=`date $BUILD_TIME_TAMPLATE`
   script:
   - >
     docker run -t --rm
@@ -34,7 +35,7 @@ build-ui-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -DdockerImageTags=$BUILD_TIME
+    mvn clean package -Pdocker -Dmaven.repo.local=.m2 -DdockerImageTags=$BUILD_TIME
   - docker push $DOCKER_IMAGE_UI
   after_script:
   - cd ../
@@ -47,7 +48,7 @@ build-api-with-containers:
   before_script:
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
+  - BUILD_TIME=`date $BUILD_TIME_TAMPLATE`
   script:
   - >
     docker run -t --rm
@@ -73,7 +74,7 @@ build-docs-api-with-containers:
   before_script:
   - cd ./docs-api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
+  - BUILD_TIME=`date $BUILD_TIME_TAMPLATE`
   script:
   - >
     docker run -t --rm

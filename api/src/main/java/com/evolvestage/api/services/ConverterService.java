@@ -1,7 +1,5 @@
 package com.evolvestage.api.services;
 
-import com.dreamteam.api.dtos.*;
-import com.dreamteam.api.entities.*;
 import com.evolvestage.api.dtos.*;
 import com.evolvestage.api.entities.*;
 import com.evolvestage.api.repositories.BoardsRepository;
