@@ -101,7 +101,7 @@ deploy:
   script:
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./infrastructure/docker-compose.yml ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
-  - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./recreate.sh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
+  - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./infrastructure/recreate.sh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - >
     sshpass -p $DEPLOYMENT_SERVER_PASS ssh
     -o StrictHostKeyChecking=no -o PreferredAuthentications=password
