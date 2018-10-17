@@ -35,7 +35,7 @@ build-ui-with-containers:
     -u 0:0
     maven:3-jdk-8
     mvn clean package -Pdocker -DdockerImageTags=$BUILD_TIME
-  - docker push $DOCKER_IMAGE_API
+  - docker push $DOCKER_IMAGE_UI
   after_script:
   - cd ../
   only:
