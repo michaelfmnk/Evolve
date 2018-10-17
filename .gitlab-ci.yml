@@ -1,8 +1,9 @@
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api:latest
-  DOCKER_IMAGE_DOCS_API: registry.gitlab.com/dnu-dreamteam/dolgov/docs-api:latest
-  DOCKER_IMAGE_UI: registry.gitlab.com/dnu-dreamteam/dolgov/ui:latest
+  DOCKER_IMAGE_API: registry.gitlab.com/dnu-dreamteam/dolgov/api
+  DOCKER_IMAGE_DOCS_API: registry.gitlab.com/dnu-dreamteam/dolgov/docs-api
+  DOCKER_IMAGE_UI: registry.gitlab.com/dnu-dreamteam/dolgov/ui
+  BUILD_TIME_TAMPLATE: +%Y.%m.%d.%H.%M.%S
 
 cache:
   paths:
@@ -24,16 +25,17 @@ build-ui-with-containers:
   before_script:
   - cd ./ui/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - apk update
-  - apk add --nocache git
-  - apk add --update nodejs nodejs-npm && node -v
-  - npm install -g yarn
-  - yarn --version
+  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
   script:
-  - npm install
-  - npm rebuild node-sass
-  - docker build -t $DOCKER_IMAGE_UI .
-  - docker push $DOCKER_IMAGE_UI
+  - >
+    docker run -t --rm
+    -v /var/run/docker.sock:/var/run/docker.sock
+    -v "$(pwd)":"$(pwd)"
+    -w "$(pwd)"
+    -u 0:0
+    maven:3-jdk-8
+    mvn clean package -Pdocker -DdockerImageTags=$BUILD_TIME
+  - docker push $DOCKER_IMAGE_API
   after_script:
   - cd ../
   only:
@@ -45,6 +47,7 @@ build-api-with-containers:
   before_script:
   - cd ./api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
   script:
   - >
     docker run -t --rm
@@ -53,7 +56,7 @@ build-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -Dmaven.repo.local=.m2
+    mvn clean package -Pdocker -Dmaven.repo.local=.m2 -DdockerImageTags=$BUILD_TIME
   - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
@@ -70,6 +73,7 @@ build-docs-api-with-containers:
   before_script:
   - cd ./docs-api/
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - BUILD_TIME=`date +$BUILD_TIME_TAMPLATE`
   script:
   - >
     docker run -t --rm
@@ -78,7 +82,7 @@ build-docs-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -Dmaven.repo.local=.m2
+    mvn clean package -Pdocker -Dmaven.repo.local=.m2 -DdockerImageTags=$BUILD_TIME
   - docker push $DOCKER_IMAGE_DOCS_API
   after_script:
   - cd /
@@ -96,14 +100,11 @@ deploy:
   script:
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no ./infrastructure/docker-compose.yml ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
+  - sshpass -p "${DEPLOYMENT_SERVER_PASS}" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -r ./recreate.sh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/
   - >
     sshpass -p $DEPLOYMENT_SERVER_PASS ssh
     -o StrictHostKeyChecking=no -o PreferredAuthentications=password
     -o PubkeyAuthentication=no
-    $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP "docker-compose -f docker-compose.yml stop;
-    docker-compose -f docker-compose.yml rm web --force;
-    docker-compose -f docker-compose.yml build;
-    docker-compose -f docker-compose.yml pull;
-    docker-compose -f docker-compose.yml up -d;"
+    $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP "chmod +x ./recreate.sh; (&>log.txt ./recreate.sh &)"
   only:
   - master
