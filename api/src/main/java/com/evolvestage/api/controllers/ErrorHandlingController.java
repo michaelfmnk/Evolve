@@ -2,6 +2,8 @@ package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.ErrorDetailDto;
 import com.evolvestage.api.exceptions.BadRequestException;
+import com.evolvestage.api.exceptions.ConflictException;
+import com.evolvestage.api.exceptions.UnauthorizedException;
 import com.evolvestage.api.utils.TimeProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
@@ -96,6 +98,26 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorDetailDto exceptionHandler(UnauthorizedException e) {
+        return ErrorDetailDto.builder()
+                .status(HttpStatus.UNAUTHORIZED)
+                .cause(e)
+                .timeStamp(timeProvider.getDate())
+                .build();
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDetailDto exceptionHandler(ConflictException e) {
+        return ErrorDetailDto.builder()
+                .status(HttpStatus.CONFLICT)
+                .cause(e)
+                .timeStamp(timeProvider.getDate())
+                .build();
+    }
+
     @ExceptionHandler(DisabledException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorDetailDto exceptionHandler(DisabledException e) {
@@ -134,7 +156,6 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
             if (Objects.nonNull(fieldError.getDefaultMessage())) {
                 errorDetailDto.setDetail(fieldError.getField() + ": " + fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<>(errorDetailDto, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         return new ResponseEntity<>(errorDetailDto, HttpStatus.UNPROCESSABLE_ENTITY);
     }

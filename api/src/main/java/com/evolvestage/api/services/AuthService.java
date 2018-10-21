@@ -5,6 +5,8 @@ import com.evolvestage.api.entities.Authority;
 import com.evolvestage.api.entities.User;
 import com.evolvestage.api.entities.VerificationCode;
 import com.evolvestage.api.exceptions.BadRequestException;
+import com.evolvestage.api.exceptions.ConflictException;
+import com.evolvestage.api.exceptions.UnauthorizedException;
 import com.evolvestage.api.properties.AuthProperties;
 import com.evolvestage.api.repositories.UsersRepository;
 import com.evolvestage.api.repositories.VerificationCodeRepository;
@@ -67,7 +69,7 @@ public class AuthService {
         Optional<User> foundUser = userRepository.findUserByEmail(request.getEmail());
 
         if (foundUser.isPresent() && foundUser.get().isEnabled()) {
-            throw new BadRequestException(messagesService.getMessage("user.already.exists"));
+            throw new ConflictException(messagesService.getMessage("user.already.exists"));
         }
 
         User user = foundUser.map(found -> {
@@ -110,7 +112,7 @@ public class AuthService {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
             return new TokenContainer(refreshedToken);
         }
-        throw new BadRequestException(messagesService.getMessage("auth.token.not.refreshable"));
+        throw new UnauthorizedException(messagesService.getMessage("auth.token.not.refreshable"));
     }
 
     @Transactional

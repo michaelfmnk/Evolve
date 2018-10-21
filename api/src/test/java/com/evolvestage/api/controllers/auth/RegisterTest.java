@@ -186,4 +186,27 @@ public class RegisterTest extends BaseTest {
                 .body("dev_message", equalTo("org.springframework.web.bind.MethodArgumentNotValidException"));
     }
 
+    @Test
+    public void shouldNotRegisterUserWithSameEmail() throws JsonProcessingException {
+        SignUpDto authRequest = SignUpDto.builder()
+                .email("admin@gmail.com")
+                .password("newPassword12")
+                .firstName("FN")
+                .lastName("LN")
+                .build();
+
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsBytes(authRequest))
+                .when()
+                .post("/api/auth/sign-up")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_CONFLICT)
+                .body("detail", equalTo("User with such email already exists"));
+
+    }
+
 }
