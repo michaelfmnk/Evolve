@@ -3,7 +3,7 @@ package com.evolvestage.docsapi.config;
 import com.evolvestage.docsapi.properties.StorageProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.boot.context.event.ApplicationPreparedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +17,11 @@ import static java.nio.file.Files.exists;
 @Component
 @CommonsLog
 @AllArgsConstructor
-public class StorageInitialization implements ApplicationListener<ApplicationPreparedEvent> {
+public class StorageInitialization implements ApplicationListener<ApplicationReadyEvent> {
     private final StorageProperties storageProperties;
 
     @Override
-    public void onApplicationEvent(ApplicationPreparedEvent applicationPreparedEvent) {
+    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         try {
             Path tmpLocation = Paths.get(storageProperties.getTemporaryLocation());
             Path permanentLocation = Paths.get(storageProperties.getTemporaryLocation());
