@@ -25,6 +25,8 @@ services:
     - "8080"
     volumes:
     - "./data/secret/:/secret/"
+    - "/data/permanent:/permanent"
+    - "/data/temporary:/temporary"
 
   api:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/api
