@@ -30,8 +30,7 @@ public class Card {
     private LocalDateTime createdTime;
 
     @Column(name = "archived")
-    @NotNull
-    private Boolean archived = false;
+    private Boolean archived;
 
     @Column(name = "order_num")
     private Integer order;
