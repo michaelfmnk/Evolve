@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class Card {
     private LocalDateTime createdTime;
 
     @Column(name = "archived")
-    private boolean archived;
+    @NotNull
+    private Boolean archived = false;
 
     @Column(name = "order_num")
     private Integer order;

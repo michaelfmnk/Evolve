@@ -16,11 +16,9 @@ public class CardService {
     private final CardsRepository cardsRepository;
 
     public void archiveCard(Integer boardId, Integer cardId) {
-        Card card = cardsRepository.findCardByBoardIdAndCardId(boardId, cardId);
-        if (card == null) {
-            throw new EntityNotFoundException(messagesService.getMessage("card.not.found"));
-        }
-        card.setArchived(true);
-        cardsRepository.save(card);
+        Card cardEntity = cardsRepository.findCardByBoardIdAndCardId(boardId, cardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
+        cardEntity.setArchived(true);
+        cardsRepository.save(cardEntity);
     }
 }
