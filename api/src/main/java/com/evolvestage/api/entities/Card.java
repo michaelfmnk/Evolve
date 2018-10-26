@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Entity
+@Builder
+@Table(name = "cards")
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity(name = "cards")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +31,7 @@ public class Card {
     private LocalDateTime createdTime;
 
     @Column(name = "archived")
-    @NotNull
-    private boolean archived = false;
+    private Boolean archived;
 
     @Column(name = "order_num")
     private Integer order;

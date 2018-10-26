@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity(name = "labels")
+@Table(name = "labels")
 public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CardsRepository extends JpaRepository<Card, Integer> {
 
-    @Query("SELECT card FROM Card card WHERE card.cardId = :cardId AND card.column.boardId = :boardId")
+    @Query("SELECT card FROM Card card WHERE card.cardId = :cardId AND card.column.board.boardId = :boardId")
     Card findCardByBoardIdAndCardId(@Param("boardId") Integer boardId, @Param("cardId") Integer cardId);
 }

@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@Entity
+@Table(name = "checklist_items")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "checklist_items")
 public class CheckboxItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
