@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +28,10 @@ public class Card {
 
     @CreationTimestamp
     private LocalDateTime createdTime;
+
+    @Column(name = "archived")
+    @NotNull
+    private boolean archived = false;
 
     @Column(name = "order_num")
     private Integer order;
