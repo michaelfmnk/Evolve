@@ -21,4 +21,17 @@ public class ArchiveCardTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
+
+    @Test
+    public void shouldNotGetCard() {
+        given()
+                .accept(ContentType.JSON)
+                .headers(headers)
+                .when()
+                .patch("/api/boards/2/cards/3/archive")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_FORBIDDEN);
+    }
 }
