@@ -1,9 +1,9 @@
 package com.evolvestage.docsapi.controllers;
 
-import com.evolvestage.docsapi.services.StorageService;
 import com.evolvestage.docsapi.dtos.DocumentDto;
 import com.evolvestage.docsapi.dtos.DocumentResponseDto;
 import com.evolvestage.docsapi.dtos.MoveDocumentDto;
+import com.evolvestage.docsapi.services.StorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(Api.ROOT_PATH)
+@RequestMapping(Api.ROOT)
 public class PermanentLocationController {
 
     private final StorageService storageService;
@@ -48,6 +48,14 @@ public class PermanentLocationController {
     public List<DocumentDto> moveFileToPermanentStorage(
             @Validated @NotEmpty @RequestBody List<MoveDocumentDto> filesToMove) throws IOException {
         return storageService.moveFiles(filesToMove);
+    }
+
+    @GetMapping(Api.PermanentStorage.TEMPORARY_PUBLIC_FILE)
+    public ResponseEntity<byte[]> downloadPublicFile(@PathVariable("file_id") UUID fileId) throws IOException {
+        DocumentResponseDto responseDto = storageService.downloadPublicFile(fileId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(responseDto.getMime()));
+        return new ResponseEntity<>(responseDto.getFile(), headers, HttpStatus.OK);
     }
 }
 

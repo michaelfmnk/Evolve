@@ -16,4 +16,7 @@ public interface DocumentRepository extends JpaRepository<Document, Integer> {
     Optional<Document> findByFileId(UUID fileId);
 
     List<Document> findByFileIdIn(Collection<UUID> fileIds);
+
+    Optional<Document> findByFileIdAndIsPublicIsTrue(UUID fileId);
+
 }

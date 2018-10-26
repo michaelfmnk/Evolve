@@ -1,7 +1,7 @@
 package com.evolvestage.docsapi.controllers;
 
-import com.evolvestage.docsapi.services.StorageService;
 import com.evolvestage.docsapi.dtos.DocumentDto;
+import com.evolvestage.docsapi.services.StorageService;
 import lombok.AllArgsConstructor;
 import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = Api.ROOT_PATH)
+@RequestMapping(value = Api.ROOT)
 public class TemporaryLocationController {
     private final StorageService storageService;
 
