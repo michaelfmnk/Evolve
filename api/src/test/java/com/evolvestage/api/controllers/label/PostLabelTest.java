@@ -43,7 +43,7 @@ public class PostLabelTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateLabel() throws IOException {
+    public void shouldNotCreateLabelOnValidation() throws IOException {
         LabelDto label = new LabelDto();
         given()
                 .accept(ContentType.JSON)

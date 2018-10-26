@@ -48,7 +48,7 @@ public class PostBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateBoard() throws IOException {
+    public void shouldNotCreateBoardOnValidation() throws IOException {
         BoardDto board = BoardDto.builder()
                 .backgroundId(UUID.randomUUID())
                 .build();

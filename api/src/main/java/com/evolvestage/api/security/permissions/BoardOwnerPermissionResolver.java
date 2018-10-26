@@ -8,26 +8,24 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 /**
- * use as @PreAuthorize("hasPermission(#id, 'OWN_BOARD', 'USER')")
+ * use as @PreAuthorize("hasPermission(#id, 'BOARD_OWNER', 'USER')")
  */
 
 @Component
 @AllArgsConstructor
-public class OwnBoardPermissionResolver implements PermissionResolver {
+public class BoardOwnerPermissionResolver implements PermissionResolver {
 
-    private static final String OWN_BOARD = "OWN_BOARD";
+    private static final String BOARD_OWNER = "BOARD_OWNER";
     private final UserService userService;
 
     @Override
     public String getTargetType() {
-        return OWN_BOARD;
+        return BOARD_OWNER;
     }
 
     @Override
@@ -36,9 +34,7 @@ public class OwnBoardPermissionResolver implements PermissionResolver {
             return false;
         }
         User user = userService.findValidUserById(auth.getId());
-        List<Board> own = emptyIfNull(user.getJoinedBoards());
-        List<Board> joined = emptyIfNull(user.getOwnBoards());
-        return Stream.concat(own.stream(), joined.stream())
+        return emptyIfNull(user.getJoinedBoards()).stream()
                 .map(Board::getBoardId)
                 .anyMatch(id -> Objects.equals(target, id));
     }

@@ -36,7 +36,7 @@ public class GetBoardByIdTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotGetBoardInfo() {
+    public void shouldNotGetBoardInfoOnAccessDenied() {
         given()
                 .accept(ContentType.JSON)
                 .headers(headers)

@@ -33,6 +33,7 @@ public class BoardController {
     }
 
     @PostMapping(Api.Boards.BOARD_COLUMNS)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public BoardColumnDto createColumn(@Validated @RequestBody BoardColumnDto column,
                                        @PathVariable(name = "board_id") Integer boardId) {
         column.setBoardId(boardId);
@@ -40,7 +41,7 @@ public class BoardController {
     }
 
     @PostMapping(Api.Boards.BOARD_LABELS)
-    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public LabelDto createLabel(@Validated @RequestBody LabelDto label,
                                 @PathVariable(name = "board_id") Integer boardId) {
         label.setBoardId(boardId);
@@ -48,13 +49,13 @@ public class BoardController {
     }
 
     @GetMapping(Api.Boards.BOARD)
-    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public BoardDto getBoardById(@PathVariable(name = "board_id") Integer boardId) {
         return boardService.getBoardById(boardId);
     }
 
     @PatchMapping(Api.Boards.BOARD_CARDS_ARCHIVE_CARD)
-    @PreAuthorize("hasPermission(#boardId, 'OWN_BOARD', 'USER')")
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
     public void archiveCard(@PathVariable("board_id") Integer boardId,
                             @PathVariable("card_id") Integer cardId) {
         cardService.archiveCard(boardId, cardId);

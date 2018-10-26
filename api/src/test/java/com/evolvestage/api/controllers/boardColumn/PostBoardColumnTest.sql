@@ -9,3 +9,9 @@ insert into boards (board_id, "name", owner_id) values
 (2, 'DOLGOV RULIT', 2),
 (3, 'FPECS FOREVER', 3),
 (4, 'PIU-PIU-PIU', 2);
+
+INSERT INTO users_authorities (user_id, authority_id)
+VALUES (1, 2),
+       (2, 2),
+       (3, 2),
+       (4, 2);

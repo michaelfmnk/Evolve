@@ -76,7 +76,7 @@ public class PostBoardColumnTest  extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateColumnWithoutBorder() throws IOException {
+    public void shouldNotAllowCreateColumnWithoutBorder() throws IOException {
         BoardColumnDto column = BoardColumnDto.builder()
                 .name("NEW COLUMN")
                 .build();
@@ -90,7 +90,6 @@ public class PostBoardColumnTest  extends BaseTest {
                 .then()
                 .extract().response().prettyPeek()
                 .then()
-                .statusCode(HttpStatus.SC_NOT_FOUND)
-                .body("detail", equalTo("Board was not found"));
+                .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }
