@@ -1,0 +1,1 @@
+alter table cards add column archived boolean default false not null;

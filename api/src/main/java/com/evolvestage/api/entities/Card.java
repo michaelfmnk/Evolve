@@ -8,15 +8,17 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Entity
+@Builder
+@Table(name = "cards")
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity(name = "cards")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,9 @@ public class Card {
 
     @CreationTimestamp
     private LocalDateTime createdTime;
+
+    @Column(name = "archived")
+    private Boolean archived;
 
     @Column(name = "order_num")
     private Integer order;

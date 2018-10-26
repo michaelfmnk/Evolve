@@ -9,10 +9,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity(name = "columns")
+@Table(name = "columns")
 public class BoardColumn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

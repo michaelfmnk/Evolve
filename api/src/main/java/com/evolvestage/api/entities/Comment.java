@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Entity
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "card_comments")
+@Table(name = "card_comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
