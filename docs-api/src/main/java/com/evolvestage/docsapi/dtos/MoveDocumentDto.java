@@ -14,4 +14,5 @@ import java.util.UUID;
 public class MoveDocumentDto {
     private UUID fileId;
     private Integer dataId;
+    private Boolean isPublic;
 }

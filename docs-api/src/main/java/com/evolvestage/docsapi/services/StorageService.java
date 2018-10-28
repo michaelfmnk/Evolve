@@ -1,12 +1,12 @@
 package com.evolvestage.docsapi.services;
 
-import com.google.common.io.Files;
 import com.evolvestage.docsapi.dtos.DocumentDto;
 import com.evolvestage.docsapi.dtos.DocumentResponseDto;
 import com.evolvestage.docsapi.dtos.MoveDocumentDto;
 import com.evolvestage.docsapi.entities.Document;
 import com.evolvestage.docsapi.exceptions.BadRequestException;
 import com.evolvestage.docsapi.repositories.DocumentRepository;
+import com.google.common.io.Files;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.io.FilenameUtils;
@@ -103,23 +103,32 @@ public class StorageService {
                 .build();
     }
 
+    public DocumentResponseDto downloadPublicFile(UUID fileId) throws IOException {
+        Document doc = documentRepository.findByFileIdAndIsPublicIsTrue(fileId)
+                .orElseThrow(() -> new EntityNotFoundException("Document not found"));
+        byte[] file = storageUtils.getFile(fileId);
+        return DocumentResponseDto.builder()
+                .file(file)
+                .mime(doc.getMime())
+                .build();
+    }
+
     public List<DocumentDto> moveFiles(List<MoveDocumentDto> docsToMove) throws IOException {
         List<DocumentDto> fileDtos = new ArrayList<>(docsToMove.size());
-
         for (MoveDocumentDto item : docsToMove) {
-            fileDtos.add(moveFile(item.getFileId(), item.getDataId()));
+            fileDtos.add(moveFile(item.getFileId(), item.getDataId(), item.getIsPublic()));
         }
-
         return fileDtos;
     }
 
-    private DocumentDto moveFile(UUID fileId, Integer dataId) throws IOException {
+    private DocumentDto moveFile(UUID fileId, Integer dataId, Boolean isPublic) throws IOException {
         log.info(format("moving documents from temporary storage: fileId = %s & dataId = %s", fileId, dataId));
         Document doc = documentRepository.findByFileIdAndAndDataIdIsNull(fileId)
                 .orElseThrow(() -> new EntityNotFoundException("Document not found"));
 
         storageUtils.moveFileToPermanentLocation(fileId);
         doc.setDataId(dataId);
+        doc.setIsPublic(Boolean.TRUE.equals(isPublic));
         doc = documentRepository.save(doc);
         return converterService.toDto(doc);
     }

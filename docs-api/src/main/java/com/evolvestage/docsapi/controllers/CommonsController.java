@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(Api.ROOT_PATH)
+@RequestMapping(Api.ROOT)
 public class CommonsController {
 
     @GetMapping(value = Api.Common.GIT_LOG, produces = MediaType.TEXT_HTML_VALUE)

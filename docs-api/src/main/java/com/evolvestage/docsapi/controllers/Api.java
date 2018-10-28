@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Api {
 
-    public static final String ROOT_PATH = "/docs-api";
+    public static final String ROOT = "/docs-api";
 
     @UtilityClass
     public class TemporaryStorage {
@@ -17,6 +17,7 @@ public class Api {
     public class PermanentStorage {
         public final String PERMANENT_LOCATION = "/permanent";
         public final String PERMANENT_FILE_BY_ID = "/permanent/{file_id}";
+        public final String TEMPORARY_PUBLIC_FILE = "/permanent/public/{file_id}";
     }
 
     @UtilityClass

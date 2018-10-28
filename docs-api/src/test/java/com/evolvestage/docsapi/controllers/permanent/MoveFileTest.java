@@ -1,9 +1,9 @@
 package com.evolvestage.docsapi.controllers.permanent;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.evolvestage.docsapi.BaseTest;
 import com.evolvestage.docsapi.dtos.MoveDocumentDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.http.ContentType;
 import junit.framework.TestCase;
 import org.assertj.db.type.Request;
@@ -20,8 +20,7 @@ import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -68,7 +67,49 @@ public class MoveFileTest extends BaseTest {
 
         assertThat(new Request(dataSource, "SELECT count(1) " +
                 "FROM documents WHERE file_id='00000000-0000-0000-0000-000000000001' " +
-                "AND data_id=1")).row(0).value().isEqualTo(1);
+                "AND data_id=1 AND is_public IS FALSE")).row(0).value().isEqualTo(1);
+    }
+
+    @Test
+    public void shouldMoveFileAndMakePublic() throws IOException {
+        MoveDocumentDto dto = MoveDocumentDto.builder()
+                .fileId(UUID.fromString(PDF_ID))
+                .dataId(1)
+                .isPublic(true)
+                .build();
+
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header(RIGHT_HEADER)
+                .body(objectMapper.writeValueAsBytes(Arrays.asList(dto)))
+                .when()
+                .put("/docs-api/permanent")
+                .then().extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("", hasSize(1))
+                .body("[0].file_id", equalTo("00000000-0000-0000-0000-000000000001"))
+                .body("[0].data_id", equalTo(1))
+                .body("[0].document_name", equalTo("empty-pdf.pdf"))
+                .body("[0].mime", equalTo("application/pdf"));
+
+        assertFalse(tmpPdf.exists());
+        assertTrue(new File(permanentStorage, PDF_ID).exists());
+        assertThat(new Request(dataSource, "SELECT count(1) " +
+                "FROM documents WHERE file_id='00000000-0000-0000-0000-000000000001' " +
+                "AND data_id=1 AND is_public IS TRUE")).row(0).value().isEqualTo(1);
+        File pdf = new File(permanentStorage, PDF_ID);
+
+        byte[] bytesFile = Files.readAllBytes(pdf.toPath());
+
+        given()
+                .when()
+                .get("/docs-api/permanent/public/00000000-0000-0000-0000-000000000001")
+                .then()
+                .extract().response().prettyPeek().then()
+                .statusCode(HttpStatus.SC_OK)
+                .body(is(new String(bytesFile)));
     }
 
     @Test
