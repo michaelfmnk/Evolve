@@ -24,14 +24,17 @@ public class BoardService {
     }
 
     public BoardDto getBoardById(Integer boardId) {
-        Board boardEntity = boardsRepository.findById(boardId)
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        Board boardEntity = findValidBoard(boardId);
         return converter.toDto(boardEntity);
     }
 
     public void deleteBoard(Integer boardId) {
-        Board boardEntity = boardsRepository.findById(boardId)
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        Board boardEntity = findValidBoard(boardId);
         boardsRepository.delete(boardEntity);
+    }
+
+    private Board findValidBoard(Integer boardId) {
+       return boardsRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
     }
 }

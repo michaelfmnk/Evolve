@@ -60,10 +60,19 @@ public class BoardController {
         cardService.archiveCard(boardId, cardId);
     }
 
+
     @DeleteMapping(Api.Boards.BOARD)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
     public void deleteBoard(@PathVariable("board_id") Integer boardId) {
         boardService.deleteBoard(boardId);
+    }
+
+    @DeleteMapping(Api.Boards.BOARD_CARD_BY_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
+    public void deleteCard(@PathVariable("board_id") Integer boardId,
+                           @PathVariable("card_id") Integer cardId) {
+        cardService.deleteCard(boardId, cardId);
     }
 }
