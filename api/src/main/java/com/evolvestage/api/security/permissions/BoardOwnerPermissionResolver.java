@@ -34,7 +34,7 @@ public class BoardOwnerPermissionResolver implements PermissionResolver {
             return false;
         }
         User user = userService.findValidUserById(auth.getId());
-        return emptyIfNull(user.getJoinedBoards()).stream()
+        return emptyIfNull(user.getOwnBoards()).stream()
                 .map(Board::getBoardId)
                 .anyMatch(id -> Objects.equals(target, id));
     }

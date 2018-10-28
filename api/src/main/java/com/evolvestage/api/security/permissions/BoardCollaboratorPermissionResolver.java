@@ -37,8 +37,8 @@ public class BoardCollaboratorPermissionResolver implements PermissionResolver {
         }
 
         User user = userService.findValidUserById(auth.getId());
-        List<Board> own = emptyIfNull(user.getJoinedBoards());
-        List<Board> joined = emptyIfNull(user.getOwnBoards());
+        List<Board> own = emptyIfNull(user.getOwnBoards());
+        List<Board> joined = emptyIfNull(user.getJoinedBoards());
         return Stream.concat(own.stream(), joined.stream())
                 .map(Board::getBoardId)
                 .anyMatch(id -> Objects.equals(target, id));
