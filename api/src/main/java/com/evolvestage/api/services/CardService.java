@@ -29,6 +29,5 @@ public class CardService {
     private Card findValidCard(Integer boardId, Integer cardId) {
         return cardsRepository.findCardByBoardIdAndCardId(boardId, cardId)
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
-
     }
 }
