@@ -3,15 +3,13 @@ package com.evolvestage.api.controllers;
 import com.evolvestage.api.dtos.BoardColumnDto;
 import com.evolvestage.api.dtos.BoardDto;
 import com.evolvestage.api.dtos.LabelDto;
-import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.security.UserAuthentication;
 import com.evolvestage.api.services.BoardColumnService;
 import com.evolvestage.api.services.BoardService;
 import com.evolvestage.api.services.CardService;
 import com.evolvestage.api.services.LabelService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,9 +61,9 @@ public class BoardController {
     }
 
     @DeleteMapping(Api.Boards.BOARD)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
-    public ResponseEntity<Void> deleteBoard(@PathVariable("board_id") Integer boardId) {
+    public void deleteBoard(@PathVariable("board_id") Integer boardId) {
         boardService.deleteBoard(boardId);
-        return ResponseEntity.noContent().build();
     }
 }
