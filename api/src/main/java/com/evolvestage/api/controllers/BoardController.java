@@ -64,8 +64,8 @@ public class BoardController {
 
     @DeleteMapping(Api.Boards.BOARD)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
-    public ResponseEntity<?> deleteBoard(@PathVariable("board_id") Integer boardId) {
+    public ResponseEntity<Void> deleteBoard(@PathVariable("board_id") Integer boardId) {
         boardService.deleteBoard(boardId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
