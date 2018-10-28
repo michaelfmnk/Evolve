@@ -28,4 +28,10 @@ public class BoardService {
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
         return converter.toDto(boardEntity);
     }
+
+    public void deleteBoard(Integer boardId) {
+        Board boardEntity = boardsRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        boardsRepository.delete(boardEntity);
+    }
 }
