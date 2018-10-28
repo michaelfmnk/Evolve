@@ -11,6 +11,7 @@ import com.evolvestage.api.services.CardService;
 import com.evolvestage.api.services.LabelService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,12 @@ public class BoardController {
     public void archiveCard(@PathVariable("board_id") Integer boardId,
                             @PathVariable("card_id") Integer cardId) {
         cardService.archiveCard(boardId, cardId);
+    }
+
+    @DeleteMapping(Api.Boards.BOARD)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
+    public ResponseEntity<?> deleteBoard(@PathVariable("board_id") Integer boardId) {
+        boardService.deleteBoard(boardId);
+        return ResponseEntity.ok().build();
     }
 }
