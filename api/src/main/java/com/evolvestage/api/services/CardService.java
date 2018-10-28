@@ -16,9 +16,19 @@ public class CardService {
     private final CardsRepository cardsRepository;
 
     public void archiveCard(Integer boardId, Integer cardId) {
-        Card cardEntity = cardsRepository.findCardByBoardIdAndCardId(boardId, cardId)
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
+        Card cardEntity = findValidCard(boardId, cardId);
         cardEntity.setArchived(true);
         cardsRepository.save(cardEntity);
+    }
+
+    public void deleteCard(Integer boardId, Integer cardId) {
+        Card cardEntity = findValidCard(boardId, cardId);
+        cardsRepository.delete(cardEntity);
+    }
+
+    private Card findValidCard(Integer boardId, Integer cardId) {
+        return cardsRepository.findCardByBoardIdAndCardId(boardId, cardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
+
     }
 }
