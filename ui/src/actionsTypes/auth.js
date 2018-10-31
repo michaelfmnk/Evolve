@@ -13,3 +13,4 @@ export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS '
 export const SIGN_IN_ERROR = 'SIGN_IN_ERROR '
 
 export const REFRESH_AUTH_FROM_STORE = 'REFRESH_AUTH_FROM_STORE'
+export const LOGOUT = 'LOGOUT'

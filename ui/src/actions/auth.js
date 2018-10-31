@@ -55,3 +55,8 @@ export const refreshAuth = (tokenWithUserIdObj) => ({
   type: types.REFRESH_AUTH_FROM_STORE,
   payload: tokenWithUserIdObj
 })
+
+// LOGOUT
+export const logout = () => ({
+  type: types.LOGOUT
+})

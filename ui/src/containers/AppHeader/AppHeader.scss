@@ -1,0 +1,63 @@
+@import 'commonStyles/variables.scss';
+
+
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height:  20px;
+  padding: 15px;
+  background-color: $dark-color;
+  box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.4);
+
+  .header-menu {
+    display: flex;
+
+    i.nav-btn{
+        color: white;
+        background-color: transparent;
+        transition: $a_short-duration;
+        padding: 10px 12px;
+        display: block;
+        border-radius: 5px;
+        background: hsla(0,0%,100%,.3);
+        margin: 2px;
+        
+   
+    &:hover {
+              cursor: pointer;
+              color: $dark-color;
+          }
+     }  
+  }
+
+  .logo-wrp {
+      color: white;
+      line-height: 40px;
+      font-size: 1.5em;
+      transition: $a_short-duration;
+      justify-self: center;
+      padding-right: 4%;
+      .logo-img {
+          display: block;
+          float: left;
+          margin-right: 10px;
+          background-size: cover;
+          width: 1.8em;
+          height: 1.5em;
+          
+      }
+
+      &:hover {
+        cursor: pointer;
+        letter-spacing: 0.4em;
+    }
+
+    @media (max-width: 400px) {
+        &{
+            display: none;
+        }
+    }
+  }
+}

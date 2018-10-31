@@ -1,0 +1,121 @@
+@import 'commonStyles/variables.scss';
+
+ ul.boards-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .board-block {
+        width: 30%;
+        max-width: 250px;
+        min-width: 170px;
+        height: 120px;
+        margin: 15px;
+        overflow: hidden;
+        background-color: rgb(206, 206, 206);
+        background-size: contain;
+        background-position: center;
+        padding: 10px;
+        border-radius: 5px;
+        transition: $a-duration;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        background-size: cover;
+        background-position: 50%;
+
+        @media(max-width: 560px){
+          &{
+            height: 100px;
+            margin: 3px;
+          }
+        }
+
+        .fade{
+          background-color: rgba(0,0,0,.4);
+          bottom: 0;
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+
+
+        &:hover {
+          cursor: pointer;
+          transform: translate(-5px, -5px);
+          box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.3);
+        }
+        p {            
+            position: relative;
+            color: white;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        p.members-header{
+          margin-bottom: 25px;
+        }
+
+        .name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;  
+            font-size: 1.1rem;
+        }
+
+        
+        .party {
+          .members-wrp{
+            background-color: rgba(200,200,200,.3);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding-left: 6px;
+            left: 0;
+            right: 0;
+            bottom: 6px;
+
+            img {
+              transition: $a_short-duration;
+              display: inline-block;
+              border-radius: 50%;
+              width: 20px; height: 20px;
+              background: $dark-color;
+              margin: 3px; 
+              cursor: pointer; 
+
+            &:hover {
+                transform: translate(-3px, -3px);
+                box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.3);
+            }
+          }
+          }
+           
+          } 
+      }
+
+      .add-board {
+          p {
+              text-align: center;                
+
+              i {
+                  font-size: 3em;
+                  color: $dark-color;
+                  line-height: 110px;
+                  height: 100%;
+                  width: 100%;
+                  transition: $a_short-duration;
+                  cursor: pointer; 
+              }
+
+              i:hover {
+                  transform: translate(-2px, -2px);
+                  text-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+              }
+          }
+      }
+}

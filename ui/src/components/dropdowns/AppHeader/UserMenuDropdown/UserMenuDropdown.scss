@@ -1,0 +1,19 @@
+@import 'commonStyles/variables.scss';
+
+.usinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+      color: $light-color;
+  }
+
+  .useravatar {
+      width: 85px; height: 40px;
+      border-radius: 50%;
+      background-color: red;
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+}

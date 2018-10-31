@@ -1,0 +1,93 @@
+@import 'commonStyles/variables.scss';
+
+i.trigger{
+    background-color: transparent;
+    border-radius: 5px;
+    margin: 2px;
+    color: white;
+    display: inline-block;
+    padding: 10px 12px;
+    transition: $a_short-duration;
+    background: hsla(0,0%,100%,.3);
+}
+
+i.trigger:hover{
+    cursor: pointer;
+    color: $dark-color;
+}
+
+.creation-menu-dropdown-wrp{
+      position: absolute;
+      padding: 10px;
+      padding-bottom: 15px;
+      background-color: $dark-color;
+      border-radius: 5px;
+      box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
+      width: 170px;
+      right: 0;
+      top: 0;
+      padding-top: 15px;
+
+      z-index: -1;
+
+      transition: $a-duration;
+      opacity: 0;
+
+        &.animated{
+            top: 60px;
+            opacity: 1;
+            z-index: 100;
+        }
+
+      .divideline {
+          background-color: $light-color;
+      }
+      
+      li {
+        display: block;
+        position: relative;
+        border-radius: 0;
+        background-color: transparent;
+        width: 90%;
+        margin: 0 auto;
+        transition: $a_duration;
+
+        background-color: transparent;
+        border-radius: 6px;
+
+        a {
+            position: relative;
+            color: $light-color;
+            z-index: 5;
+            transition: $a_duration;
+
+            display: inline-block;
+            padding: 10px 12px;
+        }
+    }
+
+    li::before {
+        content:"";
+        z-index: 0;
+        position: absolute;
+        width: 0;
+        top: 0; left: 0; bottom: 0;
+        background-color: rgb(206, 206, 206);
+        transition: $a_duration;
+    }
+
+    li:hover {
+        &::before {
+            width: 100%;
+        }
+
+        a {
+            color: $dark-color;
+            font-weight: bold;
+        }
+
+        >i, >a {
+          color: $dark-color;
+      }
+    }
+}

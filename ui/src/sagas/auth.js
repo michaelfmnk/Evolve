@@ -1,4 +1,5 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
+import { push } from 'connected-react-router'
 import * as actions from 'actions/auth'
 import * as actionTypes from 'actionsTypes/auth'
 import { userIdSelector } from 'selectors/auth'
@@ -24,6 +25,7 @@ function * verifyUserAccount (action) {
     saveAuthIdentifiersToStorage(authIdentifiers)
 
     yield put(actions.verifyAccountSuccess(authIdentifiers))
+    yield put(push('/home'))
   } catch (e) {
     console.log(e)
     yield put(actions.verifyAccountError(e))
@@ -37,14 +39,21 @@ function * signIn (action) {
     saveAuthIdentifiersToStorage(authIdentifiers)
 
     yield put(actions.signInSuccess(authIdentifiers))
+    yield put(push('/home'))
   } catch (e) {
     console.log(e)
     yield put(actions.signUpError(e))
   }
 }
 
+function * logout (action) {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+}
+
 export default function * AuthSaga () {
   yield takeEvery(actionTypes.SIGN_UP_REQUEST, signUp)
   yield takeEvery(actionTypes.SIGN_IN_REQUEST, signIn)
   yield takeEvery(actionTypes.VERIFY_ACCOUNT_REQUEST, verifyUserAccount)
+  yield takeEvery(actionTypes.LOGOUT, logout)
 }
