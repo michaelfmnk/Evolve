@@ -10,6 +10,7 @@ public class Api {
     public class Commons {
         public final String VERSION = "/version";
         public final String GIT_LOG = "/gitlog";
+        public final String BACKGROUNDS = "/backgrounds";
     }
 
     @UtilityClass

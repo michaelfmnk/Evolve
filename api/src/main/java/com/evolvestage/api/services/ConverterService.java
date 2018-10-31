@@ -5,6 +5,7 @@ import com.evolvestage.api.entities.*;
 import com.evolvestage.api.repositories.BoardsRepository;
 import com.evolvestage.api.repositories.UsersRepository;
 import com.evolvestage.api.utils.MessagesService;
+import com.evolvestage.api.utils.UrlUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -84,16 +85,6 @@ public class ConverterService {
                 .build();
     }
 
-    public Board toEntity(BoardDto dto) {
-        User owner = usersRepository.findById(dto.getOwnerId())
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.found")));
-        return Board.builder()
-                .name(dto.getName())
-                .owner(owner)
-                .backgroundId(dto.getBackgroundId())
-                .build();
-    }
-
     public BoardColumnDto toDto(BoardColumn entity) {
         if (Objects.isNull(entity)) {
             return null;
@@ -110,16 +101,6 @@ public class ConverterService {
                 .build();
     }
 
-    public BoardColumn toEntity(BoardColumnDto dto) {
-        Board board = boardsRepository.findById(dto.getBoardId())
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
-        return BoardColumn.builder()
-                .name(dto.getName())
-                .order(dto.getOrder())
-                .board(board)
-                .build();
-    }
-
     public LabelDto toDto(Label entity) {
         if (Objects.isNull(entity)) {
             return null;
@@ -130,16 +111,6 @@ public class ConverterService {
                 .name(entity.getName())
                 .color(entity.getColor())
                 .boardId(entity.getBoard().getBoardId())
-                .build();
-    }
-
-    public Label toEntity(LabelDto dto) {
-        Board board = boardsRepository.findById(dto.getBoardId())
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
-        return Label.builder()
-                .name(dto.getName())
-                .color(dto.getColor())
-                .board(board)
                 .build();
     }
 
@@ -159,6 +130,47 @@ public class ConverterService {
                 .users(emptyIfNull(entity.getUsers()).stream()
                         .map(this::toBriefDto)
                         .collect(Collectors.toList()))
+                .build();
+    }
+
+    public CommonBackgroundDto toDto(CommonBackground entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return CommonBackgroundDto.builder()
+                .backgroundId(entity.getBackgroundId())
+                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
+                .build();
+    }
+
+    public Board toEntity(BoardDto dto) {
+        User owner = usersRepository.findById(dto.getOwnerId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.found")));
+        return Board.builder()
+                .name(dto.getName())
+                .owner(owner)
+                .backgroundId(dto.getBackgroundId())
+                .build();
+    }
+
+    public BoardColumn toEntity(BoardColumnDto dto) {
+        Board board = boardsRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        return BoardColumn.builder()
+                .name(dto.getName())
+                .order(dto.getOrder())
+                .board(board)
+                .build();
+    }
+
+    public Label toEntity(LabelDto dto) {
+        Board board = boardsRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("board.not.found")));
+        return Label.builder()
+                .name(dto.getName())
+                .color(dto.getColor())
+                .board(board)
                 .build();
     }
 }
