@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -41,6 +42,8 @@ public abstract class BaseTest {
     protected AuthProperties authProperties;
     @MockBean
     protected MailjetClient mailjetClient;
+    @MockBean
+    protected RestTemplate restTemplate;
     @SpyBean
     protected PasswordEncoder passwordEncoder;
 

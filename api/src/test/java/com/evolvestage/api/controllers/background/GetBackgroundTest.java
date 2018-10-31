@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
 public class GetBackgroundTest extends BaseTest {
 
@@ -22,8 +21,8 @@ public class GetBackgroundTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body("$", hasSize(4))
-                .body("[0].background_id", equalTo("1e2eeb8a-dd39-11e8-9f8b-f2801f1b9fd1"))
-                .body("[0].background_url", equalTo("http://sevolve-stage.com:80/docs-api/permanent/public/1e2eeb8a-dd39-11e8-9f8b-f2801f1b9fd1"));
+                .body("[0].background_id", equalTo("111d2419-acc3-4b35-ba49-c5938d0f524d"))
+                .body("[0].background_url", endsWith("docs-api/permanent/public/111d2419-acc3-4b35-ba49-c5938d0f524d"));
 
     }
 }

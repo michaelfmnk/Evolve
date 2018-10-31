@@ -66,6 +66,7 @@ public class ConverterService {
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
                 .backgroundId(entity.getBackgroundId())
+                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
                 .columns(emptyIfNull(entity.getColumns()).stream()
                         .map(this::toDto)
                         .collect(Collectors.toList()))
@@ -82,6 +83,7 @@ public class ConverterService {
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
                 .backgroundId(entity.getBackgroundId())
+                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
                 .build();
     }
 

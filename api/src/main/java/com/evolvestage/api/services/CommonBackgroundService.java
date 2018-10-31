@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,5 +20,9 @@ public class CommonBackgroundService {
         return backgroundRepository.findAll().stream()
                 .map(converterService::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isDefaultBackground(UUID fileId) {
+        return backgroundRepository.existsById(fileId);
     }
 }

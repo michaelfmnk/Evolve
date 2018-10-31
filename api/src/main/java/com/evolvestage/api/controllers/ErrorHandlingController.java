@@ -1,9 +1,7 @@
 package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.ErrorDetailDto;
-import com.evolvestage.api.exceptions.BadRequestException;
-import com.evolvestage.api.exceptions.ConflictException;
-import com.evolvestage.api.exceptions.UnauthorizedException;
+import com.evolvestage.api.exceptions.*;
 import com.evolvestage.api.utils.TimeProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
@@ -73,6 +71,26 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
     public ErrorDetailDto exceptionHandler(EntityNotFoundException e) {
         return ErrorDetailDto.builder()
                 .status(HttpStatus.NOT_FOUND)
+                .cause(e)
+                .timeStamp(timeProvider.getDate())
+                .build();
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorDetailDto exceptionHandler(ForbiddenException e) {
+        return ErrorDetailDto.builder()
+                .status(HttpStatus.FORBIDDEN)
+                .cause(e)
+                .timeStamp(timeProvider.getDate())
+                .build();
+    }
+
+    @ExceptionHandler(UnprocessableEntityException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorDetailDto exceptionHandler(UnprocessableEntityException e) {
+        return ErrorDetailDto.builder()
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .cause(e)
                 .timeStamp(timeProvider.getDate())
                 .build();
