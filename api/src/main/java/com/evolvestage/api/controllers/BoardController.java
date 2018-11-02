@@ -1,5 +1,6 @@
 package com.evolvestage.api.controllers;
 
+import com.evolvestage.api.dtos.BoardBriefDto;
 import com.evolvestage.api.dtos.BoardColumnDto;
 import com.evolvestage.api.dtos.BoardDto;
 import com.evolvestage.api.dtos.LabelDto;
@@ -31,8 +32,8 @@ public class BoardController {
 
     @PostMapping(Api.Boards.BOARD_COLUMNS)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
-    public BoardColumnDto createColumn(@Validated @RequestBody BoardColumnDto column,
-                                       @PathVariable(name = "board_id") Integer boardId) {
+    public BoardColumnDto createColumn(@PathVariable(name = "board_id") Integer boardId,
+                                       @Validated @RequestBody BoardColumnDto column) {
         column.setBoardId(boardId);
         return boardColumnService.createColumn(column);
     }
@@ -45,17 +46,25 @@ public class BoardController {
         return labelService.createLabel(label);
     }
 
-    @GetMapping(Api.Boards.BOARD)
+    @GetMapping(Api.Boards.BOARD_BY_ID)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public BoardDto getBoardById(@PathVariable(name = "board_id") Integer boardId) {
         return boardService.getBoardById(boardId);
     }
 
-    @DeleteMapping(Api.Boards.BOARD)
+    @DeleteMapping(Api.Boards.BOARD_BY_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
     public void deleteBoard(@PathVariable("board_id") Integer boardId) {
         boardService.deleteBoard(boardId);
+    }
+
+    @PutMapping(Api.Boards.BOARD_BY_ID)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public BoardBriefDto updateBoard(@PathVariable("board_id") Integer boardId,
+                                     @RequestBody @Validated BoardBriefDto boardBriefDto) {
+        boardBriefDto.setId(boardId);
+        return boardService.updateBoard(boardId, boardBriefDto);
     }
 
 }

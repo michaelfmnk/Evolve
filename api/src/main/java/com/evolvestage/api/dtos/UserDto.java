@@ -26,4 +26,5 @@ public class UserDto {
     private List<BoardBriefDto> ownBoards;
     private List<BoardBriefDto> joinedBoards;
     private UUID avatarId;
+    private String avatarUrl;
 }

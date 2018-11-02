@@ -17,7 +17,7 @@ public class UrlUtils {
     private final String DOCS_API_URL= "evolve-stage.com";
     private final String PUBLIC_FILE_PATH_TEMPLATE = "/docs-api/permanent/public/%s";
 
-    public String formBackgroundUrl(UUID backgroundId) {
+    public String formPublicFileUrl(UUID backgroundId) {
         if (Objects.isNull(backgroundId)) {
             return null;
         }

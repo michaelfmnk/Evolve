@@ -21,4 +21,5 @@ public class UserBriefDto {
     @NotBlank
     private String lastName;
     private UUID avatarId;
+    private String avatarUrl;
 }

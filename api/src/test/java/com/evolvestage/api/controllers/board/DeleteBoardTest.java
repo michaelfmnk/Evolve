@@ -4,13 +4,13 @@ import com.evolvestage.api.BaseTest;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.http.HttpMethod;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -31,10 +31,10 @@ public class DeleteBoardTest extends BaseTest {
                 .hasNumberOfRows(0);
         verify(restTemplate, times(1))
                 .exchange(
-                        contains("permanent?file_id=1e2ef350-dd39-11e8-9f8b-f2801f1b9fd1"),
-                        eq(HttpMethod.DELETE),
-                        any(),
-                        eq(String.class)
+                        ArgumentMatchers.endsWith("permanent?file_id=1e2ef350-dd39-11e8-9f8b-f2801f1b9fd1"),
+                        ArgumentMatchers.eq(HttpMethod.DELETE),
+                        ArgumentMatchers.any(),
+                        ArgumentMatchers.eq(String.class)
                 );
     }
 
@@ -53,10 +53,10 @@ public class DeleteBoardTest extends BaseTest {
                 .hasNumberOfRows(0);
         verify(restTemplate, times(0))
                 .exchange(
-                        contains(""),
-                        eq(HttpMethod.DELETE),
-                        any(),
-                        eq(String.class)
+                        ArgumentMatchers.contains(""),
+                        ArgumentMatchers.eq(HttpMethod.DELETE),
+                        ArgumentMatchers.any(),
+                        ArgumentMatchers.eq(String.class)
                 );
     }
 

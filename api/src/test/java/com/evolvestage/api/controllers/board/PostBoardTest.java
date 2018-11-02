@@ -53,7 +53,7 @@ public class PostBoardTest extends BaseTest {
                             .value("background_id").isEqualTo(response.getBackgroundId());
         verify(restTemplate, times(1))
                 .exchange(
-                        ArgumentMatchers.contains("/permanent"),
+                        ArgumentMatchers.endsWith("/permanent"),
                         ArgumentMatchers.eq(HttpMethod.PUT),
                         ArgumentMatchers.any(),
                         ArgumentMatchers.eq(new ParameterizedTypeReference<List<DocumentDto>>() {})

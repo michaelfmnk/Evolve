@@ -33,6 +33,7 @@ public class ConverterService {
                 .email(entity.getEmail())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
+                .avatarUrl(UrlUtils.formPublicFileUrl(entity.getAvatarId()))
                 .ownBoards(emptyIfNull(entity.getOwnBoards()).stream()
                         .map(this::toBriefDto)
                         .collect(Collectors.toList()))
@@ -52,6 +53,7 @@ public class ConverterService {
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .avatarId(entity.getAvatarId())
+                .avatarUrl(UrlUtils.formPublicFileUrl(entity.getAvatarId()))
                 .build();
     }
 
@@ -66,7 +68,7 @@ public class ConverterService {
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
                 .backgroundId(entity.getBackgroundId())
-                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
+                .backgroundUrl(UrlUtils.formPublicFileUrl(entity.getBackgroundId()))
                 .columns(emptyIfNull(entity.getColumns()).stream()
                         .map(this::toDto)
                         .collect(Collectors.toList()))
@@ -83,7 +85,7 @@ public class ConverterService {
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
                 .backgroundId(entity.getBackgroundId())
-                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
+                .backgroundUrl(UrlUtils.formPublicFileUrl(entity.getBackgroundId()))
                 .build();
     }
 
@@ -142,7 +144,7 @@ public class ConverterService {
 
         return CommonBackgroundDto.builder()
                 .backgroundId(entity.getBackgroundId())
-                .backgroundUrl(UrlUtils.formBackgroundUrl(entity.getBackgroundId()))
+                .backgroundUrl(UrlUtils.formPublicFileUrl(entity.getBackgroundId()))
                 .build();
     }
 
