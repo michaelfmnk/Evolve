@@ -43,9 +43,17 @@ services:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/api
     restart: always
     environment:
-    - JVM_MEMORY_OPTS=-Dspring.datasource.url=jdbc:postgresql://postgres:5432/api_db -Dspring.datasource.username=postgres -Dspring.datasource.password=postgres -Dserver.port=8080 -Dauth.privateKey=/secret/fake-privatekey.der -Dauth.publicKey=/secret/fake-publickey.der
+    - >
+        JVM_MEMORY_OPTS=-Dspring.datasource.url=jdbc:postgresql://postgres:5432/api_db
+        -Ddocs.api.baseUrl=docs-api:8080
+        -Dspring.datasource.username=postgres
+        -Dspring.datasource.password=postgres
+        -Dserver.port=8080
+        -Dauth.privateKey=/secret/fake-privatekey.der
+        -Dauth.publicKey=/secret/fake-publickey.der
     links:
     - "postgres:postgres"
+    - "docs-api:docs-api"
     volumes:
     - "./data/secret/:/secret/"
     ports:

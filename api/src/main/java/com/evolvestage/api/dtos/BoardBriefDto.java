@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -15,10 +15,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BoardBriefDto implements Serializable {
+public class BoardBriefDto {
     private Integer id;
     @NotBlank
     private String name;
+    private UserBriefDto owner;
     private Integer ownerId;
     private UUID backgroundId;
+    private String backgroundUrl;
+    private List<UserBriefDto> collaborators;
 }

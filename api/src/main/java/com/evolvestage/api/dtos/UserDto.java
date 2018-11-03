@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDto implements Serializable {
+public class UserDto {
     private Integer id;
     @NotBlank
     private String email;
@@ -27,4 +26,5 @@ public class UserDto implements Serializable {
     private List<BoardBriefDto> ownBoards;
     private List<BoardBriefDto> joinedBoards;
     private UUID avatarId;
+    private String avatarUrl;
 }

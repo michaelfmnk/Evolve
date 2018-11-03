@@ -46,7 +46,7 @@ public class MoveFileTest extends BaseTest {
                 .dataId(1)
                 .build();
 
-        given()
+        given().log().all()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .header(RIGHT_HEADER)

@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 
@@ -30,6 +29,9 @@ public class GetUserByIdTest extends BaseTest {
                 .body("email", notNullValue())
                 .body("own_boards", hasSize(1))
                 .body("own_boards[0].name", equalTo("board first"))
+                .body("own_boards[0].owner.avatar_id", equalTo("0485de66-c013-11e8-a355-529269fb1459"))
+                .body("own_boards[0].collaborators[0].avatar_url", endsWith("docs-api/permanent/public/0485de66-c013-11e8-a355-529269fb1459"))
+                .body("own_boards[0].collaborators", hasSize(2))
                 .body("joined_boards", hasSize(2))
                 .body("joined_boards[0].name", equalTo("board first"))
                 .body("joined_boards[1].name", equalTo("board second"));

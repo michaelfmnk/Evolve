@@ -10,6 +10,7 @@ public class Api {
     public class Commons {
         public final String VERSION = "/version";
         public final String GIT_LOG = "/gitlog";
+        public final String BACKGROUNDS = "/backgrounds";
     }
 
     @UtilityClass
@@ -21,7 +22,7 @@ public class Api {
     @UtilityClass
     public class Boards {
         public final String BOARDS = "/boards";
-        public final String BOARD = "/boards/{board_id}";
+        public final String BOARD_BY_ID = "/boards/{board_id}";
         public final String BOARD_COLUMNS = "/boards/{board_id}/columns";
         public final String BOARD_LABELS = "/boards/{board_id}/labels";
         public final String BOARD_CARD_BY_ID = "/boards/{board_id}/cards/{card_id}";

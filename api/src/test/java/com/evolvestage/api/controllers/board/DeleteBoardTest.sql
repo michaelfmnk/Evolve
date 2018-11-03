@@ -32,11 +32,11 @@ VALUES (1,
         '0485de66-c013-11e8-a355-529269fb1459',
         false); --test
 
-INSERT INTO boards (board_id, "name", owner_id)
-VALUES (1, 'SUPERMEGA BOARD', 1),
-       (2, 'DOLGOV RULIT', 2),
-       (3, 'FPECS FOREVER', 3),
-       (4, 'PIU-PIU-PIU', 2);
+INSERT INTO boards (board_id, "name", owner_id, background_id)
+VALUES (1, 'SUPERMEGA BOARD', 1, '1e2ef350-dd39-11e8-9f8b-f2801f1b9fd1'),
+       (2, 'DOLGOV RULIT', 2, '1e25f3f0-dd39-11e8-9f8b-f28018119fd1'),
+       (3, 'FPECS FOREVER', 3, '4e2ef3f0-dd39-11e8-9f8b-f2808f1b9fd1'),
+       (4, 'PIU-PIU-PIU', 1, '111d2419-acc3-4b35-ba49-c5938d0f524d');
 
 INSERT INTO users_authorities (user_id, authority_id)
 VALUES (1, 2),
