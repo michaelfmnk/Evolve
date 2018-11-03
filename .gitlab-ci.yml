@@ -57,7 +57,11 @@ build-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -Dmaven.repo.local=.m2 -DdockerImageTags=$BUILD_TIME
+    mvn clean package
+    -Pdocker
+    -Dmaven.repo.local=.m2
+    -DdockerImageTags=$BUILD_TIME
+    -Djdk.net.URLClassPath.disableClassPathURLCheck=true
   - docker push $DOCKER_IMAGE_API
   after_script:
   - cd /
@@ -83,7 +87,11 @@ build-docs-api-with-containers:
     -w "$(pwd)"
     -u 0:0
     maven:3-jdk-8
-    mvn clean package -Pdocker -Dmaven.repo.local=.m2 -DdockerImageTags=$BUILD_TIME
+    mvn clean package
+    -Pdocker
+    -Dmaven.repo.local=.m2
+    -DdockerImageTags=$BUILD_TIME
+    -Djdk.net.URLClassPath.disableClassPathURLCheck=true
   - docker push $DOCKER_IMAGE_DOCS_API
   after_script:
   - cd /
