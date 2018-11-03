@@ -84,6 +84,10 @@ public class ConverterService {
                 .id(entity.getBoardId())
                 .name(entity.getName())
                 .ownerId(entity.getOwner().getUserId())
+                .owner(toBriefDto(entity.getOwner()))
+                .collaborators(emptyIfNull(entity.getCollaborators()).stream()
+                        .map(this::toBriefDto)
+                        .collect(Collectors.toList()))
                 .backgroundId(entity.getBackgroundId())
                 .backgroundUrl(UrlUtils.formPublicFileUrl(entity.getBackgroundId()))
                 .build();

@@ -26,6 +26,14 @@ public class Board {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @ManyToMany
+    @JoinTable(
+            name = "boards_users",
+            joinColumns = { @JoinColumn(name = "board_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    private List<User> collaborators;
+
     @OneToMany(mappedBy = "board")
     private List<BoardColumn> columns;
 
