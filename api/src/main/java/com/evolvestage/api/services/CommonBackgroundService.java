@@ -3,6 +3,7 @@ package com.evolvestage.api.services;
 import com.evolvestage.api.dtos.CommonBackgroundDto;
 import com.evolvestage.api.repositories.CommonBackgroundRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class CommonBackgroundService {
     private final CommonBackgroundRepository backgroundRepository;
     private final ConverterService converterService;
 
-    public List<CommonBackgroundDto> getCommonBackground() {
-        return backgroundRepository.findAll().stream()
+    public List<CommonBackgroundDto> getCommonBackground(Pageable pageable) {
+        return backgroundRepository.findAll(pageable).stream()
                 .map(converterService::toDto)
                 .collect(Collectors.toList());
     }

@@ -6,6 +6,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +42,8 @@ public class CommonController {
     }
 
     @GetMapping(Api.Commons.BACKGROUNDS)
-    public List<CommonBackgroundDto> getBackgrounds() {
-        return backgroundService.getCommonBackground();
+    public List<CommonBackgroundDto> getBackgrounds(@PageableDefault(size = 20) Pageable pageable) {
+        return backgroundService.getCommonBackground(pageable);
     }
 
 }
