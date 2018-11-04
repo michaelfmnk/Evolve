@@ -13,6 +13,8 @@ import com.evolvestage.api.repositories.VerificationCodeRepository;
 import com.evolvestage.api.security.JwtTokenUtil;
 import com.evolvestage.api.security.JwtUser;
 import com.evolvestage.api.security.JwtUserFactory;
+import com.evolvestage.api.services.mail.EmailService;
+import com.evolvestage.api.services.mail.types.VerificationCodeEmail;
 import com.evolvestage.api.utils.CodeGenerator;
 import com.evolvestage.api.utils.MessagesService;
 import com.evolvestage.api.utils.TimeProvider;
@@ -43,7 +45,7 @@ public class AuthService {
     private final UserService userService;
     private final ConverterService converterService;
     private final MessagesService messagesService;
-    private final MailjetService mailjetService;
+    private final EmailService emailService;
     private final VerificationCodeRepository verificationCodeRepository;
     private final TimeProvider timeProvider;
 
@@ -96,10 +98,11 @@ public class AuthService {
                 = new VerificationCode(new VerificationCode.VerificationCodePK(user.getUserId(), code));
         verificationCodeRepository.save(verificationCode);
 
-        mailjetService.sendEmail(
-                request.getEmail(),
-                messagesService.getMessage("mail.signup.subject"),
-                code);
+        VerificationCodeEmail email = VerificationCodeEmail.builder()
+                .code(code)
+                .to(request.getEmail())
+                .build();
+        emailService.sendEmail(email);
         return converterService.toDto(user);
     }
 
