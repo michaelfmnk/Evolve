@@ -4,8 +4,9 @@ services:
     build: ./balancer
     restart: always
     links:
-      - "api:api"
-      - "ui:ui"
+    - "api:api"
+    - "ui:ui"
+    - "docs-api:docs-api"
     ports:
     - "80:80"
 
@@ -13,13 +14,40 @@ services:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/ui
     restart: always
     ports:
-    - "3000"
+    - "80"
+
+  docs-api:
+    image: registry.gitlab.com/dnu-dreamteam/dolgov/docs-api
+    restart: always
+    environment:
+    - >
+        JVM_MEMORY_OPTS=
+          -Dspring.datasource.url=jdbc:postgresql://104.248.134.76:5432/docs_api_db
+          -Dspring.datasource.username=postgres -Dspring.datasource.password=dreamteam
+          -Dserver.port=8080
+          -Dauth.publicKey=/secret/fake-publickey.der
+    ports:
+    - "8080"
+    volumes:
+    - "./data/secret/:/secret/"
+    - "/data/permanent:/permanent"
+    - "/data/temporary:/temporary"
 
   api:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/api
     restart: always
+    links:
+    - "docs-api:docs-api"
     environment:
-    - JVM_MEMORY_OPTS=-Dspring.datasource.url=jdbc:postgresql://104.248.134.76:5432/api_db -Dspring.datasource.username=postgres -Dspring.datasource.password=dreamteam -Dserver.port=8080 -Dauth.privateKey=/secret/fake-privatekey.der -Dauth.publicKey=/secret/fake-publickey.der
+    - >
+        JVM_MEMORY_OPTS=
+          -Dspring.datasource.url=jdbc:postgresql://104.248.134.76:5432/api_db
+          -Dspring.datasource.username=postgres
+          -Dspring.datasource.password=dreamteam
+          -Dserver.port=8080
+          -Dauth.privateKey=/secret/fake-privatekey.der
+          -Dauth.publicKey=/secret/fake-publickey.der
+          -Ddocs.api.baseUrl=docs-api:8080
     ports:
     - "8080"
     volumes:
