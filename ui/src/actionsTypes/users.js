@@ -1,0 +1,7 @@
+export const GET_AUTHORIZED_USER = 'GET_AUTHORIZATED_USER'
+export const GET_USER = 'GET_USER'
+export const GET_USERS_PREVIEWS = 'GET_USERS_PREVIEWS'
+
+
+
+

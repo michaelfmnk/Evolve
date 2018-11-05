@@ -1,5 +1,5 @@
 import callApi from 'helpers/callApi'
-import * as endpoints from 'api/auth'
+import * as endpoints from 'constants/endpoints/auth'
 
 class AuthService {
   signIn (credentials) {
