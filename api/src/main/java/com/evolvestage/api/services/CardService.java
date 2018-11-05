@@ -1,5 +1,6 @@
 package com.evolvestage.api.services;
 
+import com.evolvestage.api.dtos.CardDto;
 import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.repositories.CardsRepository;
 import com.evolvestage.api.utils.MessagesService;
@@ -12,8 +13,15 @@ import javax.persistence.EntityNotFoundException;
 @AllArgsConstructor
 public class CardService {
 
+    private final ConverterService converter;
     private final MessagesService messagesService;
     private final CardsRepository cardsRepository;
+
+    public CardDto createCard(CardDto cardDto) {
+        Card cardEntity = converter.toEntity(cardDto);
+        cardEntity = cardsRepository.save(cardEntity);
+        return converter.toDto(cardEntity);
+    }
 
     public void archiveCard(Integer boardId, Integer cardId) {
         Card cardEntity = findValidCard(boardId, cardId);

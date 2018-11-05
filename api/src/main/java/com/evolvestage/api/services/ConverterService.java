@@ -3,6 +3,7 @@ package com.evolvestage.api.services;
 import com.evolvestage.api.dtos.*;
 import com.evolvestage.api.entities.*;
 import com.evolvestage.api.repositories.BoardsRepository;
+import com.evolvestage.api.repositories.ColumnsRepository;
 import com.evolvestage.api.repositories.UsersRepository;
 import com.evolvestage.api.utils.MessagesService;
 import com.evolvestage.api.utils.UrlUtils;
@@ -21,6 +22,7 @@ public class ConverterService {
 
     private UsersRepository usersRepository;
     private BoardsRepository boardsRepository;
+    private ColumnsRepository columnsRepository;
     private MessagesService messagesService;
 
     public UserDto toDto(User entity) {
@@ -132,6 +134,7 @@ public class ConverterService {
                 .content(entity.getContent())
                 .order(entity.getOrder())
                 .title(entity.getTitle())
+                .authorId(entity.getAuthor().getUserId())
                 .labels(emptyIfNull(entity.getLabels()).stream()
                         .map(this::toDto)
                         .collect(Collectors.toList()))
@@ -169,6 +172,20 @@ public class ConverterService {
                 .name(dto.getName())
                 .order(dto.getOrder())
                 .board(board)
+                .build();
+    }
+
+    public Card toEntity(CardDto dto) {
+        BoardColumn column = columnsRepository.findById(dto.getColumnId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
+        User author = usersRepository.findById(dto.getAuthorId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.found")));
+        return Card.builder()
+                .content(dto.getContent())
+                .title(dto.getTitle())
+                .order(dto.getOrder())
+                .author(author)
+                .column(column)
                 .build();
     }
 
