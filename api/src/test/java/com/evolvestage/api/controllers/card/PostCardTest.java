@@ -47,7 +47,7 @@ public class PostCardTest extends BaseTest{
     }
 
     @Test
-    public void shouldNotCreateСard() throws IOException {
+    public void shouldNotCreateCard() throws IOException {
         CardDto card = new CardDto();
         given()
                 .accept(ContentType.JSON)
