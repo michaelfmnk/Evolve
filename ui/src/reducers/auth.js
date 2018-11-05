@@ -1,27 +1,36 @@
 import * as types from 'actionsTypes/auth'
+import {startAction, failAction, successAction} from 'helpers/actionsProcessTemplaters'
+import { GET_AUTHORIZED_USER } from 'actionsTypes/users'
 
 const initialState = {
-  userId: null,
+  user: {},
   token: null
 }
 
 export default function authReducer (state = initialState, action) {
   switch (action.type) {
     case types.REFRESH_AUTH_FROM_STORE:
-    case types.SIGN_IN_SUCCESS:
+    case successAction(types.SIGN_IN):
       return action.payload
 
-      case types.SIGN_UP_SUCCESS: {
+      case successAction(types.SIGN_UP): {
         return {
-          userId: action.payload.id,
+          user: { id: action.payload.id },
           token: null
         }
       }
 
-      case types.VERIFY_ACCOUNT_SUCCESS: {
+      case successAction(types.VERIFY_ACCOUNT): {
         return {
           ...state,
           token: action.payload.token
+        }
+      }
+
+      case successAction(GET_AUTHORIZED_USER): {
+        return {
+          ...state,
+          user: action.payload
         }
       }
 

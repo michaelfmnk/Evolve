@@ -8,7 +8,7 @@ const refreshAuthFromStorage = (store) => {
   if (token || userId) {
     store.dispatch(refreshAuth({
       token: token || null,
-      userId: userId || null
+      user: { id: userId || null }
     }))
   }
 }

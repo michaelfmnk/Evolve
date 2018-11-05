@@ -1,7 +1,10 @@
 @import 'commonStyles/variables.scss';
 
 .home-page-wrp{
-  padding: 5%;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 4%;
+  padding-top: 70px;
   height: calc(100vh - 50px);
   box-sizing: border-box;
 }

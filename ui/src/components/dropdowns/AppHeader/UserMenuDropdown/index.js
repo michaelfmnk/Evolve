@@ -22,8 +22,8 @@ class UserMenuDropdown extends React.Component {
   renderDropdown = () => (
     <div className='creation-menu-dropdown-wrp' ref={(elem) => { this.dropdown = elem }}>
       <div className="usinfo">
-        <div className="useravatar" />
-        <p>Username [User#0000]</p>
+        <img src={this.props.user.avatar_url} className="useravatar"/>
+        <p>{`${this.props.user.first_name} ${this.props.user.last_name}`}</p>
       </div>
       <div className="divideline" />
       <ul>

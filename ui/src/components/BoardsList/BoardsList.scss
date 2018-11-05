@@ -8,9 +8,9 @@
 
       .board-block {
         width: 30%;
-        max-width: 250px;
-        min-width: 170px;
-        height: 120px;
+        max-width: 270px;
+        min-width: 190px;
+        height: 140px;
         margin: 15px;
         overflow: hidden;
         background-color: rgb(206, 206, 206);
@@ -29,8 +29,16 @@
 
         @media(max-width: 560px){
           &{
-            height: 100px;
+            height: 120px;
             margin: 3px;
+          }
+        }
+
+        @media(max-width: 440px){
+          &{
+            height: 170px;
+            width: 100%;
+            max-width: 100%;
           }
         }
 

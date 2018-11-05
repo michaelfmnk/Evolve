@@ -7,21 +7,32 @@ import PropTypes from 'prop-types'
 import './BoardsList.css'
 
 class BoardsList extends React.Component {
+
+  handleBoardClick = (board) => {
+    this.props.handleBoardClick(board)
+  }
+
   render () {
-    const { boards } = this.props
+    const { boards, canAdd } = this.props
     return (
       <ul className='boards-list'>
          {
            boards && boards.map(board => (
-              <li className='board-block' style={{backgroundImage: `url(${board.background})`}}>
+             board &&
+              <li 
+                className='board-block' 
+                style={{backgroundImage: `url(${board.background_url})`}}
+                onClick={() => this.handleBoardClick(board)}
+              >
                 <span className='fade' />
                 <p className="name">{board.name}</p>
                 <div className="party">
                   <p className='members-header'>Members:</p>
                   <div className='members-wrp'>
+                    <img src={board.owner.avatar_url} />
                     {
-                      board.users && board.users.map(user => (
-                        <img src={user.avatar} />
+                      board.collaborators && board.collaborators.map(user => (
+                        <img src={user.avatar_url} />
                       ))
                     }
                   </div>
@@ -29,9 +40,12 @@ class BoardsList extends React.Component {
               </li>
             ))
           }
-        <li className="board-block add-board">
-          <p><i className="fas fa-plus" /></p>
-        </li>
+          {
+            canAdd &&
+            <li className="board-block add-board">
+              <p><i className="fas fa-plus" /></p>
+            </li>
+          }
       </ul>
     )
   }
@@ -42,6 +56,8 @@ BoardsList.propTypes = {
 }
 
 BoardsList.defaultProps = {
+  canAdd: false,
+  handleBoardClick: () => false,
   boards: [
     {
       name: 'First board',

@@ -4,15 +4,22 @@ import UserMenuDropdown from 'components/dropdowns/AppHeader/UserMenuDropdown'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from 'actions/auth'
+import { authUser } from 'selectors/user'
 import PropTypes from 'prop-types'
 import './AppHeader.css'
 
 class AppHeader extends React.Component {
+  redirectToHome = () => {
+    console.log('HEADER')
+    console.log(this.props)
+    this.props.history.push('/home')
+  }
+
   render () {
     return (
       <header className="page-header">
         <nav className="header-menu inline">
-          <i className="fas fa-home nav-btn" />
+          <i className="fas fa-home nav-btn" onClick={this.redirectToHome}/>
           <i className="fas fa-clipboard nav-btn"> boards</i>
         </nav>
         <div className="logo-wrp">
@@ -22,6 +29,7 @@ class AppHeader extends React.Component {
         <nav className="header-menu inline">
           <CreationMenuDropdown />
           <UserMenuDropdown
+            user={this.props.user}
             handleExitClick={this.props.actions.logout}
           />
         </nav>
@@ -31,7 +39,7 @@ class AppHeader extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-
+  user: authUser(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,6 +8,10 @@
   font-style: normal;
 }
 
+*{
+    box-sizing: border-box;
+}
+
 @import 'commonStyles/variables.scss';
 
 body, html, #root {
