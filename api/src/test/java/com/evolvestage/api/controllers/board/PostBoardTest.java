@@ -46,11 +46,17 @@ public class PostBoardTest extends BaseTest {
                 .body("background_url", endsWith("/docs-api/permanent/public/" + board.getBackgroundId().toString()))
                 .extract().response().body().asString();
         BoardDto response = objectMapper.readValue(json, BoardDto.class);
-        assertThat(new Request(dataSource, format("SELECT * FROM BOARDS WHERE board_id=%s", response.getId())))
+        assertThat(new Request(dataSource, format("SELECT * FROM boards WHERE board_id=%s", response.getId())))
                 .hasNumberOfRows(1)
                 .row(0).value("name").isEqualTo("NEW BOARD")
                             .value("owner_id").isEqualTo(1)
                             .value("background_id").isEqualTo(response.getBackgroundId());
+        assertThat(new Request(dataSource, "SELECT * FROM activities"))
+                .hasNumberOfRows(1)
+                .row(0).value("type").isEqualTo("BOARD_CREATED")
+                .value("actor_id").isEqualTo(1)
+                .value("data").isNotNull()
+                .value("board_id").isEqualTo(response.getId());
         verify(restTemplate, times(1))
                 .exchange(
                         ArgumentMatchers.endsWith("/permanent"),
