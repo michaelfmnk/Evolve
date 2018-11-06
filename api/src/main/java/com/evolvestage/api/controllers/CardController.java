@@ -23,7 +23,9 @@ public class CardController {
                               @PathVariable(name = "column_id") Integer columnId,
                               @ApiIgnore UserAuthentication auth,
                                        @Validated @RequestBody CardDto card) {
-        card.setColumnId(columnId);
+        if(cardService.isColumnValid(boardId, columnId)) {
+            card.setColumnId(columnId);
+        }
         card.setAuthorId(auth.getId());
         return cardService.createCard(card);
     }

@@ -81,4 +81,24 @@ public class PostCardTest extends BaseTest{
                 .statusCode(HttpStatus.SC_FORBIDDEN)
                 .body("detail", equalTo("Access is denied"));
     }
+
+    @Test
+    public void shouldNotCreateCardInTheNotValidColumn() throws IOException {
+        CardDto card = CardDto.builder()
+                .title("NEW CARD TITLE")
+                .build();
+        given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .headers(headers)
+                .body(objectMapper.writeValueAsBytes(card))
+                .when()
+                .post("/api/boards/1/columns/4/cards")
+                .then()
+                .extract().response().prettyPeek()
+                .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .body("message", equalTo("Column was not found"));
+    }
+
 }

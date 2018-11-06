@@ -3,6 +3,7 @@ package com.evolvestage.api.services;
 import com.evolvestage.api.dtos.CardDto;
 import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.repositories.CardsRepository;
+import com.evolvestage.api.repositories.BoardsRepository;
 import com.evolvestage.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class CardService {
     private final ConverterService converter;
     private final MessagesService messagesService;
     private final CardsRepository cardsRepository;
+    private final BoardsRepository boardsRepository;
 
     public CardDto createCard(CardDto cardDto) {
         Card cardEntity = converter.toEntity(cardDto);
@@ -32,6 +34,11 @@ public class CardService {
     public void deleteCard(Integer boardId, Integer cardId) {
         Card cardEntity = findValidCard(boardId, cardId);
         cardsRepository.delete(cardEntity);
+    }
+
+    public Boolean isColumnValid(Integer boardId, Integer columnId) {
+        return boardsRepository.existsColumnByColumnIdAndBoardId(boardId, columnId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
     }
 
     private Card findValidCard(Integer boardId, Integer cardId) {
