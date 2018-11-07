@@ -5,15 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
 @Entity
 @Builder
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "activities")
@@ -24,6 +28,9 @@ public class Activity {
 
     private Integer boardId;
     private Integer actorId;
+
+    @CreationTimestamp
+    private LocalDateTime recordedDate;
 
     @Enumerated(EnumType.STRING)
     private ActivityType type;

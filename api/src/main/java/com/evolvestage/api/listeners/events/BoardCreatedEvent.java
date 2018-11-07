@@ -1,4 +1,4 @@
-package com.evolvestage.api.activities.events;
+package com.evolvestage.api.listeners.events;
 
 import com.evolvestage.api.entities.Activity;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class BoardCreatedEvent implements ActivityEvent {
+public class BoardCreatedEvent implements Event {
     private Integer userId;
     private Integer boardId;
     private String boardName;

@@ -1,14 +1,13 @@
 package com.evolvestage.api.controllers;
 
-import com.evolvestage.api.dtos.BoardBriefDto;
-import com.evolvestage.api.dtos.BoardColumnDto;
-import com.evolvestage.api.dtos.BoardDto;
-import com.evolvestage.api.dtos.LabelDto;
+import com.evolvestage.api.dtos.*;
 import com.evolvestage.api.security.UserAuthentication;
+import com.evolvestage.api.services.ActivityService;
 import com.evolvestage.api.services.BoardColumnService;
 import com.evolvestage.api.services.BoardService;
 import com.evolvestage.api.services.LabelService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +21,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final BoardColumnService boardColumnService;
+    private final ActivityService activityService;
     private final LabelService labelService;
 
     @PostMapping(Api.Boards.BOARDS)
@@ -65,6 +65,12 @@ public class BoardController {
                                      @RequestBody @Validated BoardBriefDto boardBriefDto) {
         boardBriefDto.setId(boardId);
         return boardService.updateBoard(boardId, boardBriefDto);
+    }
+
+    @GetMapping(Api.Boards.BOARD_ACTIVITIES)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public Pagination<ActivityDto> getActivities(@PathVariable("board_id") Integer boardId, Pageable pageable) {
+        return activityService.getBoardActivity(boardId, pageable);
     }
 
 }

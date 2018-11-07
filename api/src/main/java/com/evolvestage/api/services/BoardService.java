@@ -1,10 +1,10 @@
 package com.evolvestage.api.services;
 
-import com.evolvestage.api.activities.events.BoardCreatedEvent;
 import com.evolvestage.api.docs.DocsApiService;
 import com.evolvestage.api.dtos.BoardBriefDto;
 import com.evolvestage.api.dtos.BoardDto;
 import com.evolvestage.api.entities.Board;
+import com.evolvestage.api.listeners.events.BoardCreatedEvent;
 import com.evolvestage.api.repositories.BoardsRepository;
 import com.evolvestage.api.utils.MessagesService;
 import lombok.AllArgsConstructor;

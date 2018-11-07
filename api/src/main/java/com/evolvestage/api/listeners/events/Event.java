@@ -1,10 +1,10 @@
-package com.evolvestage.api.activities.events;
+package com.evolvestage.api.listeners.events;
 
 import com.evolvestage.api.entities.Activity.ActivityType;
 
 import java.util.Map;
 
-public interface ActivityEvent {
+public interface Event {
     Integer getUserId();
     Integer getBoardId();
     ActivityType getType();

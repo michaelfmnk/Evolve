@@ -1,4 +1,4 @@
-package com.evolvestage.api.activities;
+package com.evolvestage.api.repositories;
 
 import com.evolvestage.api.entities.Activity;
 import org.springframework.data.jpa.repository.JpaRepository;
