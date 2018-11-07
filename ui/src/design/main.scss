@@ -15,7 +15,7 @@
     $a_long_duration: 1s;
 
     //Fonts:
-    $base-font: "Montserrat-Regular";
+    $base-font: "Calibri";
 
 
 
@@ -299,7 +299,7 @@ body {
             display: block;
             float: left;
             margin-right: 10px;
-            background: $dark-color url("");
+            background: red url("");
             background-size: cover;
             width: 1.8em;
             height: 1.5em;
@@ -509,7 +509,13 @@ body {
         padding: 10px 0px;
         height: 25px;
         color: $light-color;
-        a, i { color: $light-color;}
+        a, i { color: $light-color;transition: $a_short-duration;}
+        a:hover {
+            i {
+                color: $dark-color
+            }
+            color: $dark-color
+        }
         .boardmenul {
             display: grid;
             grid-template-columns: 15% 280px auto;
@@ -518,20 +524,21 @@ body {
                     display: flex;
                     li {
                         padding: 0 20px;
-                        border-right: 1px solid #999;
+                        border-right: 1px solid $light-color;
                     }
                 }
             }
+            
             .members {
                 margin-left: 20px;
                 ul {
                     display: flex;
                     li {
                         width: 18px; height: 18px;
-                        background-color: #999;
+                        background-color: red;
                         border-radius: 50%;
                         margin-right: -5px;
-                        border: 1px solid #000;
+                        border: 1px solid $light-color;
                         transition: $a_short-duration;
                     }
 
@@ -551,10 +558,14 @@ body {
         padding: 15px 0;
         height: calc(100vh - 155px);
         display: flex;
-        //overflow-x: scroll;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: mandatory;
+        scroll-snap-points-y: repeat(100%);
+        //white-space: nowrap;
         flex-direction: row;
         align-items: flex-start;
-
+        
         .column {
             display: grid;
             grid-template-rows: 40px auto 40px;
@@ -580,7 +591,8 @@ body {
 
             .rowhandler {
                 max-height: calc(100vh - 245px);
-                overflow-y: scroll;
+                overflow-y: auto;
+                scroll-snap-type: y mandatory;
 
                 .todo {
                     width: calc(100% - 15px);
