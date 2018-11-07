@@ -18,7 +18,7 @@ public class ActivityService {
     private final ConverterService converterService;
 
     public Pagination<ActivityDto> getBoardActivity(Integer boardId, Pageable pageable) {
-        Page<Activity> page = activityRepository.findAll(pageable);
+        Page<Activity> page = activityRepository.findByBoardId(boardId, pageable);
 
         return Pagination.<ActivityDto>builder()
                 .data(page.getContent().stream()
