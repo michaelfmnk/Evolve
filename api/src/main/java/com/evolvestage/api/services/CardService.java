@@ -21,7 +21,7 @@ public class CardService {
     private final ColumnsRepository columnsRepository;
 
     public CardBriefDto createCard(CardBriefDto cardBriefDto) {
-        Card cardEntity = converter.toBriefEntity(cardBriefDto);
+        Card cardEntity = converter.toEntity(cardBriefDto);
         cardEntity = cardsRepository.save(cardEntity);
         return converter.toBriefDto(cardEntity);
     }

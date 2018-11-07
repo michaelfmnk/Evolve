@@ -99,7 +99,7 @@ public class PostCardTest extends BaseTest{
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND)
-                .body("message", equalTo("Column was not found"));
+                .body("detail", equalTo("Column was not found"));
     }
 
 }

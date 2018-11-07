@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ColumnsRepository extends JpaRepository<BoardColumn, Integer> {
 
-    @Query("SELECT EXISTS(column) FROM BoardColumn column WHERE column.columnId = :columnId AND column.board.boardId = :boardId)")
+    @Query("SELECT count(column) > 0 FROM BoardColumn column WHERE column.columnId = :columnId AND column.board.boardId = :boardId")
     Boolean existsColumnByColumnIdAndBoardId(@Param("boardId") Integer boardId, @Param("columnId") Integer columnId);
 }

@@ -201,7 +201,7 @@ public class ConverterService {
                 .column(column)
                 .build();
     }
-    public Card toBriefEntity(CardBriefDto dto) {
+    public Card toEntity(CardBriefDto dto) {
         BoardColumn column = columnsRepository.findById(dto.getColumnId())
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
         User author = usersRepository.findById(dto.getAuthorId())
