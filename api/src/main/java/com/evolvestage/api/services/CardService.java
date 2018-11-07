@@ -1,9 +1,10 @@
 package com.evolvestage.api.services;
 
+import com.evolvestage.api.dtos.CardBriefDto;
 import com.evolvestage.api.dtos.CardDto;
 import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.repositories.CardsRepository;
-import com.evolvestage.api.repositories.BoardsRepository;
+import com.evolvestage.api.repositories.ColumnsRepository;
 import com.evolvestage.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ public class CardService {
     private final ConverterService converter;
     private final MessagesService messagesService;
     private final CardsRepository cardsRepository;
-    private final BoardsRepository boardsRepository;
+    private final ColumnsRepository columnsRepository;
 
-    public CardDto createCard(CardDto cardDto) {
-        Card cardEntity = converter.toEntity(cardDto);
+    public CardBriefDto createCard(CardBriefDto cardBriefDto) {
+        Card cardEntity = converter.toBriefEntity(cardBriefDto);
         cardEntity = cardsRepository.save(cardEntity);
-        return converter.toDto(cardEntity);
+        return converter.toBriefDto(cardEntity);
     }
 
     public void archiveCard(Integer boardId, Integer cardId) {
@@ -37,8 +38,7 @@ public class CardService {
     }
 
     public Boolean isColumnValid(Integer boardId, Integer columnId) {
-        return boardsRepository.existsColumnByColumnIdAndBoardId(boardId, columnId)
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
+        return columnsRepository.existsColumnByColumnIdAndBoardId(boardId, columnId);
     }
 
     private Card findValidCard(Integer boardId, Integer cardId) {

@@ -143,6 +143,19 @@ public class ConverterService {
                         .collect(Collectors.toList()))
                 .build();
     }
+    public CardBriefDto toBriefDto(Card entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return CardBriefDto.builder()
+                .id(entity.getCardId())
+                .content(entity.getContent())
+                .order(entity.getOrder())
+                .title(entity.getTitle())
+                .authorId(entity.getAuthor().getUserId())
+                .build();
+    }
 
     public CommonBackgroundDto toDto(CommonBackground entity) {
         if (Objects.isNull(entity)) {
@@ -176,6 +189,19 @@ public class ConverterService {
     }
 
     public Card toEntity(CardDto dto) {
+        BoardColumn column = columnsRepository.findById(dto.getColumnId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
+        User author = usersRepository.findById(dto.getAuthorId())
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.found")));
+        return Card.builder()
+                .content(dto.getContent())
+                .title(dto.getTitle())
+                .order(dto.getOrder())
+                .author(author)
+                .column(column)
+                .build();
+    }
+    public Card toBriefEntity(CardBriefDto dto) {
         BoardColumn column = columnsRepository.findById(dto.getColumnId())
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
         User author = usersRepository.findById(dto.getAuthorId())

@@ -1,6 +1,7 @@
 package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
+import com.evolvestage.api.dtos.CardBriefDto;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class PostCardTest extends BaseTest{
 
     @Test
     public void shouldCreateCard() throws IOException {
-        CardDto card = CardDto.builder()
+        CardBriefDto card = CardBriefDto.builder()
                 .content("NEW CARD")
                 .title("NEW CARD TITLE")
                 .build();
@@ -48,7 +49,7 @@ public class PostCardTest extends BaseTest{
 
     @Test
     public void shouldNotCreateCard() throws IOException {
-        CardDto card = new CardDto();
+        CardBriefDto card = new CardBriefDto();
         given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -65,7 +66,7 @@ public class PostCardTest extends BaseTest{
 
     @Test
     public void shouldNotCreateCardWithoutPermission() throws IOException {
-        CardDto card = CardDto.builder()
+        CardBriefDto card = CardBriefDto.builder()
                 .title("NEW CARD TITLE")
                 .build();
         given()
@@ -84,7 +85,7 @@ public class PostCardTest extends BaseTest{
 
     @Test
     public void shouldNotCreateCardInTheNotValidColumn() throws IOException {
-        CardDto card = CardDto.builder()
+        CardBriefDto card = CardBriefDto.builder()
                 .title("NEW CARD TITLE")
                 .build();
         given()
