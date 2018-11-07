@@ -4,9 +4,9 @@ import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.listeners.events.CardArchivedEvent;
 import com.evolvestage.api.repositories.CardsRepository;
 import com.evolvestage.api.utils.MessagesService;
+import com.evolvestage.api.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,7 +26,7 @@ public class CardService {
                 .boardId(boardId)
                 .cardId(cardId)
                 .cardTitle(cardEntity.getTitle())
-                .userId(getUserIdFromSecurityContext())
+                .userId(SecurityUtils.getUserIdFromSecurityContext())
                 .build());
         cardsRepository.save(cardEntity);
     }
@@ -41,7 +41,4 @@ public class CardService {
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
     }
 
-    private Integer getUserIdFromSecurityContext() {
-        return (Integer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
 }

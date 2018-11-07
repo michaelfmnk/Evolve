@@ -20,9 +20,9 @@ public class GetBackgroundTest extends BaseTest {
                 .get("/api/backgrounds").prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("$", hasSize(greaterThanOrEqualTo(12)))
-                .body("[0].background_id", equalTo("111d2419-acc3-4b35-ba49-c5938d0f524d"))
-                .body("[0].background_url", endsWith("docs-api/permanent/public/111d2419-acc3-4b35-ba49-c5938d0f524d"));
+                .body("data", hasSize(greaterThanOrEqualTo(12)))
+                .body("data[0].background_id", equalTo("111d2419-acc3-4b35-ba49-c5938d0f524d"))
+                .body("data[0].background_url", endsWith("docs-api/permanent/public/111d2419-acc3-4b35-ba49-c5938d0f524d"));
     }
 
     @Test
@@ -36,7 +36,9 @@ public class GetBackgroundTest extends BaseTest {
                 .get("/api/backgrounds").prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("$", hasSize(4));
+                .body("data", hasSize(4))
+                .body("total_elements", equalTo(13))
+                .body("total_pages", equalTo(4));
 
         given()
                 .accept(ContentType.JSON)
@@ -48,6 +50,6 @@ public class GetBackgroundTest extends BaseTest {
                 .get("/api/backgrounds").prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("$", hasSize(0));
+                .body("data", hasSize(0));
     }
 }
