@@ -46,7 +46,7 @@ VALUES (1, 2),
 
 INSERT INTO columns (column_id, board_id, name, order_num)
 VALUES (1, 1, 'column 1', 1),
-       (2, 1, 'column 2', 2),
+       (2, 3, 'column 2', 2),
        (3, 1, 'column 3', 3);
 
 INSERT INTO cards (card_id, column_id, title, content, author_id, created_time, order_num)
