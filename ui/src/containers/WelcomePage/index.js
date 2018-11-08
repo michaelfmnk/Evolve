@@ -10,13 +10,8 @@ import ContactsSection from 'components/WelcomePage/ContactsSection'
 import './WelcomePage.css'
 
 class WelcomePage extends React.Component {
-  handleScroll = (event) => {
-    console.log(event.target)
-    // if we in top page
-  }
-
+  
   componentDidMount () {
-    // document.addEventListener('scroll', this.handleScroll)
     configureAnchors({ scrollDuration: 300 })
   }
 

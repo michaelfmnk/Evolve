@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import LoginForm from 'components/LoginForm'
 import './LoginPage.css'
-
+ 
 class LoginPage extends React.Component {
   render () {
     return (

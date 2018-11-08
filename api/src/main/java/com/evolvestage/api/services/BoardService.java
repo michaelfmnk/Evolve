@@ -4,9 +4,11 @@ import com.evolvestage.api.docs.DocsApiService;
 import com.evolvestage.api.dtos.BoardBriefDto;
 import com.evolvestage.api.dtos.BoardDto;
 import com.evolvestage.api.entities.Board;
+import com.evolvestage.api.listeners.events.BoardCreatedEvent;
 import com.evolvestage.api.repositories.BoardsRepository;
 import com.evolvestage.api.utils.MessagesService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,12 +25,18 @@ public class BoardService {
     private final CommonBackgroundService backgroundService;
     private final MessagesService messagesService;
     private final DocsApiService docsApiService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public BoardDto createBoard(BoardDto boardDto) {
         Board boardEntity = converter.toEntity(boardDto);
         boardEntity = boardsRepository.save(boardEntity);
         saveBackground(boardEntity.getBackgroundId(), boardEntity.getBoardId());
+        eventPublisher.publishEvent(BoardCreatedEvent.builder()
+                .boardId(boardEntity.getBoardId())
+                .userId(boardEntity.getOwner().getUserId())
+                .boardName(boardEntity.getName())
+                .build());
         return converter.toDto(boardEntity);
     }
 

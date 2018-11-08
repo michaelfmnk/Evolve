@@ -47,8 +47,8 @@ public class DocsApiService {
                 .isPublic(makePublic)
                 .build();
         HttpHeaders headers = getHeaders();
-        HttpEntity<List<MoveDocumentDto>> requestEntity
-                = new HttpEntity<>(Arrays.asList(moveDocumentDto), headers);
+        HttpEntity<List<MoveDocumentDto>> requestEntity = new HttpEntity<>(Arrays.asList(moveDocumentDto), headers);
+        log.info("started performing request to docs-api to save file with id = " + fileId);
         performRequest(() -> restTemplate.exchange(
                 formatPath(PERMANENT_DOCS_PATH),
                 HttpMethod.PUT,
@@ -61,6 +61,7 @@ public class DocsApiService {
                 .queryParam("file_id", fileId)
                 .toUriString();
         HttpEntity<?> requestEntity = new HttpEntity<>(getHeaders());
+        log.info("started performing request to docs-api to delete file with id = " + fileId);
         performRequest(() -> restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class));
     }
 

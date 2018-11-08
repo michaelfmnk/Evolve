@@ -77,6 +77,21 @@ public class ConverterService {
                 .build();
     }
 
+
+    public ActivityDto toDto(Activity entity) {
+        UserBriefDto actor = usersRepository.findById(entity.getActorId())
+                .map(this::toBriefDto)
+                .orElse(null);
+
+        return ActivityDto.builder()
+                .activityId(entity.getActivityId())
+                .actor(actor)
+                .recordedDate(entity.getRecordedDate())
+                .data(entity.getData())
+                .boardId(entity.getBoardId())
+                .build();
+    }
+
     public BoardBriefDto toBriefDto(Board entity) {
         if (Objects.isNull(entity)) {
             return null;

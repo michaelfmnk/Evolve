@@ -72,7 +72,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(paths).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.headers().cacheControl();
+        http.headers().cacheControl().disable();
     }
 
 }

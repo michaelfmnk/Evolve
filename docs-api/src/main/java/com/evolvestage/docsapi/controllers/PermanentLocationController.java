@@ -5,10 +5,8 @@ import com.evolvestage.docsapi.dtos.DocumentResponseDto;
 import com.evolvestage.docsapi.dtos.MoveDocumentDto;
 import com.evolvestage.docsapi.services.StorageService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @AllArgsConstructor
@@ -50,11 +49,13 @@ public class PermanentLocationController {
         return storageService.moveFiles(filesToMove);
     }
 
+    @Cacheable("images")
     @GetMapping(Api.PermanentStorage.TEMPORARY_PUBLIC_FILE)
     public ResponseEntity<byte[]> downloadPublicFile(@PathVariable("file_id") UUID fileId) throws IOException {
         DocumentResponseDto responseDto = storageService.downloadPublicFile(fileId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(responseDto.getMime()));
+        headers.setCacheControl(CacheControl.maxAge(24, TimeUnit.HOURS).cachePrivate());
         return new ResponseEntity<>(responseDto.getFile(), headers, HttpStatus.OK);
     }
 }
