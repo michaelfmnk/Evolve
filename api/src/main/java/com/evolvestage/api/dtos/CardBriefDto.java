@@ -7,14 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CardDto {
+public class CardBriefDto {
     private Integer id;
     private String content;
     @NotBlank
@@ -22,6 +21,4 @@ public class CardDto {
     private Integer columnId;
     private Integer authorId;
     private Integer order;
-    private List<UserBriefDto> users;
-    private List<LabelDto> labels;
 }

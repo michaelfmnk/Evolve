@@ -35,6 +35,10 @@ public class Card {
     private Integer order;
 
     @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @ManyToOne
     @JoinColumn(name = "column_id")
     private BoardColumn column;
 
