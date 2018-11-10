@@ -12,10 +12,9 @@
   }
 
   .login_form_content{
-   
-    padding: 20px;
-    padding-bottom: 2rem;
-      
+
+    padding: 20px 20px 2rem;
+
     input[type=checkbox]{
       position: absolute;
       left: 0; top: 0;
@@ -24,7 +23,7 @@
     }
 
     label[for=remember_me_checkbox] {
-      
+
       margin-left: 30px;
       position: relative;
       cursor: pointer;

@@ -44,9 +44,7 @@ class NavHeader extends React.Component {
               activeClassName="selected_link"
               isActive={() => this.isHashActive('#contacts')}
               onClick={(event) => { goToAnchor('contacts', true) }}
-          >
-            Contacts
-            </NavLink>
+            >Contacts</NavLink>
           </li>
         </ul>
       </nav>
