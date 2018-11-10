@@ -10,10 +10,8 @@ import io.restassured.http.ContentType;
 import lombok.extern.apachecommons.CommonsLog;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -37,7 +35,10 @@ import java.util.concurrent.TimeoutException;
 import static com.evolvestage.api.config.ws.WebSocketConfig.WS_URL;
 import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @CommonsLog
@@ -50,10 +51,7 @@ public class WebSocketTest extends BaseTest {
     private DefaultStompFrameHandler stompFrameHandler;
     private LinkedBlockingDeque<String> blockingQueue;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Before
+    @BeforeEach
     public void before() {
         blockingQueue = new LinkedBlockingDeque<>();
         stompClient = new WebSocketStompClient(
@@ -96,15 +94,16 @@ public class WebSocketTest extends BaseTest {
     }
 
     @Test
-    public void notAuthorizedUserShouldNotHaveAbilityToConnect() throws InterruptedException, ExecutionException, TimeoutException {
-        thrown.expect(ExecutionException.class);
-        thrown.expectCause(hasProperty("statusCode"));
-        thrown.expectCause(hasProperty("statusCode", equalTo(UNAUTHORIZED)));
-        connect(null);
+    public void notAuthorizedUserShouldNotHaveAbilityToConnect() {
+        ExecutionException exception = assertThrows(ExecutionException.class, () -> {
+            connect(null);
 
-        stompClient
-                .connect(String.format("ws://localhost:%s%s", port, WS_URL), new StompSessionHandlerAdapter() {})
-                .get(100, MILLISECONDS);
+            stompClient
+                    .connect(String.format("ws://localhost:%s%s", port, WS_URL), new StompSessionHandlerAdapter() {})
+                    .get(100, MILLISECONDS);
+        });
+        assertThat(exception.getCause(), hasProperty("statusCode"));
+        assertThat(exception.getCause(), hasProperty("statusCode", is(UNAUTHORIZED)));
     }
 
     @Test

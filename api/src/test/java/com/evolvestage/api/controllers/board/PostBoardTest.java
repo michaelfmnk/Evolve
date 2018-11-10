@@ -5,7 +5,7 @@ import com.evolvestage.api.docs.DocumentDto;
 import com.evolvestage.api.dtos.BoardDto;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

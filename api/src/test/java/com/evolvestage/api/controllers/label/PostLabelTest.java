@@ -4,7 +4,7 @@ import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.LabelDto;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.io.IOException;

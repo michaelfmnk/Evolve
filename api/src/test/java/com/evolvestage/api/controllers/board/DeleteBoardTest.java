@@ -3,7 +3,7 @@ package com.evolvestage.api.controllers.board;
 import com.evolvestage.api.BaseTest;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.http.HttpMethod;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;

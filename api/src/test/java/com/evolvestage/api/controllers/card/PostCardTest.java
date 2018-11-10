@@ -2,14 +2,14 @@ package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.CardBriefDto;
+import com.evolvestage.api.dtos.CardDto;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.io.IOException;
 
-import com.evolvestage.api.dtos.CardDto;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
