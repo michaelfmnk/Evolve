@@ -8,8 +8,6 @@ import com.mailjet.client.MailjetClient;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,10 +64,4 @@ public abstract class BaseTest {
                         .build());
         badHeaders = new Headers(new Header(authProperties.getHeaderName(), badToken));
     }
-
-    @Test
-    public void contextLoads() {
-        Assertions.assertTrue(true);
-    }
-
 }

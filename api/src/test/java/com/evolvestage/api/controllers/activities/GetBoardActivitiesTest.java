@@ -2,6 +2,7 @@ package com.evolvestage.api.controllers.activities;
 
 import com.evolvestage.api.BaseTest;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
@@ -12,6 +13,7 @@ import static org.hamcrest.Matchers.hasSize;
 public class GetBoardActivitiesTest extends BaseTest {
 
     @Test
+    @DisplayName("should get board activities with pagination")
     public void shouldGetActivities() {
         given()
                 .accept(ContentType.JSON)
@@ -33,6 +35,7 @@ public class GetBoardActivitiesTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("should not get activities for board without permission")
     public void shouldNotGetActivities() {
         given()
                 .accept(ContentType.JSON)
