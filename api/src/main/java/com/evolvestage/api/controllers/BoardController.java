@@ -73,4 +73,11 @@ public class BoardController {
         return activityService.getBoardActivity(boardId, pageable);
     }
 
+    @DeleteMapping(Api.Boards.BOARD_COLUMN_BY_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public void deleteColumn(@PathVariable("board_id") Integer boardId, @PathVariable("column_id") Integer columnId) {
+        boardColumnService.deleteColumn(boardId, columnId);
+    }
+
 }
