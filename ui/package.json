@@ -2,7 +2,9 @@
   "name": "ui",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://evolve-stage.com",
   "dependencies": {
+    "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
     "cross-env": "^5.2.0",
     "history": "^4.7.2",

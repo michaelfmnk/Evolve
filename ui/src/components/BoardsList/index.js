@@ -12,6 +12,13 @@ class BoardsList extends React.Component {
     this.props.handleBoardClick(board)
   }
 
+  onAdd = () => {
+      const { canAdd, onAddBoard } = this.props;
+      canAdd
+        && onAddBoard
+        && onAddBoard();
+  };
+
   render () {
     const { boards, canAdd } = this.props
     return (
@@ -19,8 +26,8 @@ class BoardsList extends React.Component {
          {
            boards && boards.map(board => (
              board &&
-              <li 
-                className='board-block' 
+              <li
+                className='board-block'
                 style={{backgroundImage: `url(${board.background_url})`}}
                 onClick={() => this.handleBoardClick(board)}
               >
@@ -42,7 +49,10 @@ class BoardsList extends React.Component {
           }
           {
             canAdd &&
-            <li className="board-block add-board">
+            <li
+                onClick={this.onAdd}
+                className="board-block add-board"
+            >
               <p><i className="fas fa-plus" /></p>
             </li>
           }
@@ -52,7 +62,8 @@ class BoardsList extends React.Component {
 }
 
 BoardsList.propTypes = {
-  boards: PropTypes.arrayOf(PropTypes.object)
+  boards: PropTypes.arrayOf(PropTypes.object),
+    onAddBoard: PropTypes.func,
 }
 
 BoardsList.defaultProps = {
