@@ -1,0 +1,90 @@
+@charset "UTF-8";
+@import url('fonts.css');
+
+//Variables:
+    //Colors:
+    $border-color: #b8b8b8;
+    $active-color: rgb(76, 178, 236);
+    $apply-color: rgb(57, 145, 61);
+
+    //Animations:
+    $a_short-duration: 0.2s;
+    $a-duration: 0.5s;
+    $a_long_duration: 1s;
+
+    //Fonts:
+    $base-font: "Montserrat-Regular";
+
+.page-main {
+    margin-top: 70px;
+    background: url("thumb-1920-34904.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
+    height: calc(100vh - 70px);
+}
+
+.blur {
+    position: fixed;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    z-index: 1;
+    background: rgba(0,0,0, 0.6);
+}
+
+.windowhandler {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    z-index: 10;
+
+    .openedboard {
+        position: relative;
+        width: 50vw;
+        min-width: 600px;
+        //height: 100px;
+        margin-top: 70px;
+        background-color: #fff;
+
+        display: grid;
+        grid-template-rows: 150px auto;
+        .closewindow {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+        }
+        .imagesection {
+            
+            background-color: $border-color;
+            img {
+                max-width: 600px;
+                height: 100%;
+            }
+        }
+
+        .other {
+            display: grid;
+            grid-template-columns: auto 200px;
+
+            .col-1 {
+                padding: 10px;
+                .sectioncaption {
+                    i {
+                        margin: 5px 15px 5px 0;
+                    }
+                    margin: 5px 0;
+                    font-weight: bold;
+                }
+            }
+
+            .col-2 {
+                padding: 10px;
+            }
+        }
+    }
+}
