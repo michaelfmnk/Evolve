@@ -6,8 +6,11 @@ import com.evolvestage.api.security.JwtUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mailjet.client.MailjetClient;
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
-import io.restassured.http.Headers;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,14 +31,12 @@ import javax.sql.DataSource;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseTest {
 
-    protected Headers headers;
-    protected Headers badHeaders;
     @LocalServerPort
     protected Integer port;
     @SpyBean
     protected JwtTokenUtil jwtTokenUtil;
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     @Autowired
     protected DataSource dataSource;
     @Autowired
@@ -50,18 +51,44 @@ public abstract class BaseTest {
     @PostConstruct
     public void prepare() {
         RestAssured.port = port;
-        final String userToken = jwtTokenUtil.generateToken(
-                JwtUser.builder()
-                        .id(1)
-                        .email("michaelfmnk@gmail.com")
-                        .build());
-        headers = new Headers(new Header(authProperties.getHeaderName(), userToken));
-
-        final String badToken = jwtTokenUtil.generateToken(
-                JwtUser.builder()
-                        .id(-1)
-                        .email("fake@fake.com")
-                        .build());
-        badHeaders = new Headers(new Header(authProperties.getHeaderName(), badToken));
+        RestAssured.config = RestAssuredConfig.config().objectMapperConfig(ObjectMapperConfig.objectMapperConfig()
+                        .jackson2ObjectMapperFactory((aClass, s) -> objectMapper));
     }
+
+
+
+    protected RequestSpecificationWrapper given() {
+        return new RequestSpecificationWrapper();
+    }
+
+    protected class RequestSpecificationWrapper {
+
+        public RequestSpecification auth() {
+            return auth(1, "michaelfmnk@gmail.com");
+        }
+
+        public RequestSpecification badAuth() {
+            return auth(-1, "fake@auth.com");
+        }
+
+        public RequestSpecification noAuth() {
+            return givenBaseSpec();
+        }
+
+        public RequestSpecification auth(Integer userId, String email) {
+            String userToken = jwtTokenUtil.generateToken(
+                    JwtUser.builder()
+                            .id(userId)
+                            .email(email)
+                            .build());
+            return givenBaseSpec().header(new Header(authProperties.getHeaderName(), userToken));
+        }
+
+        private RequestSpecification givenBaseSpec() {
+            return RestAssured.given().log().all()
+                    .accept(ContentType.JSON)
+                    .contentType(ContentType.JSON);
+        }
+    }
+
 }

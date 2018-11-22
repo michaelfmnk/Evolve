@@ -2,29 +2,25 @@ package com.evolvestage.api.controllers.auth;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.AuthRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.sql.SQLException;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class RefreshTokenTest extends BaseTest {
 
     @Test
-    public void shouldRefreshToken() throws JsonProcessingException {
+    public void shouldRefreshToken() {
         AuthRequest authRequest = AuthRequest.builder()
                 .email("michaelfmnk@gmail.com")
                 .password("test")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()
@@ -35,9 +31,7 @@ public class RefreshTokenTest extends BaseTest {
                 .body("user_id", equalTo(1));
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/auth/login")
                 .then()
@@ -55,9 +49,7 @@ public class RefreshTokenTest extends BaseTest {
                 .execute();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/auth/login")
                 .then()

@@ -3,10 +3,9 @@ package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.security.JwtUser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.restassured.http.ContentType;
+import lombok.SneakyThrows;
 import lombok.extern.apachecommons.CommonsLog;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
@@ -33,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static com.evolvestage.api.config.ws.WebSocketConfig.WS_URL;
-import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
@@ -69,14 +67,12 @@ public class WebSocketTest extends BaseTest {
     }
 
     @Test
-    public void shouldSendMessageToSocketOnCreateBoard()
-            throws InterruptedException, ExecutionException, TimeoutException, JsonProcessingException {
+    @SneakyThrows
+    public void shouldSendMessageToSocketOnCreateBoard() {
         StompSession session = connect(wsHeaders);
         StompSession.Subscription subscription = session.subscribe("/boards/1", stompFrameHandler);
-
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/cards/1/archive")
                 .then()
@@ -119,8 +115,7 @@ public class WebSocketTest extends BaseTest {
         StompSession.Subscription subscription = session.subscribe("/boards/1", stompFrameHandler);
 
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/cards/1/archive")
                 .then()
@@ -133,7 +128,8 @@ public class WebSocketTest extends BaseTest {
         subscription.unsubscribe();
     }
 
-    private StompSession connect(WebSocketHttpHeaders headers) throws InterruptedException, ExecutionException, TimeoutException {
+    @SneakyThrows
+    private StompSession connect(WebSocketHttpHeaders headers) {
         return stompClient
                 .connect(String.format("ws://localhost:%s%s", port, WS_URL), headers,
                         new StompSessionHandlerAdapter() {})

@@ -2,15 +2,13 @@ package com.evolvestage.api.controllers.auth;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.SignUpDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.errors.MailjetException;
-import io.restassured.http.ContentType;
+import lombok.SneakyThrows;
 import org.assertj.db.type.Request;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -31,9 +29,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()
@@ -67,7 +64,7 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void shouldReuseNotEnabledUserOnSecondSignUp() throws JsonProcessingException {
+    public void shouldReuseNotEnabledUserOnSecondSignUp() {
         doReturn("passwordHash")
                 .when(passwordEncoder).encode(any(CharSequence.class));
         SignUpDto authRequest = SignUpDto.builder()
@@ -78,9 +75,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()
@@ -110,7 +106,8 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void shouldFailRegisterIfNotPossibleToSendEmail() throws Throwable {
+    @SneakyThrows
+    public void shouldFailRegisterIfNotPossibleToSendEmail() {
         when(mailjetClient.post(any(MailjetRequest.class))).thenThrow(new MailjetException("error"));
 
         SignUpDto authRequest = SignUpDto.builder()
@@ -121,9 +118,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()
@@ -138,7 +134,7 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void shouldRegisterOnUnprocessableEntity() throws Throwable {
+    public void shouldRegisterOnUnprocessableEntity() {
         SignUpDto authRequest = SignUpDto.builder()
                 .email("meteormf99gmail.com")
                 .password("newPassword12")
@@ -147,9 +143,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()
@@ -170,9 +165,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()
@@ -187,7 +181,7 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotRegisterUserWithSameEmail() throws JsonProcessingException {
+    public void shouldNotRegisterUserWithSameEmail() {
         SignUpDto authRequest = SignUpDto.builder()
                 .email("admin@gmail.com")
                 .password("newPassword12")
@@ -196,9 +190,8 @@ public class RegisterTest extends BaseTest {
                 .build();
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/sign-up")
                 .then()

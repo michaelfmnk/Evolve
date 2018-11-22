@@ -1,14 +1,12 @@
 package com.evolvestage.api.controllers.board;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.http.HttpMethod;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -19,8 +17,7 @@ public class DeleteBoardTest extends BaseTest {
     @Test
     public void shouldDeleteBoard() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .delete("/api/boards/1")
                 .then()
@@ -41,8 +38,7 @@ public class DeleteBoardTest extends BaseTest {
     @Test
     public void shouldDeleteBoardAndNotDeleteDefaultBackground() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .delete("/api/boards/4")
                 .then()
@@ -63,8 +59,7 @@ public class DeleteBoardTest extends BaseTest {
     @Test
     public void shouldNotDeleteBoard() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .delete("/api/boards/3")
                 .then()

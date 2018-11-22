@@ -2,13 +2,10 @@ package com.evolvestage.api.controllers.user;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.VerificationCodeDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -16,12 +13,11 @@ import static org.hamcrest.Matchers.*;
 public class VerifyUserCodeTest extends BaseTest {
 
     @Test
-    public void shouldVerifyCodeAndReturnValidToken() throws JsonProcessingException {
+    public void shouldVerifyCodeAndReturnValidToken() {
         VerificationCodeDto codeContainer = new VerificationCodeDto("123321");
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(codeContainer))
+                .noAuth()
+                .body(codeContainer)
                 .when()
                 .post("api/users/4/verify")
                 .then()
@@ -42,12 +38,11 @@ public class VerifyUserCodeTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotVerifyCode() throws JsonProcessingException {
+    public void shouldNotVerifyCode() {
         VerificationCodeDto codeContainer = new VerificationCodeDto("123399");
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(codeContainer))
+                .noAuth()
+                .body(codeContainer)
                 .when()
                 .post("api/users/4/verify")
                 .then()
@@ -72,12 +67,11 @@ public class VerifyUserCodeTest extends BaseTest {
     }
 
     @Test
-    public void shouldFailVerifyCodeOnUserEnabled() throws JsonProcessingException {
+    public void shouldFailVerifyCodeOnUserEnabled() {
         VerificationCodeDto codeContainer = new VerificationCodeDto("123399");
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(codeContainer))
+                .noAuth()
+                .body(codeContainer)
                 .when()
                 .post("api/users/1/verify")
                 .then()

@@ -1,11 +1,9 @@
 package com.evolvestage.api.controllers.background;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class GetBackgroundTest extends BaseTest {
@@ -13,9 +11,7 @@ public class GetBackgroundTest extends BaseTest {
     @Test
     public void shouldGetCommonBackgroundsAndFormUrl() {
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/backgrounds").prettyPeek()
                 .then()
@@ -28,9 +24,7 @@ public class GetBackgroundTest extends BaseTest {
     @Test
     public void shouldWorkPagination() {
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .param("size", 4)
                 .when()
                 .get("/api/backgrounds").prettyPeek()
@@ -41,9 +35,7 @@ public class GetBackgroundTest extends BaseTest {
                 .body("total_pages", equalTo(4));
 
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .param("page", 1000)
                 .param("size", 4)
                 .when()

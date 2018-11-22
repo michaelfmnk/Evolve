@@ -3,8 +3,6 @@ package com.evolvestage.api.controllers.board;
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.docs.DocumentDto;
 import com.evolvestage.api.dtos.BoardBriefDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -16,7 +14,6 @@ import org.testcontainers.shaded.org.apache.http.HttpStatus;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.*;
@@ -25,16 +22,14 @@ import static org.mockito.Mockito.*;
 public class PutBoardTest extends BaseTest {
 
     @Test
-    public void shouldUpdateBoard() throws JsonProcessingException {
+    public void shouldUpdateBoard() {
         BoardBriefDto boardToUpdate = BoardBriefDto.builder()
                 .backgroundId(UUID.randomUUID())
                 .name("updated board name")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(boardToUpdate))
+                .auth()
+                .body(boardToUpdate)
                 .when()
                 .put("/api/boards/1").prettyPeek()
                 .then()
@@ -67,15 +62,13 @@ public class PutBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldDeleteBackground() throws JsonProcessingException {
+    public void shouldDeleteBackground() {
         BoardBriefDto boardToUpdate = BoardBriefDto.builder()
                 .name("updated board name")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(boardToUpdate))
+                .auth()
+                .body(boardToUpdate)
                 .when()
                 .put("/api/boards/1").prettyPeek()
                 .then()
@@ -106,16 +99,14 @@ public class PutBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotTouchBackgroundIfItWasNotChanged() throws JsonProcessingException {
+    public void shouldNotTouchBackgroundIfItWasNotChanged() {
         BoardBriefDto boardToUpdate = BoardBriefDto.builder()
                 .backgroundId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
                 .name("updated board name")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(boardToUpdate))
+                .auth()
+                .body(boardToUpdate)
                 .when()
                 .put("/api/boards/1").prettyPeek()
                 .then()
@@ -146,15 +137,13 @@ public class PutBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotUpdateBoardOnValidation() throws JsonProcessingException {
+    public void shouldNotUpdateBoardOnValidation() {
         BoardBriefDto boardToUpdate = BoardBriefDto.builder()
                 .backgroundId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(boardToUpdate))
+                .auth()
+                .body(boardToUpdate)
                 .when()
                 .put("/api/boards/1").prettyPeek()
                 .then()
@@ -162,7 +151,7 @@ public class PutBoardTest extends BaseTest {
     }
 
     @Test
-    public void restTemplateShouldRethrowExceptionAndDataShouldBeRestored() throws JsonProcessingException {
+    public void restTemplateShouldRethrowExceptionAndDataShouldBeRestored() {
         when(restTemplate.exchange(
                 ArgumentMatchers.anyString(),
                 ArgumentMatchers.eq(HttpMethod.PUT),
@@ -174,10 +163,8 @@ public class PutBoardTest extends BaseTest {
                 .name("updated board name")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(boardToUpdate))
+                .auth()
+                .body(boardToUpdate)
                 .when()
                 .put("/api/boards/1").prettyPeek()
                 .then()
