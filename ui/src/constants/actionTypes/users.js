@@ -1,7 +1,2 @@
 export const GET_AUTH_USER_DATA = 'GET_AUTH_USER_DATA'
 export const GET_USER_PREVIEW = 'GET_USER_PREVIEW'
-
-
-
-
-

@@ -7,51 +7,50 @@ import PropTypes from 'prop-types'
 import './BoardsList.css'
 
 class BoardsList extends React.Component {
-
   handleBoardClick = (board) => {
     this.props.handleBoardClick(board)
   }
 
   onAdd = () => {
-      const { canAdd, onAddBoard } = this.props;
-      canAdd
-        && onAddBoard
-        && onAddBoard();
+      const { canAdd, onAddBoard } = this.props
+      canAdd &&
+        onAddBoard &&
+        onAddBoard()
   };
 
   render () {
     const { boards, canAdd } = this.props
     return (
       <ul className='boards-list'>
-         {
+        {
            boards && boards.map(board => (
              board &&
-              <li
-                className='board-block'
-                style={{backgroundImage: `url(${board.background_url})`}}
-                onClick={() => this.handleBoardClick(board)}
+             <li
+               className='board-block'
+               style={{backgroundImage: `url(${board.background_url})`}}
+               onClick={() => this.handleBoardClick(board)}
               >
-                <span className='fade' />
-                <p className="name">{board.name}</p>
-                <div className="party">
-                  <p className='members-header'>Members:</p>
-                  <div className='members-wrp'>
-                    <img src={board.owner.avatar_url} />
-                    {
+               <span className='fade' />
+               <p className="name">{board.name}</p>
+               <div className="party">
+                 <p className='members-header'>Members:</p>
+                 <div className='members-wrp'>
+                   <img src={board.owner.avatar_url} />
+                   {
                       board.collaborators && board.collaborators.map(user => (
                         <img src={user.avatar_url} />
                       ))
                     }
-                  </div>
-                </div>
-              </li>
+                 </div>
+               </div>
+             </li>
             ))
           }
-          {
+        {
             canAdd &&
             <li
-                onClick={this.onAdd}
-                className="board-block add-board"
+              onClick={this.onAdd}
+              className="board-block add-board"
             >
               <p><i className="fas fa-plus" /></p>
             </li>
@@ -63,7 +62,7 @@ class BoardsList extends React.Component {
 
 BoardsList.propTypes = {
   boards: PropTypes.arrayOf(PropTypes.object),
-    onAddBoard: PropTypes.func,
+    onAddBoard: PropTypes.func
 }
 
 BoardsList.defaultProps = {

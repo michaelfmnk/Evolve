@@ -35,6 +35,6 @@ function configureStore (history) {
     return store
 }
 
-const store = configureStore(History);
+const store = configureStore(History)
 
-export default store;
+export default store

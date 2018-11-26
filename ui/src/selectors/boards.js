@@ -1,14 +1,13 @@
 
-
-const joinedBoardsIds = ({auth}) => ( auth.user || {} ).joined_boards || []
-const ownBoardsIdsIds = ({auth}) => ( auth.user || {} ).own_boards || []
+const joinedBoardsIds = ({auth}) => (auth.user || {}).joined_boards || []
+const ownBoardsIdsIds = ({auth}) => (auth.user || {}).own_boards || []
 const userById = ({users}, id) => users.byId[id]
 
 export const boardByIdFromRoute = (state, {match}) => boardById(state, match.params.board_id)
 
 export const boardById = (state, id) => {
   const board = state.boards.byId[id]
-  if( !board ) return null
+  if (!board) return null
 
   return {
     ...board,
@@ -18,6 +17,6 @@ export const boardById = (state, id) => {
 }
 
 export const authUserBoards = (state) => ({
-  ownBoards: ownBoardsIdsIds(state).map( id => boardById(state, id)),
-  joinedBoards: joinedBoardsIds(state).map( id => boardById(state, id))
+  ownBoards: ownBoardsIdsIds(state).map(id => boardById(state, id)),
+  joinedBoards: joinedBoardsIds(state).map(id => boardById(state, id))
 })

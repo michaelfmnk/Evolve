@@ -3,7 +3,7 @@ import AuthSaga from 'sagas/auth.js'
 
 function * rootSaga () {
   yield all([
-    fork(AuthSaga),
+    fork(AuthSaga)
   ])
 }
 

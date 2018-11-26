@@ -14,7 +14,6 @@ class UserMenuDropdown extends React.Component {
     }, 100)
   }
 
-
   renderTrigger = () => (
     <i className="fas fa-user trigger" />
   )
@@ -22,7 +21,7 @@ class UserMenuDropdown extends React.Component {
   renderDropdown = () => (
     <div className='creation-menu-dropdown-wrp' ref={(elem) => { this.dropdown = elem }}>
       <div className="usinfo">
-        <img src={this.props.user.avatar_url} className="useravatar"/>
+        <img src={this.props.user.avatar_url} className="useravatar" />
         <p>{`${this.props.user.first_name} ${this.props.user.last_name}`}</p>
       </div>
       <div className="divideline" />

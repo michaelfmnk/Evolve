@@ -30,8 +30,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mergeProps = (stateProps, dispatchProps) => {
-  const { authUserId } = stateProps;
-  const { dispatch } = dispatchProps;
+  const { authUserId } = stateProps
+  const { dispatch } = dispatchProps
 
   return {
       ...stateProps,
@@ -39,10 +39,10 @@ const mergeProps = (stateProps, dispatchProps) => {
         verifyAccount: (secredCode) => {
           dispatch(verifyAccountRequest(authUserId, secredCode))
         },
-        signUp: (userInfo) => dispatch( signUpRequest(userInfo) )
+        signUp: (userInfo) => dispatch(signUpRequest(userInfo))
       }
-  };
-};
+  }
+}
 
 RegisterPage.propTypes = {
   actions: PropTypes.object,

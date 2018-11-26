@@ -11,22 +11,22 @@ import { authUserIdSelector } from 'selectors/auth'
 import './App.css'
 
 class App extends Component {
-  componentDidMount(){
+  componentDidMount () {
     this.props.actions.getAuthUserDataRequest()
   }
 
   render () {
     return (
       <React.Fragment>
-        <AppHeader history={history}/>
+        <AppHeader history={history} />
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path = '/' exact render = { ()=> <Redirect to ='/home' />} />
+            <Route path='/' exact render={() => <Redirect to='/home' />} />
             <Route path='/home' component={HomePage} />
-        
+
             <Route path='/boards/:board_id' component={BoardPage} />
             {/* <Route path='/users/:user_id/profile' component={ProfilePage} />  */}
-       
+
           </Switch>
         </ConnectedRouter>
       </React.Fragment>
@@ -43,10 +43,10 @@ const mergeProps = (stateProps, {dispatch}) => {
     ...stateProps,
     actions: {
       getAuthUserDataRequest: () => {
-        dispatch( getAuthUserData(stateProps.authUserId))
-      } 
+        dispatch(getAuthUserData(stateProps.authUserId))
+      }
     }
   }
 }
 
-export default connect(mapStateToProps, null , mergeProps)(App)
+export default connect(mapStateToProps, null, mergeProps)(App)

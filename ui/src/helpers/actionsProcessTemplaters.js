@@ -4,15 +4,15 @@ export const success = (type) => `SUCCESS_${type}`
 
 export const startActionWithType = (type, payload) => ({
   type: start(type),
-  payload,
-});
+  payload
+})
 
 export const successActionWithType = (type, payload) => ({
   type: success(type),
-  payload,
-});
+  payload
+})
 
 export const failActionWithType = (type, payload) => ({
   type: fail(type),
   payload
-});
+})

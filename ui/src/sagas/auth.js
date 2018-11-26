@@ -13,7 +13,7 @@ function * authHandler (action) {
 
   axiosInstance.defaults.headers.Authorization = token
 
-  yield put( push(home))
+  yield put(push(home))
 }
 
 function * signUpHandler (action) {
@@ -23,13 +23,13 @@ function * signUpHandler (action) {
 function * logout (action) {
   clearLocalStorage()
   const currentPath = yield select(currentPathSelector)
-  if( [signIn, signUp ].every( path => currentPath !== path)) { 
+  if ([signIn, signUp ].every(path => currentPath !== path)) {
     yield put(push(welcome))
   }
 }
 
 export default function * AuthSaga () {
-  yield takeEvery( success(types.SIGN_UP), signUpHandler)
+  yield takeEvery(success(types.SIGN_UP), signUpHandler)
   yield takeEvery([ success(types.VERIFY_ACCOUNT), success(types.SIGN_IN)], authHandler)
-  yield takeEvery( types.LOGOUT, logout )
+  yield takeEvery(types.LOGOUT, logout)
 }

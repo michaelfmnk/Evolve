@@ -7,14 +7,14 @@ export const getAuthUserData = (userId) => ({
   type: types.GET_AUTH_USER_DATA,
   REQUEST: {
     url: ednpoints.userById(userId),
-    responseDataConverter: ( userData => {
+    responseDataConverter: userData => {
       const data = normalize(userData, userWithBoards)
       return {
         authUser: data.entities.authUser[data.result],
         collaborators: data.entities.users,
         boards: data.entities.boards
       }
-    })
+    }
   }
 })
 
@@ -24,4 +24,3 @@ export const getUser = (userId) => ({
     url: ednpoints.userById(userId)
   }
 })
-

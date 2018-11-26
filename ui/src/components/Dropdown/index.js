@@ -17,7 +17,7 @@ class Dropdown extends React.Component {
       document.addEventListener('click', this.hideDropdownMenu)
     })
   }
-  
+
   hideDropdownMenu = () => {
     this.setState({ displayMenu: false }, () => {
       document.removeEventListener('click', this.hideDropdownMenu)

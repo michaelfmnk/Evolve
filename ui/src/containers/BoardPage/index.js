@@ -5,12 +5,12 @@ import { bindActionCreators } from 'redux'
 import './BoardPage.css'
 
 class BoardPage extends Component {
-  render(){
+  render () {
     const {board} = this.props
     if (!board) return null
-    return(
+    return (
       <main>
-        <div  className = 'wrp' style={{backgroundImage: `url(${board.background_url})`, height:'100vh'}}/>
+        <div className='wrp' style={{backgroundImage: `url(${board.background_url})`, height: '100vh'}} />
 
       </main>
     )

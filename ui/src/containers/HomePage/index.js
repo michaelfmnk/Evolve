@@ -4,13 +4,12 @@ import { authUserBoards } from 'selectors/boards'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './HomePage.css'
-import Modal from 'components/Modal';
-import BoardCreation from 'components/BoardCreation';
+import Modal from 'components/Modal'
+import BoardCreation from 'components/BoardCreation'
 
 class HomePage extends React.Component {
-
   state = {
-    boardCreationModalShown: false,
+    boardCreationModalShown: false
   };
 
   handleBoardClick = (board) => {
@@ -19,17 +18,17 @@ class HomePage extends React.Component {
 
   setBoardCreationModalVisibility = visible => () => {
       this.setState({
-          boardCreationModalShown: visible,
-      });
+          boardCreationModalShown: visible
+      })
   };
 
   handleBoardSubmit = (boardInfo) => {
-      console.log(boardInfo);
+      console.log(boardInfo)
   };
 
   render () {
-    const { ownBoards, joinedBoards } = this.props.boards;
-    const { boardCreationModalShown } = this.state;
+    const { ownBoards, joinedBoards } = this.props.boards
+    const { boardCreationModalShown } = this.state
     return (
       <main className="home-page-wrp">
         <h2>Personal boards:</h2>
@@ -39,22 +38,19 @@ class HomePage extends React.Component {
           onAddBoard={this.setBoardCreationModalVisibility(true)}
           handleBoardClick={this.handleBoardClick}
         />
+        
         <h2>Joined boards:</h2>
-          {
-              boardCreationModalShown && (
-                  <Modal
-                      onClose={this.setBoardCreationModalVisibility(false)}
-                  >
-                      <BoardCreation
-                          onBoardSubmit={this.handleBoardSubmit}
-                      />
-                  </Modal>
-              )
-          }
         <BoardsList
           boards={joinedBoards}
           handleBoardClick={this.handleBoardClick}
         />
+        {
+          boardCreationModalShown && (
+            <Modal onClose={this.setBoardCreationModalVisibility(false)}>
+              <BoardCreation onBoardSubmit={this.handleBoardSubmit} />
+            </Modal>
+          )
+        }
       </main>
     )
   }
@@ -70,6 +66,4 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch)
 })
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
-

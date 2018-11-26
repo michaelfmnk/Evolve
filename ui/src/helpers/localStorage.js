@@ -3,9 +3,7 @@ export function saveAuthIdentifiersToStorage (token, userId) {
   token && localStorage.setItem('token', token)
 }
 
-export function clearLocalStorage(){
+export function clearLocalStorage () {
   localStorage.removeItem('token')
   localStorage.removeItem('userId')
 }
-
-

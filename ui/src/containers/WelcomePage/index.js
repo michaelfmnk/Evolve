@@ -10,7 +10,6 @@ import ContactsSection from 'components/WelcomePage/ContactsSection'
 import './WelcomePage.css'
 
 class WelcomePage extends React.Component {
-  
   componentDidMount () {
     configureAnchors({ scrollDuration: 300 })
   }
