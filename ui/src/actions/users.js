@@ -1,27 +1,27 @@
-import {startAction, failAction, successAction} from 'helpers/actionsProcessTemplaters'
-import * as types from 'actionsTypes/users'
+import * as ednpoints from 'constants/routes/api/users'
+import * as types from 'constants/actionTypes/users'
+import { userWithBoards } from 'constants/normalizr_schemas/userWithBoards'
+import { normalize } from 'normalizr'
 
-export const getUser = (id, isAuthorizedUser) => ({
-  type: startAction(types.GET_USER),
-  payload: { id, isAuthorizedUser }
+export const getAuthUserData = (userId) => ({
+  type: types.GET_AUTH_USER_DATA,
+  REQUEST: {
+    url: ednpoints.userById(userId),
+    responseDataConverter: ( userData => {
+      const data = normalize(userData, userWithBoards)
+      return {
+        authUser: data.entities.authUser[data.result],
+        collaborators: data.entities.users,
+        boards: data.entities.boards
+      }
+    })
+  }
 })
 
-export const getUserSuccess = (user) => ({
-  type: successAction(types.GET_USER),
-  payload: user
+export const getUser = (userId) => ({
+  type: types.GET_USER_PREVIEW,
+  REQUEST: {
+    url: ednpoints.userById(userId)
+  }
 })
 
-export const getUserError = (error) => ({
-  type: failAction(types.GET_USER),
-  payload: error.message
-})
-
-export const getAuthorizedUserSuccess = (user) => ({
-  type: successAction(types.GET_AUTHORIZED_USER),
-  payload: user
-})
-
-export const getUsersPreviewsSuccess = (usersByIds) => ({
-  type: successAction(types.GET_USERS_PREVIEWS),
-  payload: { usersByIds }
-})

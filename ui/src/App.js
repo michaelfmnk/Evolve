@@ -6,15 +6,15 @@ import BoardPage from 'containers/BoardPage'
 import AppHeader from 'containers/AppHeader'
 import history from './history.js'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { getUser } from 'actions/users'
-import { userIdSelector } from 'selectors/auth'
+import { getAuthUserData } from 'actions/users'
+import { authUserIdSelector } from 'selectors/auth'
 import './App.css'
 
 class App extends Component {
   componentDidMount(){
-    this.props.actions.getUser(this.props.authUserId, true)
+    this.props.actions.getAuthUserDataRequest()
   }
+
   render () {
     return (
       <React.Fragment>
@@ -35,13 +35,18 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  authUserId: userIdSelector(state)
+  authUserId: authUserIdSelector(state)
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    getUser
-  }, dispatch)
-})
+const mergeProps = (stateProps, {dispatch}) => {
+  return {
+    ...stateProps,
+    actions: {
+      getAuthUserDataRequest: () => {
+        dispatch( getAuthUserData(stateProps.authUserId))
+      } 
+    }
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, null , mergeProps)(App)

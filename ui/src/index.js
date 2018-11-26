@@ -6,16 +6,13 @@ import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import LoginPage from 'containers/LoginPage'
 import RegisterPage from 'containers/RegisterPage'
-import configureStore from 'store'
+import store from 'store'
 import App from 'App'
 import WelcomePage from 'containers/WelcomePage'
 import RequireAuth from 'containers/RequireAuth'
 import refreshAuthFromStorage from 'helpers/refreshAuthFromStorage'
 import history from './history.js'
 import './index.css'
-
-
-const store = configureStore(history)
 
 refreshAuthFromStorage(store)
 
