@@ -23,7 +23,6 @@ public class CardService {
     private final CardsRepository cardsRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ColumnsRepository columnsRepository;
-    private final CardService cardService;
     private final BoardColumnService boardColumnService;
 
     public CardBriefDto createCard(CardBriefDto cardBriefDto) {
@@ -59,7 +58,7 @@ public class CardService {
     }
 
     public CardBriefDto moveCard(Integer cardId, Integer boardId, Integer destinationId) {
-        Card card = cardService.findValidCard(boardId, cardId);
+        Card card = findValidCard(boardId, cardId);
         BoardColumn destinationColumn = boardColumnService.findValidByColumnIdAndBoardId(destinationId, boardId);
         card.setColumn(destinationColumn);
         card = cardsRepository.save(card);
