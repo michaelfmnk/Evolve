@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { getAuthUserData } from 'actions/users'
 import { createBoardRequest } from 'actions/boards'
 import { authUserIdSelector } from 'selectors/auth'
+import { getDefaultBackgrounds } from 'actions/images'
 import Modal from 'components/Modal'
 import BoardCreation from 'components/BoardCreation'
 import './App.css'
@@ -38,6 +39,7 @@ class App extends Component {
 
   render () {
     const { isCreationModalOpen } = this.state
+    const { backgrounds, actions } = this.props
     return (
       <React.Fragment>
         <AppHeader history={history} toggleCreationModal={this.toggleModal}/>
@@ -56,6 +58,8 @@ class App extends Component {
             <BoardCreation 
               createBoard={this.handleBoardSubmit} 
               toggleModal={this.toggleModal}
+              backgrounds={backgrounds}
+              getDefaultBackgrounds={actions.getDefaultBackgrounds}
             />
           </Modal>
          )
@@ -66,7 +70,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  authUserId: authUserIdSelector(state)
+  authUserId: authUserIdSelector(state),
+  backgrounds: state.images
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
@@ -82,7 +87,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         dispatch(getAuthUserData(stateProps.authUserId))
       },
       ...bindActionCreators({
-        createBoardRequest
+        createBoardRequest,
+        getDefaultBackgrounds
       }, dispatch)
       
     }
