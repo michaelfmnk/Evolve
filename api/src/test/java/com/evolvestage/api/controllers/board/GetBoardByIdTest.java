@@ -29,6 +29,7 @@ public class GetBoardByIdTest extends BaseTest {
                 .body("columns[0].cards", hasSize(2))
                 .body("columns[0].cards[0].labels[1].color", equalTo("#ba3c3c"))
                 .body("columns[0].cards[0].labels", hasSize(2))
+                .body("columns[0].cards[0].column_id", equalTo(1))
                 .body("columns[0].cards[0].users", hasSize(1))
                 .body("columns[0].cards[0].order", equalTo(1))
                 .body("columns[0].cards[0].content", equalTo("card 1 from col 1"))
