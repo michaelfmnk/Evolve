@@ -10,8 +10,15 @@ export default class BoardCreationModal extends Component {
     };
 
     state = {
-        name: ''
+				name: '',
+				background_id: ''
     };
+
+    componentDidMount() {
+				if( !this.props.backgrounds.length ) {
+					this.props.getDefaultBackgrounds()
+				}
+    }
 
     onClose = () => {
         this.props.handleClose()
@@ -26,13 +33,14 @@ export default class BoardCreationModal extends Component {
     onBoardSubmit = async () => {
         const { name } = this.state
         if (name && name.length > 0) {
-            await this.props.createBoard({ name: this.state.name })
+            await this.props.createBoard(this.state)
             this.props.toggleModal()
         }
     };
 
     render () {
-        const { name } = this.state
+				const { name , background_id} = this.state
+				const { backgrounds } = this.props
         return (
           <div className="modal">
             <div className="creation-dialog">
@@ -46,8 +54,30 @@ export default class BoardCreationModal extends Component {
               <span
                 onClick={this.onClose}
                 className="close-icon"
-              />
+              >
+								<i className='fas fa-times'> </i>
+							</span>
             </div>
+
+						<div className="backgrounds">
+							<h4> Choose background:</h4>
+							{
+								backgrounds.map( img => (
+									<React.Fragment>
+										<div onClick={() => this.setState({...img}, () => console.log(this.state))} className="img-wrp">
+											<img key={img.background_id} src={img.background_url}/>
+												{
+													background_id === img.background_id && 
+														<span className='checked-badge'> 
+															<i className="fas fa-check"></i> 
+														</span>
+												}
+											</div>
+									 </React.Fragment>
+								))
+							}
+						</div>
+						
             <button
               onClick={this.onBoardSubmit}
               className={classnames('submit-board-button', { 'active': name.length > 0})}
