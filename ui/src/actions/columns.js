@@ -9,3 +9,13 @@ export const createColumn = (boardId, column) => ({
     data: column
   }
 })
+
+export const deleteColumn = (boardId, columnId) => ({
+  type: types.DELETE_COLUMN,
+  REQUEST: {
+    method: 'DELETE',
+    url: endpoints.columns(boardId) + "/" + columnId,
+  },
+  columnId,
+  boardId
+})

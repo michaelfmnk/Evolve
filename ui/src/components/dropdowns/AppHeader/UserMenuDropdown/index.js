@@ -26,11 +26,11 @@ class UserMenuDropdown extends React.Component {
       </div>
       <div className="divideline" />
       <ul>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">User boards</a></li>
+        <li><span >Profile</span></li>
+        <li><span >User boards</span></li>
         <div className="divideline" />
-        <li><a href="#">Settings</a></li>
-        <li onClick={this.props.handleExitClick}><a href="#">Exit</a></li>
+        <li><span >Settings</span></li>
+        <li onClick={this.props.handleExitClick}><span >Exit</span></li>
       </ul>
     </div>
   )

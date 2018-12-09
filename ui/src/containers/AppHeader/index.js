@@ -27,7 +27,10 @@ class AppHeader extends React.Component {
           Evolve
         </div>
         <nav className="header-menu inline">
-          <CreationMenuDropdown />
+          <CreationMenuDropdown 
+            toggleCreationModal={this.props.toggleCreationModal}
+          
+          />
           <UserMenuDropdown
             user={this.props.user}
             handleExitClick={this.props.actions.logout}

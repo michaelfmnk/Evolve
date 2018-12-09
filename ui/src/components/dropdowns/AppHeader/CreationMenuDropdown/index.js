@@ -18,8 +18,10 @@ class CreationMenuDropdown extends React.Component {
 
   renderDropdown = () => (
     <ul className='creation-menu-dropdown-wrp' ref={(elem) => { this.dropdown = elem }}>
-      <li><a href="#"><i className="fas fa-plus" /> create board</a></li>
-      <li><a href="#"><i className="fas fa-plus" /> create team</a></li>
+      <li onClick={this.props.toggleCreationModal}>
+        <span ><i className="fas fa-plus" /> create board</span>
+      </li>
+      <li><span ><i className="fas fa-plus" /> create team</span></li>
     </ul>
   )
 

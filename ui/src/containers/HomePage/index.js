@@ -20,7 +20,7 @@ class HomePage extends React.Component {
 
   render () {
     const { ownBoards, joinedBoards } = this.props.boards
-    const { openCreationModal } = this.props
+    const { toggleCreationModal } = this.props
 
     return (
       <main className="home-page-wrp">
@@ -28,7 +28,7 @@ class HomePage extends React.Component {
         <BoardsList
           boards={ownBoards}
           canAdd
-          onAddBoard={openCreationModal}
+          onAddBoard={toggleCreationModal}
           handleBoardClick={this.handleBoardClick}
         />
         

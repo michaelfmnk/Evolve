@@ -1,17 +1,33 @@
 import React from 'react'
+import CardsList from 'components/CardsList'
+import AddEntityForm from 'components/AddEntityForm'
 
-const ColumnsList = () => (
+const ColumnsList = ({columns, actions}) => (
   <div className="columnhandler">
-    <div class="column">
-        <div class="cap-block">
-            <div class="caption">Bugs</div>
-            <div class="options"><a href="#"><i class="fas fa-ellipsis-h"></i></a></div>
-        </div>
-        <div class="rowhandler">
-          
-        </div>
-        <div class="onemore"><a href="#"><i class="fas fa-plus"></i> Add Card</a></div>
-    </div>
+  {
+    columns.map( column => (
+      <div className="column">
+          <div className="cap-block">
+              <div className="caption">{column.name}</div>
+              <div className="options" onClick={() => actions.deleteColumn(column.id)}><i className="fas fa-times"></i></div>
+          </div>
+
+          <CardsList 
+            cards={column.cards}
+            createCard={(title) => actions.createCard(column.id, {title})}
+          />
+
+      </div>
+    ))
+  }
+  {/* <div className="onemore"><a href="#"><i className="fas fa-plus"></i> Add Card</a></div> */}
+  <div className="column">
+    <AddEntityForm 
+      placeholder='Enter column name'
+      btnText='Add column'
+      createEntity={(name) => actions.createColumn({name})}
+    />
+  </div>
   </div>
 )
 

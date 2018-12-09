@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { boardByIdFromRoute, currentBoardId } from 'selectors/boards'
+import { boardColumns } from 'selectors/columns'
 import { authUserIdSelector } from 'selectors/auth'
 import { getBoardById } from 'actions/boards'
-import { createColumn } from 'actions/columns'
+import { createColumn, deleteColumn } from 'actions/columns'
+import { createCard } from 'actions/cards'
 import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
@@ -23,7 +25,10 @@ class BoardPage extends Component {
   }
 
   render () {
-    const { board, authUserId, actions } = this.props
+    const { board, authUserId, actions, boardColumnsWithCards } = this.props;
+
+    console.log(boardColumnsWithCards)
+    
     if (!board) return null
     return (
       <main>
@@ -35,8 +40,12 @@ class BoardPage extends Component {
             isBoardPersonal={authUserId === board.owner_id  }
           />
           <ColumnsList
-            columns={board.columns} 
-            actions={{createColumn: actions.createColumn}}
+            columns={boardColumnsWithCards} 
+            actions={{
+              createColumn: actions.createColumn,
+              deleteColumn: actions.deleteColumn,
+              createCard: actions.createCard,
+            }}
           />
          
         </div>       
@@ -49,14 +58,37 @@ const mapStateToProps = (state, props) => ({
   board: boardByIdFromRoute(state, props),
   authUserId: authUserIdSelector(state),
   currentBoardId: currentBoardId(state),
+  boardColumnsWithCards: boardColumns(state)
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    getBoardById,
-    createColumn,
-    setCurrentBoard
-  }, dispatch)
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   actions: bindActionCreators({
+//     getBoardById,
+//     createColumn,
+//     setCurrentBoard,
+//     createCard
+//   }, dispatch)
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardPage)
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { dispatch } = dispatchProps
+  const { currentBoardId } = stateProps
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+
+    actions: {
+      createCard: (columnId, card) => dispatch( createCard(currentBoardId, columnId, card) ),
+      createColumn: (column) => dispatch( createColumn(currentBoardId, column) ),
+      deleteColumn: (columnId) => dispatch( deleteColumn(currentBoardId, columnId) ),
+      ...bindActionCreators({
+        getBoardById,
+        setCurrentBoard,
+      }, dispatch)
+  }
+  }
+}
+
+export default connect(mapStateToProps, null, mergeProps)(BoardPage)

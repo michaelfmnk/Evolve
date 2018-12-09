@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
+import { bindActionCreators } from 'redux'
 import HomePage from 'containers/HomePage'
 import BoardPage from 'containers/BoardPage'
 import AppHeader from 'containers/AppHeader'
@@ -39,11 +40,11 @@ class App extends Component {
     const { isCreationModalOpen } = this.state
     return (
       <React.Fragment>
-        <AppHeader history={history} openCreationModal={this.toggleModal}/>
+        <AppHeader history={history} toggleCreationModal={this.toggleModal}/>
         <ConnectedRouter history={history}>
           <Switch>
             <Route path='/' exact render={() => <Redirect to='/home' />} />
-            <Route path='/home' render={ () => <HomePage openCreationModal={this.toggleModal} />}/>
+            <Route path='/home' render={ () => <HomePage toggleCreationModal={this.toggleModal} />}/>
             <Route path='/boards/:board_id' component={BoardPage} />
             {/* <Route path='/users/:user_id/profile' component={ProfilePage} />  */}
 
@@ -52,7 +53,10 @@ class App extends Component {
        {
          isCreationModalOpen && (
           <Modal onClose={this.toggleModal}>
-            <BoardCreation onBoardSubmit={this.handleBoardSubmit} />
+            <BoardCreation 
+              createBoard={this.handleBoardSubmit} 
+              toggleModal={this.toggleModal}
+            />
           </Modal>
          )
        } 
@@ -65,15 +69,22 @@ const mapStateToProps = (state) => ({
   authUserId: authUserIdSelector(state)
 })
 
-const mergeProps = (stateProps, {dispatch}) => {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { dispatch } = dispatchProps;
+
   return {
     ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+
     actions: {
       getAuthUserDataRequest: () => {
         dispatch(getAuthUserData(stateProps.authUserId))
       },
-
-      createBoardRequest
+      ...bindActionCreators({
+        createBoardRequest
+      }, dispatch)
+      
     }
   }
 }

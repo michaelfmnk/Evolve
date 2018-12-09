@@ -21,13 +21,14 @@ const apiCaller = store => next => action => {
 
   const { url, method = 'GET', data, responseDataConverter = (data) => data} = request
   const type = action.type
+  const processedAction = startAction(action)
 
-  store.dispatch(startAction(action))
+  store.dispatch(processedAction)
 
   axiosInstance.request({ url, method, data })
     .then(res => {
       const data = responseDataConverter(res.data)
-      store.dispatch(successActionWithType(type, data))
+      store.dispatch( { ...processedAction,  ...successActionWithType(type, data) })
     })
     .catch(err => {
       console.error(err)

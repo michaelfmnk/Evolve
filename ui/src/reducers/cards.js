@@ -1,5 +1,6 @@
 import {start, fail, success} from 'helpers/actionsProcessTemplaters'
 import {GET_BOARD_BY_ID}  from 'constants/actionTypes/boards'
+import * as types from 'constants/actionTypes/cards'
 import { combineReducers } from 'redux'
 
 const initialState = {
@@ -14,6 +15,13 @@ function byId (state = initialState.byId, action) {
       return {
         ...state,
         ...action.payload.cardsByIds
+      }
+    }
+
+    case success(types.CREATE_CARD): {
+      return {
+        ...state,
+        [action.payload.id]: action.payload
       }
     }
 

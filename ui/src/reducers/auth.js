@@ -1,6 +1,7 @@
 import * as types from 'constants/actionTypes/auth'
 import {start, fail, success} from 'helpers/actionsProcessTemplaters'
 import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
+import { CREATE_BOARD } from 'constants/actionTypes/boards'
 
 const initialState = {
   user: {},
@@ -32,6 +33,16 @@ export default function authReducer (state = initialState, action) {
       return {
         ...state,
         user: action.payload.authUser
+      }
+    }
+
+    case success(CREATE_BOARD): {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          own_boards: [ ...state.user.own_boards, action.payload.id ]
+        }
       }
     }
 

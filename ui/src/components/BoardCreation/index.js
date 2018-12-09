@@ -23,10 +23,11 @@ export default class BoardCreationModal extends Component {
         })
     };
 
-    onBoardSubmit = () => {
+    onBoardSubmit = async () => {
         const { name } = this.state
         if (name && name.length > 0) {
-            this.props.onBoardSubmit({ name: this.state.name })
+            await this.props.createBoard({ name: this.state.name })
+            this.props.toggleModal()
         }
     };
 
