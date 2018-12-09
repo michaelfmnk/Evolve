@@ -150,6 +150,7 @@ public class ConverterService {
                 .order(entity.getOrder())
                 .title(entity.getTitle())
                 .authorId(entity.getAuthor().getUserId())
+                .columnId(entity.getColumn().getColumnId())
                 .labels(emptyIfNull(entity.getLabels()).stream()
                         .map(this::toDto)
                         .collect(Collectors.toList()))
@@ -168,6 +169,7 @@ public class ConverterService {
                 .content(entity.getContent())
                 .order(entity.getOrder())
                 .title(entity.getTitle())
+                .columnId(entity.getColumn().getColumnId())
                 .authorId(entity.getAuthor().getUserId())
                 .build();
     }
