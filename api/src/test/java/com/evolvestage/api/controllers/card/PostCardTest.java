@@ -37,6 +37,7 @@ public class PostCardTest extends BaseTest{
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", notNullValue())
                 .body("content", equalTo("NEW CARD"))
+                .body("column_id", equalTo(1))
                 .body("title", equalTo("NEW CARD TITLE"))
                 .extract().response().body().asString();
         CardDto response = objectMapper.readValue(json, CardDto.class);
