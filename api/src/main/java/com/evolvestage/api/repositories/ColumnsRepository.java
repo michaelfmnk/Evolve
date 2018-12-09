@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 public interface ColumnsRepository extends JpaRepository<BoardColumn, Integer> {
 
@@ -15,4 +16,7 @@ public interface ColumnsRepository extends JpaRepository<BoardColumn, Integer> {
     @Modifying
     @Query("DELETE FROM BoardColumn column WHERE column.columnId = :columnId AND column.board.boardId = :boardId")
     void deleteColumnByColumnIdAndBoardId(@Param("boardId") Integer boardId, @Param("columnId") Integer columnId);
+
+    @Query("SELECT column FROM BoardColumn column WHERE column.columnId = :columnId AND column.board.boardId = :boardId")
+    Optional<BoardColumn> findColumnByColumnIdAndBoardId(@Param("columnId") Integer columnId, @Param("boardId") Integer boardId);
 }
