@@ -1,6 +1,7 @@
-import * as types from 'actionsTypes/auth'
-import {startAction, failAction, successAction} from 'helpers/actionsProcessTemplaters'
-import { GET_AUTHORIZED_USER } from 'actionsTypes/users'
+import * as types from 'constants/actionTypes/auth'
+import {start, fail, success} from 'helpers/actionsProcessTemplaters'
+import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
+import { CREATE_BOARD } from 'constants/actionTypes/boards'
 
 const initialState = {
   user: {},
@@ -10,33 +11,45 @@ const initialState = {
 export default function authReducer (state = initialState, action) {
   switch (action.type) {
     case types.REFRESH_AUTH_FROM_STORE:
-    case successAction(types.SIGN_IN):
+    case success(types.SIGN_IN): {
       return action.payload
+    }
 
-      case successAction(types.SIGN_UP): {
-        return {
-          user: { id: action.payload.id },
-          token: null
+    case success(types.SIGN_UP): {
+      return {
+        user: { id: action.payload.id },
+        token: null
+      }
+    }
+
+    case success(types.VERIFY_ACCOUNT): {
+      return {
+        ...state,
+        token: action.payload.token
+      }
+    }
+
+    case success(GET_AUTH_USER_DATA): {
+      return {
+        ...state,
+        user: action.payload.authUser
+      }
+    }
+
+    case success(CREATE_BOARD): {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          own_boards: [ ...state.user.own_boards, action.payload.id ]
         }
       }
+    }
 
-      case successAction(types.VERIFY_ACCOUNT): {
-        return {
-          ...state,
-          token: action.payload.token
-        }
-      }
+    case types.LOGOUT: {
+      return { ...initialState }
+    }
 
-      case successAction(GET_AUTHORIZED_USER): {
-        return {
-          ...state,
-          user: action.payload
-        }
-      }
-
-      case types.LOGOUT:
-        return { ...initialState }
-
-      default: return state
+    default: return state
   }
 }

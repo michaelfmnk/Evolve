@@ -1,1 +1,0 @@
-export const getUserById = (id) => `/api/users/${id}`
