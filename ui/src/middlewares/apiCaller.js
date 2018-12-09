@@ -33,7 +33,8 @@ const apiCaller = store => next => action => {
       console.error(err)
       const { data, status } = err.response
       store.dispatch(failActionWithType(type, { errorData: data, status }))
-
+      console.log(' ERROR ')
+      console.log(status)
       switch (status) {
         case 401:
         case 403: {

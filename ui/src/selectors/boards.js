@@ -12,7 +12,7 @@ export const boardById = (state, id) => {
   return {
     ...board,
     owner: userById(state, board.owner),
-    collaborators: board.collaborators.map(id => userById(state, id))
+    collaborators: board.collaborators ? board.collaborators.map(id => userById(state, id)) : []
   }
 }
 
@@ -20,3 +20,5 @@ export const authUserBoards = (state) => ({
   ownBoards: ownBoardsIdsIds(state).map(id => boardById(state, id)),
   joinedBoards: joinedBoardsIds(state).map(id => boardById(state, id))
 })
+
+export const currentBoardId = ({boards}) => boards.current

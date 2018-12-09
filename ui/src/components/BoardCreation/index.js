@@ -45,13 +45,13 @@ export default class BoardCreationModal extends Component {
               <span
                 onClick={this.onClose}
                 className="close-icon"
-                    />
+              />
             </div>
             <button
               onClick={this.onBoardSubmit}
               className={classnames('submit-board-button', { 'active': name.length > 0})}
-                >
-                    Create board
+            >
+              Create board
             </button>
           </div>
         )

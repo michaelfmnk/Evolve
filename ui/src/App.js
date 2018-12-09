@@ -7,28 +7,55 @@ import AppHeader from 'containers/AppHeader'
 import history from './history.js'
 import { connect } from 'react-redux'
 import { getAuthUserData } from 'actions/users'
+import { createBoardRequest } from 'actions/boards'
 import { authUserIdSelector } from 'selectors/auth'
+import Modal from 'components/Modal'
+import BoardCreation from 'components/BoardCreation'
 import './App.css'
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCreationModalOpen: false
+    }
+  }
   componentDidMount () {
     this.props.actions.getAuthUserDataRequest()
   }
 
+  toggleModal = () => {
+    this.setState({
+      isCreationModalOpen: !this.state.isCreationModalOpen
+    })
+  }
+
+  handleBoardSubmit = (board) => {
+    this.props.actions.createBoardRequest(board);
+  }
+
   render () {
+    const { isCreationModalOpen } = this.state
     return (
       <React.Fragment>
-        <AppHeader history={history} />
+        <AppHeader history={history} openCreationModal={this.toggleModal}/>
         <ConnectedRouter history={history}>
           <Switch>
             <Route path='/' exact render={() => <Redirect to='/home' />} />
-            <Route path='/home' component={HomePage} />
-
+            <Route path='/home' render={ () => <HomePage openCreationModal={this.toggleModal} />}/>
             <Route path='/boards/:board_id' component={BoardPage} />
             {/* <Route path='/users/:user_id/profile' component={ProfilePage} />  */}
 
           </Switch>
         </ConnectedRouter>
+       {
+         isCreationModalOpen && (
+          <Modal onClose={this.toggleModal}>
+            <BoardCreation onBoardSubmit={this.handleBoardSubmit} />
+          </Modal>
+         )
+       } 
       </React.Fragment>
     )
   }
@@ -44,7 +71,9 @@ const mergeProps = (stateProps, {dispatch}) => {
     actions: {
       getAuthUserDataRequest: () => {
         dispatch(getAuthUserData(stateProps.authUserId))
-      }
+      },
+
+      createBoardRequest
     }
   }
 }

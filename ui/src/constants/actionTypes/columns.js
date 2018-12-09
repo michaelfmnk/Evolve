@@ -1,0 +1,1 @@
+export const CREATE_COLUMN = 'CREATE_COLUMN'

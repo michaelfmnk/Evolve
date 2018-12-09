@@ -1,0 +1,82 @@
+@import 'commonStyles/variables.scss';
+
+.board-menu {
+  background: rgba(0,0,0,.24);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 21px;
+  color: white;
+
+  .boardmenul {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+
+        .members{
+            display: flex;
+            align-items: center;
+            float: left;
+            width: auto;        
+
+            img {
+            transition: $a_short-duration;
+            display: inline-block;
+            border-radius: 50%;
+            width: 25px; height: 25px;
+            background: $dark-color;
+            margin: 2px; 
+            cursor: pointer; 
+        }
+        }
+
+      .header{
+          display: flex;
+          align-items: center;
+
+          .caption {
+            font-weight: bold;
+            overflow: hidden;
+           
+
+            text-overflow: ellipsis;
+            margin: 0;
+            height: 25px;
+            color: white;
+          }
+
+          .mainoptions {
+            display: flex;
+            align-items: center;
+              p {
+                  height: 24px;
+                  margin: 0;
+                  
+                  display: flex;
+                  align-items: center;
+                  border-right: 1px solid $light-color;
+                  padding: 0 20px;
+                  span {
+                      font-size: 16px;
+                     
+                      display: flex;
+                      align-items: center;                     
+                  }
+              }
+
+              p.ownerhip {
+                  margin-right: 10px;
+              }
+           }          
+      }
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    float: right;
+    padding-left: 2rem;
+    }
+}
+

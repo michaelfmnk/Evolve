@@ -1,7 +1,6 @@
 import {start, fail, success} from 'helpers/actionsProcessTemplaters'
+import {GET_BOARD_BY_ID}  from 'constants/actionTypes/boards'
 import { combineReducers } from 'redux'
-import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
-import * as types from 'constants/actionTypes/boards'
 
 const initialState = {
   byId: {},
@@ -10,17 +9,11 @@ const initialState = {
 
 function byId (state = initialState.byId, action) {
   switch (action.type) {
-    case success(GET_AUTH_USER_DATA): {
-      return action.payload.boards
-    }
 
-    case success(types.GET_BOARD_BY_ID): {
+    case success(GET_BOARD_BY_ID): {
       return {
         ...state,
-        [action.payload.boardId]: {
-          ...state[action.payload.boardId],
-          ...action.payload.boardById
-        }
+        ...action.payload.columnsByIds
       }
     }
 
@@ -30,9 +23,6 @@ function byId (state = initialState.byId, action) {
 
 function current (state = initialState.current, action) {
   switch (action.type) {
-    case types.SET_CURRENT_BOARD:
-      return action.payload.boardId
-      
     default: return state
   }
 }
@@ -41,3 +31,4 @@ export default combineReducers({
   byId,
   current
 })
+

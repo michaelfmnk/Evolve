@@ -11,15 +11,9 @@ class BoardsList extends React.Component {
     this.props.handleBoardClick(board)
   }
 
-  onAdd = () => {
-      const { canAdd, onAddBoard } = this.props
-      canAdd &&
-        onAddBoard &&
-        onAddBoard()
-  };
 
   render () {
-    const { boards, canAdd } = this.props
+    const { boards, canAdd, onAddBoard } = this.props
     return (
       <ul className='boards-list'>
         {
@@ -49,7 +43,7 @@ class BoardsList extends React.Component {
         {
             canAdd &&
             <li
-              onClick={this.onAdd}
+              onClick={onAddBoard}
               className="board-block add-board"
             >
               <p><i className="fas fa-plus" /></p>

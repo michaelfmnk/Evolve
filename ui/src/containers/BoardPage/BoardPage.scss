@@ -1,4 +1,146 @@
 .wrp{
   background-size: cover;
   background-position: center;
+  padding-top: 50px;
+}
+
+
+.columnhandler::-webkit-scrollbar {
+  background-color: rgba(255, 255, 255, 0.2);
+  display: block;
+  height: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.columnhandler::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.columnhandler {
+  padding: 15px 0;
+  height: calc(100vh - 155px);
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(100%);
+  //white-space: nowrap;
+  flex-direction: row;
+  align-items: flex-start;
+
+  .column {
+      display: grid;
+      grid-template-rows: 40px auto 40px;
+      background-color: rgb(204, 204, 204);
+      border-radius: 5px;
+      padding: 5px;
+      min-width: 220px;
+      max-width: 220px;
+      margin: 0 15px;
+
+      .cap-block {
+          padding: 5px 10px;
+          display: grid;
+          grid-template-columns: auto 20px;
+          .caption {
+              font-weight: bold;
+              margin-top: 3px;
+              overflow: hidden;
+          }
+          .options {
+
+              a,
+              i {
+                  color: #000;
+                  line-height: 29px;
+              }
+          }
+      }
+
+      .rowhandler {
+          max-height: calc(100vh - 260px);
+          overflow-y: auto;
+          scroll-snap-type: y mandatory;
+
+          .todo {
+              display :grid;
+              grid-template-rows: auto 20px 20px;
+              width: calc(100% - 15px);
+              background-color: #fff;
+              border-radius: 2.5px;
+              min-height: 30px;
+              margin-bottom: 5px;
+              padding: 10px 5px;
+
+              .image {
+                  padding: 0;
+                  margin: 0;
+                  img {
+                      margin: 0;
+                      width: 205px;
+                  }
+              }
+
+              .info {
+                  display: grid;
+                  grid-template-columns: 30px auto auto 20px;
+
+                  .notifications {
+                      
+                      padding: 3px;
+                      width: 35px;
+                      i {
+                          font-size: 0.8em;
+                      }
+                      .amount {
+                          display: inline;
+                      }
+                      border-radius: 2px;
+                  }
+
+                  .unread {
+                      color: #fff;
+                      background-color: rgb(247, 43, 43);
+                  }
+
+                  .moreoptions {
+                      margin: 3px 0px 0px 10px;
+                      ul {
+                          display: flex;
+                      }
+
+                      li {
+                          margin: 0 5px;
+                      }
+                  }
+              }
+          }
+
+          .todo:last-of-type {
+              margin-bottom: 0;
+          }
+      }
+
+      ::-webkit-scrollbar {
+          background-color: #fff;
+          width: 5px;
+          border-radius: 2.5px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+          background-color: #666;
+          border-radius: 2.5px;
+      }
+
+      .onemore {
+          padding: 5px 10px;
+
+          a {
+              color: #000;
+              line-height: 40px;
+          }
+      }
+  }
 }
