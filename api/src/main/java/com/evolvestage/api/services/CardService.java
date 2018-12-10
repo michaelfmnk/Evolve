@@ -57,8 +57,13 @@ public class CardService {
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
     }
 
-    public CardBriefDto moveCard(Integer cardId, Integer boardId, Integer destinationId) {
-        Card card = findValidCard(boardId, cardId);
+    private Card findValidCard(Integer boardId, Integer columnId, Integer cardId) {
+        return cardsRepository.findCardByBoardIdAndColumnIdAndCardId(boardId, columnId, cardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
+    }
+
+    public CardBriefDto moveCard(Integer cardId, Integer columnId, Integer boardId, Integer destinationId) {
+        Card card = findValidCard(boardId, columnId, cardId);
         BoardColumn destinationColumn = boardColumnService.findValidByColumnIdAndBoardId(destinationId, boardId);
         card.setColumn(destinationColumn);
         card = cardsRepository.save(card);

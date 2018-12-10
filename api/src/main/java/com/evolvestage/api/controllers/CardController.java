@@ -53,8 +53,9 @@ public class CardController {
     @PatchMapping(Api.Boards.MOVE_CARD_BY_ID)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public CardBriefDto moveCard(@PathVariable(name = "board_id") Integer boardId,
+                                   @PathVariable(name = "column_id") Integer columnId,
                                    @PathVariable(name = "card_id") Integer cardId,
                                    @PathVariable(name = "destination_id") Integer destinationId) {
-        return cardService.moveCard(cardId, boardId, destinationId);
+        return cardService.moveCard(cardId, columnId, boardId, destinationId);
     }
 }
