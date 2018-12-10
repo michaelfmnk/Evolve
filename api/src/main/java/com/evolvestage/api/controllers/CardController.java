@@ -1,7 +1,6 @@
 package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.CardBriefDto;
-import com.evolvestage.api.dtos.CardDto;
 import com.evolvestage.api.security.UserAuthentication;
 import com.evolvestage.api.services.CardService;
 import com.evolvestage.api.utils.MessagesService;
@@ -49,5 +48,14 @@ public class CardController {
     public void archiveCard(@PathVariable("board_id") Integer boardId,
                             @PathVariable("card_id") Integer cardId) {
         cardService.archiveCard(boardId, cardId);
+    }
+
+    @PatchMapping(Api.Boards.MOVE_CARD_BY_ID)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public CardBriefDto moveCard(@PathVariable(name = "board_id") Integer boardId,
+                                   @PathVariable(name = "column_id") Integer columnId,
+                                   @PathVariable(name = "card_id") Integer cardId,
+                                   @PathVariable(name = "destination_id") Integer destinationId) {
+        return cardService.moveCard(cardId, columnId, boardId, destinationId);
     }
 }

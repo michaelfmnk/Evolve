@@ -80,4 +80,11 @@ public class BoardController {
         boardColumnService.deleteColumn(boardId, columnId);
     }
 
+    @PutMapping(Api.Boards.BOARD_COLUMN_BY_ID)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public BoardColumnDto updateColumn(@PathVariable("board_id") Integer boardId, @PathVariable("column_id") Integer columnId,
+                             @Validated @RequestBody BoardColumnDto columnDto) {
+        return boardColumnService.updateColumn(boardId, columnId, columnDto);
+    }
+
 }

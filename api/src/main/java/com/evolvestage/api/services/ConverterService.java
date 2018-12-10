@@ -126,6 +126,20 @@ public class ConverterService {
                 .build();
     }
 
+
+    public BoardColumnDto toBriefDto(BoardColumn entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return BoardColumnDto.builder()
+                .id(entity.getColumnId())
+                .name(entity.getName())
+                .order(entity.getOrder())
+                .boardId(entity.getBoard().getBoardId())
+                .build();
+    }
+
     public LabelDto toDto(Label entity) {
         if (Objects.isNull(entity)) {
             return null;
@@ -241,4 +255,5 @@ public class ConverterService {
                 .board(board)
                 .build();
     }
+
 }

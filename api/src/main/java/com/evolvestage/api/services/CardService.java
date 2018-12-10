@@ -1,7 +1,7 @@
 package com.evolvestage.api.services;
 
 import com.evolvestage.api.dtos.CardBriefDto;
-import com.evolvestage.api.dtos.CardDto;
+import com.evolvestage.api.entities.BoardColumn;
 import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.listeners.events.CardArchivedEvent;
 import com.evolvestage.api.repositories.CardsRepository;
@@ -23,6 +23,7 @@ public class CardService {
     private final CardsRepository cardsRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ColumnsRepository columnsRepository;
+    private final BoardColumnService boardColumnService;
 
     public CardBriefDto createCard(CardBriefDto cardBriefDto) {
         Card cardEntity = converter.toEntity(cardBriefDto);
@@ -56,4 +57,16 @@ public class CardService {
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
     }
 
+    private Card findValidCard(Integer boardId, Integer columnId, Integer cardId) {
+        return cardsRepository.findCardByBoardIdAndColumnIdAndCardId(boardId, columnId, cardId)
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
+    }
+
+    public CardBriefDto moveCard(Integer cardId, Integer columnId, Integer boardId, Integer destinationId) {
+        Card card = findValidCard(boardId, columnId, cardId);
+        BoardColumn destinationColumn = boardColumnService.findValidByColumnIdAndBoardId(destinationId, boardId);
+        card.setColumn(destinationColumn);
+        card = cardsRepository.save(card);
+        return converter.toBriefDto(card);
+    }
 }

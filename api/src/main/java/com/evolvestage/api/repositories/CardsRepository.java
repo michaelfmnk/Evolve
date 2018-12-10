@@ -11,4 +11,11 @@ public interface CardsRepository extends JpaRepository<Card, Integer> {
 
     @Query("SELECT card FROM Card card WHERE card.cardId = :cardId AND card.column.board.boardId = :boardId")
     Optional<Card> findCardByBoardIdAndCardId(@Param("boardId") Integer boardId, @Param("cardId") Integer cardId);
+
+    @Query("SELECT card FROM Card card WHERE card.cardId = :cardId " +
+            "AND card.column.board.boardId = :boardId " +
+            "AND card.column.columnId = :columnId ")
+    Optional<Card> findCardByBoardIdAndColumnIdAndCardId(@Param("boardId") Integer boardId,
+                                                         @Param("columnId") Integer columnId,
+                                                         @Param("cardId") Integer cardId);
 }
