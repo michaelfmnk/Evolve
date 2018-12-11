@@ -15,8 +15,8 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal}) => (
           <p className='ownerhip'> 
             {
               isBoardPersonal 
-                ?<span > <i className="fas fa-lock"></i> Personal </span> 
-                :<span > <i className="fas fa-users"> </i> Joined </span>
+                ? <span > <i className="fas fa-lock"/> Personal </span> 
+                : <span > <i className="fas fa-users"/> Joined </span>
             }
           </p>
             

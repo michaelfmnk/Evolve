@@ -25,6 +25,17 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case success(types.MOVE_CARD): {
+      const { card: { id }, targetColumn } = action
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          column_id: targetColumn.id
+        }
+      }
+    }
+
     default: return state
   }
 }

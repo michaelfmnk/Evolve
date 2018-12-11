@@ -20,7 +20,7 @@ class AppHeader extends React.Component {
       <header className="page-header">
         <nav className="header-menu inline">
           <i className="fas fa-home nav-btn" onClick={this.redirectToHome} />
-          <i className="fas fa-clipboard nav-btn"> boards</i>
+          <i className="fas fa-clipboard nav-btn"> {" "} boards</i>
         </nav>
         <div className="logo-wrp">
           {/* <img className="logo-img" /> */}

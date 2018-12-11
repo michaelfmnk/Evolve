@@ -5,12 +5,17 @@ import { boardColumns } from 'selectors/columns'
 import { authUserIdSelector } from 'selectors/auth'
 import { getBoardById } from 'actions/boards'
 import { createColumn, deleteColumn } from 'actions/columns'
-import { createCard } from 'actions/cards'
+import { createCard, moveCard } from 'actions/cards'
 import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
 import ColumnsList from 'components/ColumnsList'
 import './BoardPage.css'
+
+
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
+
 
 class BoardPage extends Component {
   componentDidMount(){
@@ -45,6 +50,7 @@ class BoardPage extends Component {
               createColumn: actions.createColumn,
               deleteColumn: actions.deleteColumn,
               createCard: actions.createCard,
+              moveCard: actions.moveCard
             }}
           />
          
@@ -70,6 +76,8 @@ const mapStateToProps = (state, props) => ({
 //   }, dispatch)
 // })
 
+
+
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps
   const { currentBoardId } = stateProps
@@ -83,6 +91,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       createCard: (columnId, card) => dispatch( createCard(currentBoardId, columnId, card) ),
       createColumn: (column) => dispatch( createColumn(currentBoardId, column) ),
       deleteColumn: (columnId) => dispatch( deleteColumn(currentBoardId, columnId) ),
+      moveCard: (card, targetColumn) => dispatch( moveCard(currentBoardId, card, targetColumn)),
       ...bindActionCreators({
         getBoardById,
         setCurrentBoard,
@@ -90,5 +99,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   }
   }
 }
+
+BoardPage = DragDropContext(HTML5Backend)(BoardPage)
 
 export default connect(mapStateToProps, null, mergeProps)(BoardPage)
