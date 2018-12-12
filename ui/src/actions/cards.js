@@ -22,3 +22,14 @@ export const moveCard = (boardId, card, targetColumn) => ({
   card, 
   targetColumn
 })
+
+export const updateCard = (boardId, card) => ({
+  type: types.UPDATE_CARD,
+  REQUEST: {
+    method: 'PUT',
+    data: card,
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}`
+  },
+  boardId,
+  card
+})

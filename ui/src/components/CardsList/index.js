@@ -33,9 +33,9 @@ function collect (connect, monitor) {
 
 class Card extends Component {
   render() {
-    const {card , connectDragSource, isDragging } = this.props
+    const {card , connectDragSource, isDragging, openCard } = this.props
     return connectDragSource(
-      <div className="todo" style={{opacity: isDragging? 0.2 : 1}}>
+      <div className="todo" style={{opacity: isDragging? 0.2 : 1}} onClick={openCard(card)}>
                 <div className="image"></div>
                 <div className="caption">{card.title}</div>
                 <div className="info">
@@ -63,11 +63,11 @@ class Card extends Component {
 
 Card = DragSource("Card", knightSource, collect)(Card);
 
-const CardsList = ({cards, createCard, moveCard}) => (
+const CardsList = ({cards, createCard, moveCard, openCard}) => (
   <div className="rowhandler">
    {
      cards.map( card => (
-        <Card card={card} moveCard={moveCard} />
+        <Card card={card} moveCard={moveCard} openCard={openCard}/>
       ))
      }
 
