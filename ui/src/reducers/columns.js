@@ -1,6 +1,6 @@
 import { start, fail, success } from 'helpers/actionsProcessTemplaters'
 import { GET_BOARD_BY_ID }  from 'constants/actionTypes/boards'
-import { CREATE_CARD } from 'constants/actionTypes/cards'
+import { CREATE_CARD, MOVE_CARD } from 'constants/actionTypes/cards'
 import { combineReducers } from 'redux'
 import * as types from 'constants/actionTypes/columns'
 
@@ -35,6 +35,32 @@ function byId (state = initialState.byId, action) {
           cards: [
             ...state[column_id].cards, id
           ]
+        }
+      }
+    }
+
+    case success(MOVE_CARD): {
+      const { card: {id, column_id }, targetColumn } = action
+      if( column_id === targetColumn.id) {
+        return {
+            ...state,
+          [column_id]: {
+            ...state[column_id],
+            cards: [ ...state[column_id].cards.filter( cardId => cardId !== id), id ]
+          },
+        }
+        
+      }
+      return {
+        ...state,
+        [column_id]: {
+          ...state[column_id],
+          cards: state[column_id].cards.filter( cardId => cardId !== id)
+        },
+
+        [targetColumn.id]: {
+          ...state[targetColumn.id],
+          cards: [ ...state[targetColumn.id].cards, id ]
         }
       }
     }

@@ -56,7 +56,7 @@ class AddEntityForm extends Component {
               onClick={this.toggleActive}
             >
               <i className="fas fa-plus"></i>
-              {btnText}
+              { " " + btnText}
             </span>
         } 
       </div>

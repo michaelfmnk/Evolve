@@ -19,3 +19,14 @@ export const deleteColumn = (boardId, columnId) => ({
   columnId,
   boardId
 })
+
+export const updateColumn = (boardId, column) => ({
+  type: types.UPDATE_COLUMN,
+  REQUEST: {
+    method: 'PUT',
+    data: {name : column.name},
+    url: endpoints.columns(boardId) + "/" + column.id,
+  },
+  column,
+  boardId
+})

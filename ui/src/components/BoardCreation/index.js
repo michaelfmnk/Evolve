@@ -58,9 +58,9 @@ export default class BoardCreationModal extends Component {
 								<i className='fas fa-times'> </i>
 							</span>
             </div>
-
+            <h4> Choose background:</h4>
 						<div className="backgrounds">
-							<h4> Choose background:</h4>
+							
 							{
 								backgrounds.map( img => (
 									<React.Fragment>

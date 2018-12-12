@@ -9,3 +9,27 @@ export const createCard = (boardId, columnId, card) => ({
     data: card
   }
 })
+
+
+
+export const moveCard = (boardId, card, targetColumn) => ({
+  type: types.MOVE_CARD,
+  REQUEST: {
+    method: 'PATCH',
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/move/${targetColumn.id}`
+  },
+  boardId, 
+  card, 
+  targetColumn
+})
+
+export const updateCard = (boardId, card) => ({
+  type: types.UPDATE_CARD,
+  REQUEST: {
+    method: 'PUT',
+    data: card,
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}`
+  },
+  boardId,
+  card
+})

@@ -1,13 +1,21 @@
 .wrp{
-  background-size: cover;
-  background-position: center;
-  padding-top: 50px;
+   padding-top: 50px;
+  height: 100vh;
 
   color: #17394d;
   font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
+}
+
+.background {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: -100;
 }
 
 
@@ -45,23 +53,39 @@
       min-width: 220px;
       max-width: 220px;
       margin: 0 15px;
+      padding-left: 0.5rem;
+      padding-right: 0.6rem;
 
       .cap-block {
-          padding: 5px 10px;
-          display: grid;
-          grid-template-columns: auto 20px;
+          padding-bottom: 5px;
+          
+          padding-right: 0px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+
+          input {
+            font-size: 15px;
+            outline: white;
+            padding: 6px;
+            background: white;
+          }
           .caption {
+              padding-left: 10px;
               font-weight: 600;
-              margin-top: 3px;
+              padding-top: 10px;
+              width: 100%;
               overflow: hidden;
               color: #17394d;
           }
           .options {
-
-              a,
               i {
-                  color: #000;
-                  line-height: 29px;
+                  color: #17394d;
+                  
+                  cursor: pointer;
+                  display: block;
+                  padding: 5px;
+
               }
           }
       }
@@ -74,12 +98,13 @@
           .todo {
               display :grid;
               grid-template-rows: auto 20px 20px;
-              width: calc(100% - 15px);
+              width: 100%;
               background-color: #fff;
               border-radius: 2.5px;
               min-height: 30px;
               margin-bottom: 5px;
               padding: 10px 5px;
+              cursor: pointer;
 
               .image {
                   padding: 0;
@@ -152,7 +177,11 @@
               color: #000;
               width: 100%;
               display: block;
+              font-weight: bold;
             //   line-height: 40px;
+            &:hover{
+                color: #5aac44;
+            }
           }
 
           .add-card-form{
@@ -171,38 +200,6 @@
                 outline: none;
                 background-color: white;
                 padding: 5px;
-            }
-
-            .buttons-group {
-                display: flex;
-                justify-content: space-between;
-  
-                .btn{
-                  padding: 10px;
-                  font-weight: 700;
-                  line-height: 20px;
-                //   margin: 8px 4px 0 0;
-                  padding: 6px 12px;
-                  cursor: pointer;
-                  text-align: center;
-                }
-  
-                .submit{
-
-                    background-color: #f5f6f7;
-                    color: rgba(0, 0, 0, 0.3);
-
-                    &.active{
-                        background-color: #5aac44;
-                        box-shadow: 0 1px 0 0 #3f6f21;
-                        border: none;
-                        color: #fff;
-
-                        &:hover {
-                            background-color: #509040;
-                          }
-                    }
-                }
             }
           }
 
