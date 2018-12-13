@@ -96,8 +96,9 @@
           scroll-snap-type: y mandatory;
 
           .todo {
-              display :grid;
-              grid-template-rows: auto 20px 20px;
+              display : flex;
+              flex-direction: column;
+              
               width: 100%;
               background-color: #fff;
               border-radius: 2.5px;
@@ -119,7 +120,19 @@
                 //   display: grid;
                 //   grid-template-columns: 30px auto auto 20px;
                 display: flex;
+                align-items: center;
+                justify-content: space-between;
                 padding-top: 2px;
+
+                .members-section {
+                    padding: 0;
+                    .members {
+                        img {
+                            height: 20px;
+                            width: 20px;
+                        }
+                    }
+                }
 
                   .notifications {
                       
@@ -141,12 +154,17 @@
 
                   .moreoptions {
                     //   margin: 3px 0px 0px 10px;
+                        
                       ul {
                           display: flex;
                       }
 
                       li {
                           margin: 0 5px;
+
+                          i {
+                            font-size: 15px;
+                          }
                       }
                   }
               }

@@ -13,23 +13,31 @@ class CardMembers extends Component {
 
   toggleAdding = () => this.setState({isMemberAdding: !this.state.isMemberAdding})
 
-  adduserToCard = (user) => {}
+  addUserToCard = (user) => () => {
+    const { card, assignUserToCard } = this.props;
+  }
+
+  handle
 
   render() {
-    const { card, card: { users }, boardUsers, updateCard} = this.props;
+    const { card, card: { users }, boardUsers, canEdit , handleUserAssigning, withLabel} = this.props;
     const { isMemberAdding, activeMember } = this.state;
 
     return (
       <div className='members-section'>
-          Members:
+          { withLabel && "Members:" }
           <div className="members">
             {
               users && users.map( user => (
-                <img src={user.avatar_utl} alt='' onClick={this.handleMemberClick}/>
+                <img src={user.avatar_url} alt='' onClick={this.handleMemberClick}/>
               ))
             }
 
-            <span className='add-member-btn' onClick={this.toggleAdding}> <i className='fa fa-plus'></i> </span>
+            {canEdit && (
+              <span className='add-member-btn' onClick={this.toggleAdding}> 
+                <i className='fa fa-plus'/> 
+              </span>
+            )}
 
             {
               isMemberAdding && (
@@ -42,12 +50,12 @@ class CardMembers extends Component {
                      
                       {
                         boardUsers && boardUsers.map( user => (
-                          <div className='users-list-item'>
+                          <div className='users-list-item' onClick={handleUserAssigning(user)}>
                             <div className='user-info'>
                               <img src={user.avatar_url} alt=''/>
                               <span> {user.first_name + ' ' + user.last_name} </span>
                             </div>
-                            { card.users && card.users.includes(user) && <i className='fas fa-check '></i> }
+                            { card.users && card.users.some( ({id}) => id === user.id) && <i className='fas fa-check '></i> }
                           </div>
                         ))
                       }

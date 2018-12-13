@@ -116,6 +116,7 @@ class Column extends Component {
           createCard={(title) => actions.createCard(column.id, {title})}
           moveCard={moveCard}
           openCard={openCard}
+          column={column}
         />
     
       </div>

@@ -1,3 +1,9 @@
 export const CREATE_CARD = 'CREATE_CARD'
 export const MOVE_CARD = 'MOVE CARD'
 export const UPDATE_CARD = 'UPDATE_CARD'
+
+export const OPEN_CARD = 'OPEN_CARD'
+export const CLOSE_CARD = 'CLOSE_CARD'
+
+export const ASSIGN_USERS_TO_CARD = 'ASSIGN_USERS_TO_CARD'
+export const UNNASSIGN_USER_FROM_CARD = 'UNNASSIGN_USER_FROM_CARD'

@@ -33,3 +33,35 @@ export const updateCard = (boardId, card) => ({
   boardId,
   card
 })
+
+export const openCard = (id) => ({
+  type: types.OPEN_CARD,
+  payload: { id }
+})
+
+export const closeCard = (id) => ({
+  type: types.CLOSE_CARD,
+})
+
+export const assignUsersToCard = (boardId, card,  userIds) => ({
+  type: types.ASSIGN_USERS_TO_CARD,
+  REQUEST: {
+    method: 'POST',
+    data: {
+      data: userIds
+    },
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/assignees`
+  }
+})
+
+
+
+export const unassignUserFromCard = (boardId, card,  userId) => ({
+  type: types.UNNASSIGN_USER_FROM_CARD,
+  REQUEST: {
+    method: 'DELETE',
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/assignees/${userId}`
+  },
+  card,
+  deletedUserId: userId
+})
