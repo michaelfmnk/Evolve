@@ -1,6 +1,7 @@
 package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.*;
+import com.evolvestage.api.dtos.containers.EmailsContainer;
 import com.evolvestage.api.security.UserAuthentication;
 import com.evolvestage.api.services.ActivityService;
 import com.evolvestage.api.services.BoardColumnService;
@@ -13,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(Api.ROOT)
@@ -85,6 +88,19 @@ public class BoardController {
     public BoardColumnDto updateColumn(@PathVariable("board_id") Integer boardId, @PathVariable("column_id") Integer columnId,
                              @Validated @RequestBody BoardColumnDto columnDto) {
         return boardColumnService.updateColumn(boardId, columnId, columnDto);
+    }
+
+    @PostMapping(Api.Boards.BOARD_COLLABORATORS)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public void invite(@PathVariable("board_id") Integer boardId,
+                       @Valid @RequestBody EmailsContainer emailsContainer) {
+        boardService.invite(boardId, emailsContainer.getEmails());
+    }
+
+    @PostMapping(Api.Boards.INVITATION_BY_ID)
+    public void acceptInvitation(@RequestBody VerificationCodeDto codeDto,
+                                 @ApiIgnore UserAuthentication authentication) {
+        boardService.acceptInvitation(codeDto.getCode(), authentication.getEmail());
     }
 
 }

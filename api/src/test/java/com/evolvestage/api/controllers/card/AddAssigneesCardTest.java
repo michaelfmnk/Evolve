@@ -1,7 +1,7 @@
 package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
-import com.evolvestage.api.dtos.ListContainer;
+import com.evolvestage.api.dtos.containers.ListContainer;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
 import org.junit.Test;

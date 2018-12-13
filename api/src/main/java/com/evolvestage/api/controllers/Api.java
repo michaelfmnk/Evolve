@@ -23,6 +23,7 @@ public class Api {
     public class Boards {
         public final String BOARDS = "/boards";
         public final String BOARD_BY_ID = "/boards/{board_id}";
+        public final String BOARD_COLLABORATORS ="/boards/{board_id}/collaborators";
         public final String BOARD_ACTIVITIES = "/boards/{board_id}/activities";
         public final String BOARD_COLUMNS = "/boards/{board_id}/columns";
         public final String BOARD_COLUMN_BY_ID = "/boards/{board_id}/columns/{column_id}";
@@ -33,12 +34,12 @@ public class Api {
         public final String CARD_ASSIGNEES = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/assignees";
         public final String CARD_ASSIGNEE_BY_ID = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/assignees/{assignee_id}";
         public final String BOARD_CARDS_ARCHIVE_CARD = "/boards/{board_id}/cards/{card_id}/archive";
+        public final String INVITATION_BY_ID = "/invitations";
     }
 
     @UtilityClass
     public class Users {
         public final String VERIFY = "/users/{user_id}/verify";
         public final String USER = "/users/{user_id}";
-        public final String USER_ACTIVITIES = "/users/{user_id}/activities";
     }
 }

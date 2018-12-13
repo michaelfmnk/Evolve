@@ -2,7 +2,7 @@ package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.CardBriefDto;
 import com.evolvestage.api.dtos.CardDto;
-import com.evolvestage.api.dtos.ListContainer;
+import com.evolvestage.api.dtos.containers.ListContainer;
 import com.evolvestage.api.security.UserAuthentication;
 import com.evolvestage.api.services.CardService;
 import com.evolvestage.api.utils.MessagesService;

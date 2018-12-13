@@ -1,4 +1,4 @@
-package com.evolvestage.api.dtos;
+package com.evolvestage.api.dtos.containers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

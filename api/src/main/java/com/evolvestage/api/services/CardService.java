@@ -2,7 +2,7 @@ package com.evolvestage.api.services;
 
 import com.evolvestage.api.dtos.CardBriefDto;
 import com.evolvestage.api.dtos.CardDto;
-import com.evolvestage.api.dtos.ListContainer;
+import com.evolvestage.api.dtos.containers.ListContainer;
 import com.evolvestage.api.entities.BoardColumn;
 import com.evolvestage.api.entities.Card;
 import com.evolvestage.api.entities.User;

@@ -10,6 +10,11 @@ services:
     ports:
     - "80:80"
 
+  redis:
+    image: redis:4.0.1-alpine
+    ports:
+      - "6380:6379"
+
   ui:
     image:  registry.gitlab.com/dnu-dreamteam/dolgov/ui
     restart: always
@@ -38,6 +43,7 @@ services:
     restart: always
     links:
     - "docs-api:docs-api"
+    - "redis:redis"
     environment:
     - >
         JVM_MEMORY_OPTS=
@@ -45,6 +51,8 @@ services:
           -Dspring.datasource.username=postgres
           -Dspring.datasource.password=dreamteam
           -Dserver.port=8080
+          -Dspring.redis.host=redis
+          -Dspring.redis.port=6379
           -Dauth.privateKey=/secret/fake-privatekey.der
           -Dauth.publicKey=/secret/fake-publickey.der
           -Ddocs.api.baseUrl=docs-api:8080
