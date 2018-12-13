@@ -30,7 +30,8 @@ public class Api {
         public final String BOARD_CARDS = "/boards/{board_id}/columns/{column_id}/cards";
         public final String BOARD_CARD_BY_ID = "/boards/{board_id}/cards/{card_id}";
         public final String MOVE_CARD_BY_ID = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/move/{destination_id}";
-        public final String CARD_ASSINEES = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/assignees";
+        public final String CARD_ASSIGNEES = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/assignees";
+        public final String CARD_ASSIGNEE_BY_ID = "/boards/{board_id}/columns/{column_id}/cards/{card_id}/assignees/{assignee_id}";
         public final String BOARD_CARDS_ARCHIVE_CARD = "/boards/{board_id}/cards/{card_id}/archive";
     }
 

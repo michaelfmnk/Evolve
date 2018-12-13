@@ -61,12 +61,22 @@ public class CardController {
         return cardService.moveCard(cardId, columnId, boardId, destinationId);
     }
 
-    @PostMapping(Api.Boards.CARD_ASSINEES)
+    @PostMapping(Api.Boards.CARD_ASSIGNEES)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
     public CardDto assignPeople(@PathVariable(name = "board_id") Integer boardId,
                                 @PathVariable(name = "column_id") Integer columnId,
                                 @PathVariable(name = "card_id") Integer cardId,
                                 @RequestBody ListContainer<Integer> assignee) {
         return cardService.assignPeople(boardId, columnId, cardId, assignee);
+    }
+
+    @DeleteMapping(Api.Boards.CARD_ASSIGNEE_BY_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public void removeAssignee(@PathVariable(name = "board_id") Integer boardId,
+                               @PathVariable(name = "column_id") Integer columnId,
+                               @PathVariable(name = "card_id") Integer cardId,
+                               @PathVariable(name = "assignee_id") Integer assigneeId) {
+        cardService.removeAssignee(boardId, columnId, cardId, assigneeId);
     }
 }

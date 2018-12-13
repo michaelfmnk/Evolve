@@ -92,4 +92,14 @@ public class CardService {
         cardsRepository.save(card);
         return converter.toDto(card);
     }
+
+    public void removeAssignee(Integer boardId, Integer columnId, Integer cardId, Integer assigneeId) {
+        Card card = findValidCard(boardId, columnId, cardId);
+        User userToUnassign = card.getUsers().stream()
+                .filter(item -> Objects.equals(item.getUserId(), assigneeId))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.assigned")));
+        card.getUsers().remove(userToUnassign);
+        cardsRepository.save(card);
+    }
 }
