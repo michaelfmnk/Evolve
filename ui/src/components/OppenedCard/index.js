@@ -48,7 +48,7 @@ class OppenedCard extends Component {
 
 
   render() {
-    const { card, column, boardUsers, updateCard, closeCard } = this.props;
+    const { card, column, boardUsers, assignUserToCard, closeCard, unassignUserFromCard ,handleUserAssigning } = this.props;
     const { content, isEditing } = this.state;
 
     const additionalClass = content !== card.content? 'active' : '' 
@@ -77,7 +77,15 @@ class OppenedCard extends Component {
             <div className="sectioncontent">
                 In column <span className='column-name'> { column.name }</span>
                 
-                <CardMembers card={card} boardUsers={boardUsers} updateCard={updateCard} />
+								<CardMembers 
+									canEdit
+									withLabel
+									card={card} 
+									boardUsers={boardUsers} 
+									assignUserToCard={assignUserToCard} 
+									unassignUserFromCard={unassignUserFromCard}
+									handleUserAssigning={handleUserAssigning}
+                />
                 
             </div>
 

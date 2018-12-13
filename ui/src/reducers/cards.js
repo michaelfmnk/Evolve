@@ -5,7 +5,7 @@ import { combineReducers } from 'redux'
 
 const initialState = {
   byId: {},
-  current: null
+  opened: null
 }
 
 function byId (state = initialState.byId, action) {
@@ -36,18 +36,49 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case success(types.ASSIGN_USERS_TO_CARD): {
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          users: [
+            ...action.payload.users
+          ]
+        }
+      }
+    }
+
+    case success(types.UNNASSIGN_USER_FROM_CARD): {
+      const { deletedUserId , card } = action;
+      return {
+        ...state,
+        [card.id]: {
+          ...state[card.id],
+          users: state[card.id]
+                 .users
+                 .filter( user => user.id !== deletedUserId)
+        }
+      }
+    }
+
     default: return state
   }
 }
 
-function current (state = initialState.current, action) {
+function opened (state = initialState.opened, action) {
   switch (action.type) {
+    case types.OPEN_CARD: 
+      return action.payload.id
+    
+    case types.CLOSE_CARD:
+      return null
+
     default: return state
   }
 }
 
 export default combineReducers({
   byId,
-  current
+  opened
 })
 
