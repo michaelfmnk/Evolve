@@ -1,11 +1,16 @@
 package com.evolvestage.api.services;
 
 import com.evolvestage.api.dtos.CardBriefDto;
+import com.evolvestage.api.dtos.CardDto;
+import com.evolvestage.api.dtos.ListContainer;
 import com.evolvestage.api.entities.BoardColumn;
 import com.evolvestage.api.entities.Card;
+import com.evolvestage.api.entities.User;
+import com.evolvestage.api.exceptions.BadRequestException;
 import com.evolvestage.api.listeners.events.CardArchivedEvent;
 import com.evolvestage.api.repositories.CardsRepository;
 import com.evolvestage.api.repositories.ColumnsRepository;
+import com.evolvestage.api.repositories.UsersRepository;
 import com.evolvestage.api.utils.MessagesService;
 import com.evolvestage.api.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -13,6 +18,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +27,7 @@ public class CardService {
 
     private final ConverterService converter;
     private final MessagesService messagesService;
+    private final UsersRepository usersRepository;
     private final CardsRepository cardsRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ColumnsRepository columnsRepository;
@@ -68,5 +76,20 @@ public class CardService {
         card.setColumn(destinationColumn);
         card = cardsRepository.save(card);
         return converter.toBriefDto(card);
+    }
+
+    public CardDto assignPeople(Integer boardId, Integer columnId, Integer cardId, ListContainer<Integer> assignees) {
+        Card card = findValidCard(boardId, columnId, cardId);
+        if (!assignees.getData().isEmpty()) {
+            List<User> newAssignees = usersRepository.findUsersInBoard(boardId, assignees.getData());
+            if (newAssignees.size() != assignees.getData().size()) {
+                throw new BadRequestException(messagesService.getMessage("person.not.invited"));
+            }
+            newAssignees.removeIf(assignee ->
+                    card.getUsers().stream().anyMatch(user -> Objects.equals(user.getUserId(), assignee.getUserId())));
+            card.getUsers().addAll(newAssignees);
+        }
+        cardsRepository.save(card);
+        return converter.toDto(card);
     }
 }

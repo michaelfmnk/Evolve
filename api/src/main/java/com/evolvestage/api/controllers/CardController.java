@@ -1,6 +1,8 @@
 package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.dtos.CardBriefDto;
+import com.evolvestage.api.dtos.CardDto;
+import com.evolvestage.api.dtos.ListContainer;
 import com.evolvestage.api.security.UserAuthentication;
 import com.evolvestage.api.services.CardService;
 import com.evolvestage.api.utils.MessagesService;
@@ -57,5 +59,14 @@ public class CardController {
                                    @PathVariable(name = "card_id") Integer cardId,
                                    @PathVariable(name = "destination_id") Integer destinationId) {
         return cardService.moveCard(cardId, columnId, boardId, destinationId);
+    }
+
+    @PostMapping(Api.Boards.CARD_ASSINEES)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public CardDto assignPeople(@PathVariable(name = "board_id") Integer boardId,
+                                @PathVariable(name = "column_id") Integer columnId,
+                                @PathVariable(name = "card_id") Integer cardId,
+                                @RequestBody ListContainer<Integer> assignee) {
+        return cardService.assignPeople(boardId, columnId, cardId, assignee);
     }
 }
