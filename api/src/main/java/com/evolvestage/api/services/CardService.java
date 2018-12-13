@@ -39,8 +39,8 @@ public class CardService {
         return converter.toBriefDto(cardEntity);
     }
 
-    public void archiveCard(Integer boardId, Integer cardId) {
-        Card cardEntity = findValidCard(boardId, cardId);
+    public void archiveCard(Integer boardId, Integer columnId, Integer cardId) {
+        Card cardEntity = findValidCard(boardId, columnId, cardId);
         cardEntity.setArchived(true);
         eventPublisher.publishEvent(CardArchivedEvent.builder()
                 .boardId(boardId)
@@ -51,18 +51,13 @@ public class CardService {
         cardsRepository.save(cardEntity);
     }
 
-    public void deleteCard(Integer boardId, Integer cardId) {
-        Card cardEntity = findValidCard(boardId, cardId);
+    public void deleteCard(Integer boardId, Integer columnId, Integer cardId) {
+        Card cardEntity = findValidCard(boardId, columnId, cardId);
         cardsRepository.delete(cardEntity);
     }
 
     public Boolean isColumnValid(Integer boardId, Integer columnId) {
         return columnsRepository.existsColumnByColumnIdAndBoardId(boardId, columnId);
-    }
-
-    private Card findValidCard(Integer boardId, Integer cardId) {
-        return cardsRepository.findCardByBoardIdAndCardId(boardId, cardId)
-                .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("card.not.found")));
     }
 
     private Card findValidCard(Integer boardId, Integer columnId, Integer cardId) {
@@ -101,5 +96,13 @@ public class CardService {
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("user.not.assigned")));
         card.getUsers().remove(userToUnassign);
         cardsRepository.save(card);
+    }
+
+    public CardBriefDto updateCard(Integer boardId, Integer columnId, Integer cardId, CardBriefDto card) {
+        Card cardEntity = findValidCard(boardId, columnId, cardId);
+        cardEntity.setContent(card.getContent());
+        cardEntity.setTitle(card.getTitle());
+        cardEntity = cardsRepository.save(cardEntity);
+        return converter.toBriefDto(cardEntity);
     }
 }

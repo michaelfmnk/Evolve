@@ -124,7 +124,7 @@ public class BoardService {
         invitationsRepository.putInvitation(code.toString(), invitation);
         boolean exists = usersRepository.existsByEmail(email);
         Email emailToSend;
-        if (exists) {
+        if (!exists) {
             emailToSend = BoardInvitationEmail.builder()
                     .to(email)
                     .link(UrlUtils.formAcceptInvitationUrl(code))

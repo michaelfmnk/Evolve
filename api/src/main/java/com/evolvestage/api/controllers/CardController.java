@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(Api.ROOT)
@@ -37,19 +38,30 @@ public class CardController {
         return cardService.createCard(card);
     }
 
+    @PutMapping(Api.Boards.BOARD_CARD_BY_ID)
+    @PreAuthorize("hasPermission(#boardId, 'BOARD_COLLABORATOR', 'USER')")
+    public CardBriefDto updateCard(@PathVariable("board_id") Integer boardId,
+                                   @PathVariable(name = "column_id") Integer columnId,
+                                   @PathVariable("card_id") Integer cardId,
+                                   @Valid @RequestBody CardBriefDto card) {
+        return cardService.updateCard(boardId, columnId, cardId, card);
+    }
+
     @DeleteMapping(Api.Boards.BOARD_CARD_BY_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
     public void deleteCard(@PathVariable("board_id") Integer boardId,
+                           @PathVariable(name = "column_id") Integer columnId,
                            @PathVariable("card_id") Integer cardId) {
-        cardService.deleteCard(boardId, cardId);
+        cardService.deleteCard(boardId, columnId, cardId);
     }
 
     @PatchMapping(Api.Boards.BOARD_CARDS_ARCHIVE_CARD)
     @PreAuthorize("hasPermission(#boardId, 'BOARD_OWNER', 'USER')")
     public void archiveCard(@PathVariable("board_id") Integer boardId,
+                            @PathVariable(name = "column_id") Integer columnId,
                             @PathVariable("card_id") Integer cardId) {
-        cardService.archiveCard(boardId, cardId);
+        cardService.archiveCard(boardId, columnId, cardId);
     }
 
     @PatchMapping(Api.Boards.MOVE_CARD_BY_ID)
