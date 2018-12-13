@@ -35,7 +35,7 @@ public class UrlUtils {
         return null;
     }
 
-    public String formAcceptInvitationUrl(UUID uuid) {
-        return "http://evolve-stage.com/invitations/" + uuid.toString();
+    public String formAcceptInvitationUrl(UUID uuid, Integer boardId) {
+        return "http://evolve-stage.com/invitations/" + boardId + "/" + uuid.toString();
     }
 }
