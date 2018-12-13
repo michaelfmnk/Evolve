@@ -26,14 +26,14 @@ public class PutBoardColumnTest extends BaseTest {
                 .headers(headers)
                 .body(objectMapper.writeValueAsBytes(column))
                 .when()
-                .put("/api/boards/1/columns/1")
+                .put("/api/boards/1/columns/3")
                 .then()
                 .extract().response().prettyPeek()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body("name", equalTo("NEW COLUMN NAME"));
 
-        assertThat(new Request(dataSource, "SELECT * FROM COLUMNS WHERE column_id=1"))
+        assertThat(new Request(dataSource, "SELECT * FROM COLUMNS WHERE column_id=3"))
                 .hasNumberOfRows(1)
                 .row(0).value("name").isEqualTo("NEW COLUMN NAME")
                 .value("board_id").isEqualTo(1);

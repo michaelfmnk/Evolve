@@ -33,14 +33,14 @@ public class BoardColumnService {
         }
     }
 
-    public BoardColumn findValidByColumnIdAndBoardId(Integer boardId, Integer columnId) {
-        return columnsRepository.findColumnByColumnIdAndBoardId(boardId, columnId)
+    public BoardColumn findValidByColumnIdAndBoardId(Integer columnId, Integer boardId) {
+        return columnsRepository.findColumnByColumnIdAndBoardId(columnId, boardId)
                 .orElseThrow(() -> new EntityNotFoundException(messagesService.getMessage("column.not.found")));
 
     }
 
     public BoardColumnDto updateColumn(Integer boardId, Integer columnId, BoardColumnDto columnDto) {
-        BoardColumn column = findValidByColumnIdAndBoardId(boardId, columnId);
+        BoardColumn column = findValidByColumnIdAndBoardId(columnId, boardId);
         column.setName(columnDto.getName());
         column = columnsRepository.save(column);
         return converter.toBriefDto(column);
