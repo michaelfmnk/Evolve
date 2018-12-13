@@ -9,7 +9,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class BoardInvitationEmail implements Email {
-    private static final String EMAIL_ID = "583160";
+    private static final String EMAIL_ID = "583163";
     private static final String VAR_NAME_LINK = "link";
     private static final String VAR_NAME_BOARD_NAME = "boardName";
 

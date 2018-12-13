@@ -9,7 +9,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class EvolveInvitationEmail implements Email {
-    private static final String EMAIL_ID = "583319";
+    private static final String EMAIL_ID = "627916";
     private static final String VAR_NAME_BOARD_NAME = "boardName";
 
     private String to;
