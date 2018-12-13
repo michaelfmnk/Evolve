@@ -128,6 +128,7 @@ public class BoardService {
             emailToSend = BoardInvitationEmail.builder()
                     .to(email)
                     .link(UrlUtils.formAcceptInvitationUrl(code))
+                    .boardId(board.getBoardId())
                     .boardName(board.getName())
                     .build();
         } else {

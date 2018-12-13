@@ -2,13 +2,18 @@ package com.evolvestage.api.controllers.auth;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.SignUpDto;
+import com.evolvestage.api.dtos.UserBriefDto;
+import com.evolvestage.api.entities.BoardInvitation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.errors.MailjetException;
 import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
+import org.junit.Before;
 import org.junit.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
+
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
@@ -19,8 +24,21 @@ import static org.mockito.Mockito.*;
 
 public class RegisterTest extends BaseTest {
 
+
+    @Before
+    public void before() {
+        redisTemplate.delete("invitations");
+    }
+
     @Test
     public void shouldRegister() throws Throwable {
+        BoardInvitation invitation = BoardInvitation.builder()
+                .boardId(2)
+                .email("meteormf99@gmail.com")
+                .build();
+        String code = UUID.randomUUID().toString();
+        redisTemplate.opsForHash().put("invitations", code, objectMapper.writeValueAsString(invitation));
+
         doReturn("passwordHash")
                 .when(passwordEncoder).encode(any(CharSequence.class));
         SignUpDto authRequest = SignUpDto.builder()
@@ -30,7 +48,7 @@ public class RegisterTest extends BaseTest {
                 .lastName("LN")
                 .build();
 
-        given()
+        String json = given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsBytes(authRequest))
@@ -41,7 +59,10 @@ public class RegisterTest extends BaseTest {
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .body("id", notNullValue())
-                .body("email", equalTo("meteormf99@gmail.com"));
+                .body("email", equalTo("meteormf99@gmail.com"))
+                .extract().response().asString();
+
+        UserBriefDto userBriefDto = objectMapper.readValue(json, UserBriefDto.class);
 
         verify(mailjetClient, times(1)).post(any(MailjetRequest.class));
 
@@ -64,6 +85,9 @@ public class RegisterTest extends BaseTest {
                 .hasNumberOfRows(1)
                 .row(0)
                 .value("verification_code").isNotNull();
+        assertThat(new Request(dataSource,
+                "select * from boards_users where board_id=2 and user_id=" + userBriefDto.getId()))
+                .hasNumberOfRows(1);
     }
 
     @Test

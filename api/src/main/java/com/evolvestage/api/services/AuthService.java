@@ -100,7 +100,7 @@ public class AuthService {
                 .findInvitationByEmail(request.getEmail()).stream().map(BoardInvitation::getBoardId).collect(Collectors.toList());
         if (!boardIds.isEmpty()) {
             List<Board> boards = boardsRepository.findAllById(boardIds);
-            user.getJoinedBoards().addAll(boards);
+            user.setJoinedBoards(boards);
         }
 
         user = userRepository.save(user);
