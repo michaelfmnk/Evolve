@@ -124,7 +124,7 @@ public class BoardService {
         invitationsRepository.putInvitation(code.toString(), invitation);
         boolean exists = usersRepository.existsByEmail(email);
         Email emailToSend;
-        if (!exists) {
+        if (exists) {
             emailToSend = BoardInvitationEmail.builder()
                     .to(email)
                     .link(UrlUtils.formAcceptInvitationUrl(code, board.getBoardId()))
@@ -143,9 +143,6 @@ public class BoardService {
     @SneakyThrows
     public void acceptInvitation(String code, String currentUsersEmail) {
         BoardInvitation invitation = invitationsRepository.findInvitationsByCode(code);
-        if (Objects.isNull(invitation)) {
-            throw new EntityNotFoundException("invitation.not.found");
-        }
         if (!Objects.equals(currentUsersEmail, invitation.getEmail())) {
             throw new BadRequestException(messagesService.getMessage("invitation.not.valid"));
         }

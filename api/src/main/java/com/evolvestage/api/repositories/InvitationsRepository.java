@@ -1,6 +1,8 @@
 package com.evolvestage.api.repositories;
 
 import com.evolvestage.api.entities.BoardInvitation;
+import com.evolvestage.api.exceptions.BadRequestException;
+import com.evolvestage.api.utils.MessagesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -20,10 +22,15 @@ public class InvitationsRepository {
     private final static String REDIS_INVITATIONS_HASH = "invitations";
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
+    private final MessagesService messagesService;
+
 
     @SneakyThrows
     public BoardInvitation findInvitationsByCode(String code) {
         String rawInvitation = (String) redisTemplate.opsForHash().get(REDIS_INVITATIONS_HASH, code);
+        if (Objects.isNull(rawInvitation)) {
+            throw new BadRequestException(messagesService.getMessage("invitation.not.found"));
+        }
         return objectMapper.readValue(rawInvitation, BoardInvitation.class);
     }
 
