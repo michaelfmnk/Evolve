@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AddEntityForm from 'components/AddEntityForm'
-
+import  CardMembers from 'components/OppenedCard/CardMembers'
 import { DragSource } from 'react-dnd'
 
 const knightSource = {
@@ -33,7 +33,7 @@ function collect (connect, monitor) {
 
 class Card extends Component {
   render() {
-    const {card , connectDragSource, isDragging, openCard } = this.props
+    const {card , connectDragSource, isDragging, openCard, column } = this.props
     return connectDragSource(
       <div className="todo" style={{opacity: isDragging? 0.2 : 1}} onClick={openCard(card)}>
                 <div className="image"></div>
@@ -49,12 +49,10 @@ class Card extends Component {
                             {card.content && <li content={'this card has description'}><i className="fas fa-list"></i></li>}
                         </ul>
                     </div>
-                    <div className="white-pace"></div>
-                    <div className="members">
-                        <ul>
-                            <li></li>
-                        </ul>
-                    </div>
+                    <CardMembers 
+                      card={card}
+                      column={column}
+                    />
                 </div>
             </div>
     )
@@ -63,11 +61,11 @@ class Card extends Component {
 
 Card = DragSource("Card", knightSource, collect)(Card);
 
-const CardsList = ({cards, createCard, moveCard, openCard}) => (
+const CardsList = ({cards, createCard, moveCard, openCard, column}) => (
   <div className="rowhandler">
    {
      cards.map( card => (
-        <Card card={card} moveCard={moveCard} openCard={openCard}/>
+        <Card card={card} moveCard={moveCard} openCard={openCard} column={column}/>
       ))
      }
 

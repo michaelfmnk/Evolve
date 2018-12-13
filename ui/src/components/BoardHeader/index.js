@@ -1,7 +1,8 @@
 import React from 'react'
+import InviteCollaborator from './InviteCollaborator'
 import './BoardHeader.css'
 
-const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal}) => (
+const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCollaborator}) => (
     <div className="board-menu">
       <div className="boardmenul">
         <div className='header'>
@@ -31,6 +32,9 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal}) => (
               <img src={user.avatar_url} title={`${user.first_name} (${user.last_name})`} />
             ))
           }
+
+          <InviteCollaborator inviteCollaborator={inviteCollaborator}/>
+
         </div>
 
       </div>

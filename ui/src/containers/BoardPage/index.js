@@ -3,9 +3,14 @@ import { connect } from 'react-redux'
 import { boardByIdFromRoute, currentBoardId } from 'selectors/boards'
 import { boardColumns } from 'selectors/columns'
 import { authUserIdSelector } from 'selectors/auth'
-import { getBoardById } from 'actions/boards'
+import { openedCardSelector } from 'selectors/cards'
+import { getBoardById, inviteCollaborator } from 'actions/boards'
 import { createColumn, deleteColumn, updateColumn } from 'actions/columns'
-import { createCard, moveCard, updateCard } from 'actions/cards'
+import { 
+  openCard, closeCard,
+  createCard, moveCard, updateCard, 
+  assignUsersToCard , unassignUserFromCard 
+} from 'actions/cards'
 import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
@@ -19,14 +24,6 @@ import { DragDropContext } from 'react-dnd'
 
 
 class BoardPage extends Component {
-
-  state = {
-    openedCard: null
-  }
-
-  openCard = (openedCard) => () => this.setState({openedCard})
-  closeCard = () => this.setState({openedCard: null})
-
   componentDidMount(){
     const { match, actions, currentBoardId} = this.props;
     const boardId = Number(match.params.board_id)
@@ -37,9 +34,19 @@ class BoardPage extends Component {
     match && actions.getBoardById(boardId)
   }
 
+  openCard = (card) => () => this.props.actions.openCard(card.id)
+  closeCard = () =>  this.props.actions.closeCard()
+
+  handleUserAssigning = (user) => () => {
+    const { actions, openedCard } = this.props;
+
+    openedCard.users && openedCard.users.some(({id}) => id === user.id )
+      ? actions.unassignUserFromCard(openedCard, user.id )
+      : actions.assignUsersToCard(openedCard, [ user.id ])
+  }
+
   render () {
-    const { board, authUserId, actions, boardColumnsWithCards } = this.props;
-    const { openedCard } = this.state
+    const { board, authUserId, actions, boardColumnsWithCards, openedCard } = this.props;
 
     console.log(boardColumnsWithCards)
     
@@ -53,10 +60,12 @@ class BoardPage extends Component {
             owner={board.owner} 
             collaborators={board.collaborators}
             isBoardPersonal={authUserId === board.owner_id  }
+            inviteCollaborator={actions.inviteCollaborator}
           />
           <ColumnsList
             columns={boardColumnsWithCards} 
             openCard={this.openCard}
+            closeCard={this.closeCard}
             actions={{
               createColumn: actions.createColumn,
               deleteColumn: actions.deleteColumn,
@@ -72,7 +81,13 @@ class BoardPage extends Component {
               column={boardColumnsWithCards.find( col => col.id === openedCard.column_id)}
               boardUsers={[ board.owner, ...board.collaborators ]}
               updateCard={actions.updateCard}
+              assignUserToCard={this.assignUserToCard}
+
+              
+              unassignUserFromCard={this.unassignUserFromCard}
+
               closeCard={this.closeCard}
+              handleUserAssigning={this.handleUserAssigning}
             />
          }
         </div>       
@@ -85,7 +100,8 @@ const mapStateToProps = (state, props) => ({
   board: boardByIdFromRoute(state, props),
   authUserId: authUserIdSelector(state),
   currentBoardId: currentBoardId(state),
-  boardColumnsWithCards: boardColumns(state)
+  boardColumnsWithCards: boardColumns(state),
+  openedCard: openedCardSelector(state),
 })
 
 // const mapDispatchToProps = (dispatch) => ({
@@ -115,9 +131,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       moveCard: (card, targetColumn) => dispatch( moveCard(currentBoardId, card, targetColumn) ),
       updateCard: (card) => dispatch( updateCard(currentBoardId, card) ),
       updateColumn: (column) => dispatch( updateColumn(currentBoardId, column) ),
+      assignUsersToCard: (card, usersIds) => dispatch( assignUsersToCard(currentBoardId, card, usersIds) ),
+      unassignUserFromCard: (card, userId) => dispatch( unassignUserFromCard(currentBoardId, card, userId)),
+      inviteCollaborator: (email) => dispatch( inviteCollaborator(currentBoardId, email)),
       ...bindActionCreators({
         getBoardById,
         setCurrentBoard,
+        openCard, 
+        closeCard,
       }, dispatch)
   }
   }

@@ -26,6 +26,24 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case success(types.UPDATE_COLUMN): {
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          ...action.payload
+        }
+      }
+    }
+
+
+    case success(types.DELETE_COLUMN): {
+      let newState = { ...state }
+      delete newState[action.columnId]
+      return newState
+    }
+
+
     case success(CREATE_CARD): {
       const { id, column_id } = action.payload
       return {
@@ -63,12 +81,6 @@ function byId (state = initialState.byId, action) {
           cards: [ ...state[targetColumn.id].cards, id ]
         }
       }
-    }
-
-    case success(types.DELETE_COLUMN): {
-      let newState = { ...state }
-      delete newState[action.columnId]
-      return newState
     }
 
     default: return state
