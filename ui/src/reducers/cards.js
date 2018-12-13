@@ -25,6 +25,16 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case success(types.UPDATE_CARD): {
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          ...action.payload
+        }
+      }
+    }
+
     case success(types.MOVE_CARD): {
       const { card: { id }, targetColumn } = action
       return {

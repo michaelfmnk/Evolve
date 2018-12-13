@@ -38,7 +38,17 @@ export const createBoardRequest = (board) => ({
   }
 })
 
+export const inviteCollaborator = (boardId, email) => ({
+  type: types.INVITE_COLLABORATOR_TO_BOARD,
+  REQUEST: {
+    method: 'POST',
+    data: {emails : [email]},
+    url: `/api/boards/${boardId}/collaborators`
+  }
+})
+
 export const setCurrentBoard = (boardId) => ({
   type: types.SET_CURRENT_BOARD,
   payload: {boardId}
 })
+

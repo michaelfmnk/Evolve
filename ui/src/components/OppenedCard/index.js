@@ -33,7 +33,7 @@ class OppenedCard extends Component {
     showXPathInStatusbar: false
   }
 
-  handleSaveDescription = () => {
+  handleSaveDescription = async () => {
     let card = {
       ...this.props.card,
       content: this.state.content
@@ -41,7 +41,8 @@ class OppenedCard extends Component {
 
     console.log('CLICKED')
     console.log(card)
-    this.props.updateCard(card)
+		await this.props.updateCard(card)
+		this.toggleEditing()
   }
 
   toggleEditing = () => this.setState( {isEditing: !this.state.isEditing })
@@ -123,18 +124,15 @@ class OppenedCard extends Component {
                     </Fragment>
                   )
                   : card.content
-                     ? <p>{card.content}</p>
+                     ? <div onClick={this.toggleEditing} dangerouslySetInnerHTML={{ __html: card.content}}/>
                      : <p className='add-cart-content' onClick={this.toggleEditing}>
                          Add full description for this card...
                        </p>
                 }
             </div>
         </div>
-
       </div>
-
     </div>
-
     )
   }
 }
