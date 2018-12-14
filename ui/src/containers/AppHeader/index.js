@@ -10,8 +10,6 @@ import './AppHeader.css'
 
 class AppHeader extends React.Component {
   redirectToHome = () => {
-    console.log('HEADER')
-    console.log(this.props)
     this.props.history.push('/home')
   }
 
