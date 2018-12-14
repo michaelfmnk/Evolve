@@ -27,7 +27,7 @@ class WelcomePage extends React.Component {
           onRegisterClick={() => this.redirectTo('/sign_up')}
         />
         <WelcomeSection
-          onGetStartedClick={() => this.redirectTo('/register')}
+          onGetStartedClick={() => this.redirectTo('/sign_up')}
         />
         <AboutSection />
         <ProjectsSection />
