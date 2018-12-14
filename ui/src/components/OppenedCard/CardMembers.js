@@ -29,7 +29,12 @@ class CardMembers extends Component {
           <div className="members">
             {
               users && users.map( user => (
-                <img src={user.avatar_url} alt='' onClick={this.handleMemberClick}/>
+                <img 
+                  src={user.avatar_url || '/img/avatar.jpeg'} 
+                  alt='' 
+                  onClick={this.handleMemberClick}
+                  title={user.first_name + ' ' + user.last_name}
+                />
               ))
             }
 

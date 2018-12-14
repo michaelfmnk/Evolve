@@ -26,7 +26,7 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
         </div>
         
         <div className='members'>
-          { owner && <img src={owner.avatar_url} title={`${owner.first_name} ${owner.last_name} | board admin`}/> }
+          { owner && <img src={owner.avatar_url || '/img/avatar.jpeg'} title={`${owner.first_name} ${owner.last_name} | board admin`}/> }
           {
             collaborators && collaborators.map(user => (
               <img src={user.avatar_url} title={`${user.first_name} (${user.last_name})`} />

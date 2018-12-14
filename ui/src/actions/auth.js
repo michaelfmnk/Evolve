@@ -1,6 +1,17 @@
 import * as types from 'constants/actionTypes/auth'
 import * as endpoints from 'constants/routes/api/auth'
 
+export const activateInvitationLink = (boardId, code) => ({
+  type: types.ACTIVATE_INVITATION_LINK,
+  REQUEST: {
+    url : "/api/invitations",
+    method: 'POST',
+    data: {code}
+  },
+  boardId,
+  code
+})
+
 export const signUpRequest = (userInfo) => ({
   type: types.SIGN_UP,
   REQUEST: {
@@ -10,16 +21,17 @@ export const signUpRequest = (userInfo) => ({
   }
 })
 
-export const verifyAccountRequest = (userId, code) => ({
+export const verifyAccountRequest = (userId, code, shouldRedirect = true) => ({
   type: types.VERIFY_ACCOUNT,
   REQUEST: {
     url: endpoints.verifyAccount(userId),
     data: { code, userId },
     method: 'POST'
-  }
+  },
+  shouldRedirect
 })
 
-export const signInRequest = (userInfo) => ({
+export const signInRequest = (userInfo , shouldRedirect = true) => ({
   type: types.SIGN_IN,
   REQUEST: {
     url: endpoints.signIn,
@@ -29,7 +41,8 @@ export const signInRequest = (userInfo) => ({
       token: authIdentifiers.token,
       user: { id: authIdentifiers.user_id }
     })
-  }
+  },
+  shouldRedirect
 })
 
 export const refreshAuth = (tokenWithUserIdObj) => ({

@@ -29,10 +29,10 @@ class BoardsList extends React.Component {
                <div className="party">
                  <p className='members-header'>Members:</p>
                  <div className='members-wrp'>
-                   <img src={board.owner.avatar_url} />
+                   <img src={board.owner.avatar_url || "/img/avatar.jpeg"} />
                    {
                       board.collaborators && board.collaborators.map(user => (
-                        <img src={user.avatar_url} />
+                        <img src={user.avatar_url || "/img/avatar.jpeg"} />
                       ))
                     }
                  </div>

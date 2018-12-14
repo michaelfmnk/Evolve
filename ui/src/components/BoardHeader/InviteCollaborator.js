@@ -8,7 +8,8 @@ class InviteCollaborator extends PureComponent {
   state = {
     isAdding: false,
     error: false,
-    email: ''
+    email: '',
+    isSent: false
   }
 
   handleChange = ({target: {name, value}}) => {
@@ -16,27 +17,35 @@ class InviteCollaborator extends PureComponent {
     console.log(error)
     this.setState({
       [name]: value,
-      error
-    })
+      error,
+    }) 
   }
 
   handleInviteClick = () => {
     const {email} = this.state;
     const { inviteCollaborator } = this.props
-    inviteCollaborator && inviteCollaborator(email)
+    inviteCollaborator(email)
+    this.setState({
+      isSent: true,
+      email: ''
+    })
+
   }
 
   toggleAdding = () => this.setState({ isAdding: !this.state.isAdding})
 
 
   render() {
-    const { isAdding , email, error } = this.state;
+    const { isAdding , email, error, isSent } = this.state;
     return (
       isAdding
         ? <Modal>
             <div className='invite-form'>
               <h3>
-                Invite collaborator to this board
+                { isSent
+                  ? 'Invation has been sent. Another one?'
+                  : 'Invite collaborator to this board'
+                }
               </h3>
               <input 
                 value={email} 
