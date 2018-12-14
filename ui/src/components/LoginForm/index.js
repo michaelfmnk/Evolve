@@ -64,7 +64,7 @@ class LoginForm extends React.Component {
              
             
           </label> */}
-          <Link to="/register" className="forgot_password">I don't have an account</Link>
+          <Link to="/sign_up" className="forgot_password">I don't have an account</Link>
 
           <ApplyFormBtn
             text='Login'
