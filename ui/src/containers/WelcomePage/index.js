@@ -23,8 +23,8 @@ class WelcomePage extends React.Component {
       <React.Fragment>
         <NavHeader
           location={this.props.location}
-          onLoginClick={() => this.redirectTo('/login')}
-          onRegisterClick={() => this.redirectTo('/register')}
+          onLoginClick={() => this.redirectTo('/sign_in')}
+          onRegisterClick={() => this.redirectTo('/sign_up')}
         />
         <WelcomeSection
           onGetStartedClick={() => this.redirectTo('/register')}
