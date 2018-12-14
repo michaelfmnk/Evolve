@@ -8,7 +8,9 @@ import { welcome, signIn, signUp, home, invitation } from 'constants/routes/ui'
 import * as types from 'constants/actionTypes/auth'
 
 function * authHandler (action) {
-  const { token, user } = action.payload
+  const { token, user = {} } = action.payload;
+  console.log('INSIDE HANDLER')
+  console.log(token, )
   saveAuthIdentifiersToStorage(token, user.id)
 
   axiosInstance.defaults.headers.Authorization = token
