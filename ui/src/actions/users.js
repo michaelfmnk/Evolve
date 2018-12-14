@@ -10,7 +10,9 @@ export const getAuthUserData = (userId) => ({
     url: ednpoints.userById(userId),
     responseDataConverter: userData => {
       const data = normalize(userData, userWithBoards)
-      let boardsById = data.entities.boards
+      console.log('BOARDS')
+      console.log(boardsById)
+      let boardsById = data.entities.boards || {}
 
       Object.keys(boardsById).forEach(id => {
 
@@ -22,7 +24,7 @@ export const getAuthUserData = (userId) => ({
 
       return {
         authUser: data.entities.authUser[data.result],
-        collaborators: data.entities.users,
+        collaborators: data.entities.users || {},
         boards: boardsById
       }
     }
