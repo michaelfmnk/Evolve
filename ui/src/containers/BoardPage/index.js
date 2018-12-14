@@ -7,7 +7,7 @@ import { openedCardSelector } from 'selectors/cards'
 import { getBoardById, inviteCollaborator } from 'actions/boards'
 import { createColumn, deleteColumn, updateColumn } from 'actions/columns'
 import { 
-  openCard, closeCard,
+  openCard, closeCard, deleteCard,
   createCard, moveCard, updateCard, 
   assignUsersToCard , unassignUserFromCard 
 } from 'actions/cards'
@@ -87,6 +87,7 @@ class BoardPage extends Component {
               unassignUserFromCard={this.unassignUserFromCard}
 
               closeCard={this.closeCard}
+              deleteCard={actions.deleteCard}
               handleUserAssigning={this.handleUserAssigning}
             />
          }
@@ -134,6 +135,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       assignUsersToCard: (card, usersIds) => dispatch( assignUsersToCard(currentBoardId, card, usersIds) ),
       unassignUserFromCard: (card, userId) => dispatch( unassignUserFromCard(currentBoardId, card, userId)),
       inviteCollaborator: (email) => dispatch( inviteCollaborator(currentBoardId, email)),
+      deleteCard: (card) => dispatch( deleteCard(currentBoardId, card) ),
       ...bindActionCreators({
         getBoardById,
         setCurrentBoard,

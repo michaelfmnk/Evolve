@@ -69,18 +69,67 @@
             }
         }
 
+        .desctiption-wrp{
+            min-height: 50px;
+            max-width: 600px;
+            overflow-x: hidden;
+
+            * {
+                max-width: 500px;
+            }
+
+            table, td, th {
+                border: 1px solid rgba(9, 48, 63, 0.6);
+                border-collapse: collapse;
+            }
+
+            table {
+                border: none;
+                border-collapse: collapse;
+                table-layout: fixed;
+                empty-cells: show;
+                max-width: 100%;
+                border-spacing: 2px;
+            }
+
+            img {
+                min-height: 40px;
+                min-width: 40px;
+            }
+        }
+
        
             
                 
                   
 
                 .sectioncaption {
+                    
 
                   &.card-header{
+
+
                     display: flex;
                     justify-content: space-between;
+                    // align-items: center;
                     margin-top: 0;
                     margin-bottom: 0;
+
+
+                    input {
+                        padding: 8px 10px;
+                        font-weight: bold;
+                        font-size: 1em;
+                        margin-block-start: 0em;
+                        margin-block-end: 0.83em;
+                        margin-inline-start: 0px;
+                        margin-inline-end: 0px;
+                        color: #17394d;
+                        
+                        &:hover {
+                           color: #216b96;;
+                        }
+                    }
                   }
                   .closewindow {
                       width: 20px;
@@ -113,6 +162,15 @@
                       font-weight: bold;
                     }
 
+                    .buttons-group {
+                        .delete {
+                            background: rgba(9, 45, 66, 0.08);
+
+                            &:hover{
+                                color: red;
+                            }
+                        }
+                    }
                     .content-editor-wrp{
                       padding-bottom: 1rem;
                       padding-top: 1rem;

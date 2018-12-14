@@ -35,6 +35,12 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case success(types.DELETE_CARD): {
+      let newCards = { ...state };
+      delete newCards[action.card.id]
+      return newCards
+    }
+
     case success(types.MOVE_CARD): {
       const { card: { id }, targetColumn } = action
       return {

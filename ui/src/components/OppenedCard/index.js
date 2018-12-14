@@ -4,6 +4,7 @@ import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 import CardMembers from "./CardMembers"
+import { debounce } from 'lodash'
 
 class OppenedCard extends Component {
 
@@ -11,7 +12,8 @@ class OppenedCard extends Component {
     super(props);
     this.state = {
       isEditing: '',
-      content: this.props.card.content || ''
+			content: this.props.card.content || '',
+			title: this.props.card.title || ''
     }
   }
 
@@ -36,21 +38,41 @@ class OppenedCard extends Component {
   handleSaveDescription = async () => {
     let card = {
       ...this.props.card,
-      content: this.state.content
+			content: this.state.content,
     }
 
-    console.log('CLICKED')
-    console.log(card)
 		await this.props.updateCard(card)
 		this.toggleEditing()
-  }
+	}
+	
+	cancelEditing = () => {
+		this.setState({
+			isEditing: false,
+			content: this.props.card.content
+		})
+	}
 
   toggleEditing = () => this.setState( {isEditing: !this.state.isEditing })
 
+	handleChange = ({target: {name, value}}) => {
+		this.setState({
+			[name]: value
+		}, this.handleSaveTitle())
+	}
+
+	handleSaveTitle = debounce(() => {
+		this.props.updateCard({
+			...this.props.card,
+			title: this.state.title
+		})
+	}, 1000)
 
   render() {
-    const { card, column, boardUsers, assignUserToCard, closeCard, unassignUserFromCard ,handleUserAssigning } = this.props;
-    const { content, isEditing } = this.state;
+    const { 
+			card, column, boardUsers, assignUserToCard, deleteCard,
+			closeCard, unassignUserFromCard ,handleUserAssigning 
+		} = this.props;
+    const { content, title, isEditing } = this.state;
 
     const additionalClass = content !== card.content? 'active' : '' 
     
@@ -66,9 +88,10 @@ class OppenedCard extends Component {
             )}
 
             <h2 className="sectioncaption card-header">
-              <div>
+              <div className='input-wrp'>
                 <i className="fas fa-clipboard"></i>
-                { card.title }
+								<input value={title} name="title" onChange={this.handleChange}/>
+								{/* {title} */}
               </div>
               <button className="closewindow" onClick={closeCard}>
                 <i className="fas fa-times"></i>
@@ -92,7 +115,7 @@ class OppenedCard extends Component {
 
 
         <div className="description">
-            <div className="sectioncaption">
+            <div className="sectioncaption" onClick={this.toggleEditing}>
                 <i className="fas fa-list"></i>
                 Description
             </div>
@@ -117,18 +140,32 @@ class OppenedCard extends Component {
                         > 
                           Save changes
                         </span>
-                        <span className='btn' onClick={this.toggleEditing}> 
+                        <span className='btn' onClick={this.cancelEditing}> 
                           Cancel 
                         </span>
                       </div> 
                     </Fragment>
                   )
                   : card.content
-                     ? <div onClick={this.toggleEditing} dangerouslySetInnerHTML={{ __html: card.content}}/>
+										 ? <div 
+													onClick={this.toggleEditing} 
+													dangerouslySetInnerHTML={{ __html: card.content}}
+													className='desctiption-wrp'
+												/>
                      : <p className='add-cart-content' onClick={this.toggleEditing}>
                          Add full description for this card...
                        </p>
-                }
+								}
+								
+							<div className="buttons-group"> 
+                <span className={`btn delete `} onClick={() => deleteCard && deleteCard(card) || undefined}> 
+                  Delete card
+                </span>
+                {/* <span className='btn' onClick={this.toggleActive}> 
+                  Archive
+                </span> */}
+              </div> 
+
             </div>
         </div>
       </div>

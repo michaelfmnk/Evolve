@@ -1,6 +1,7 @@
 export const CREATE_CARD = 'CREATE_CARD'
 export const MOVE_CARD = 'MOVE CARD'
 export const UPDATE_CARD = 'UPDATE_CARD'
+export const DELETE_CARD = 'DELETE_CARD'
 
 export const OPEN_CARD = 'OPEN_CARD'
 export const CLOSE_CARD = 'CLOSE_CARD'

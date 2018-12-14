@@ -34,6 +34,15 @@ export const updateCard = (boardId, card) => ({
   card
 })
 
+export const deleteCard = (boardId, card) => ({
+  type: types.DELETE_CARD,
+  REQUEST: {
+    method: 'DELETE',
+    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}`
+  },
+  card
+})
+
 export const openCard = (id) => ({
   type: types.OPEN_CARD,
   payload: { id }
