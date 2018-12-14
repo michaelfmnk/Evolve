@@ -29,7 +29,7 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
           { owner && <img src={owner.avatar_url || '/img/avatar.jpeg'} title={`${owner.first_name} ${owner.last_name} | board admin`}/> }
           {
             collaborators && collaborators.map(user => (
-              <img src={user.avatar_url} title={`${user.first_name} (${user.last_name})`} />
+              <img src={user.avatar_url || '/img/avatar.jpeg'} title={`${user.first_name} (${user.last_name})`} />
             ))
           }
 
