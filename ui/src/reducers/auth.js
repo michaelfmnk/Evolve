@@ -2,6 +2,7 @@ import * as types from 'constants/actionTypes/auth'
 import {start, fail, success} from 'helpers/actionsProcessTemplaters'
 import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
 import { CREATE_BOARD } from 'constants/actionTypes/boards'
+import axiosInstance from 'constants/axios/instance'
 
 const initialState = {
   user: {},
@@ -12,6 +13,9 @@ export default function authReducer (state = initialState, action) {
   switch (action.type) {
     case types.REFRESH_AUTH_FROM_STORE:
     case success(types.SIGN_IN): {
+      localStorage.setItem('token', action.payload.token)
+      axiosInstance.defaults.headers.Authorization = action.payload.token
+      
       return action.payload
     }
 
@@ -21,6 +25,11 @@ export default function authReducer (state = initialState, action) {
         token: null
       }
     }
+
+    case fail(types.SIGN_IN):
+    case fail(types.SIGN_UP):
+    case fail(types.VERIFY_ACCOUNT):
+      return state
 
     case success(types.VERIFY_ACCOUNT): {
       return {

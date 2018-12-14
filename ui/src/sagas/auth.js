@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import { saveAuthIdentifiersToStorage, clearLocalStorage } from 'helpers/localStorage'
 import { success } from 'helpers/actionsProcessTemplaters'
 import { currentPathSelector } from 'selectors/router'
-import { welcome, signIn, signUp, home } from 'constants/routes/ui'
+import { welcome, signIn, signUp, home, invitation } from 'constants/routes/ui'
 import * as types from 'constants/actionTypes/auth'
 
 function * authHandler (action) {
@@ -13,7 +13,9 @@ function * authHandler (action) {
 
   axiosInstance.defaults.headers.Authorization = token
 
-  yield put(push(home))
+  if(action.shouldRedirect) {
+    yield put(push(home))
+  }
 }
 
 function * signUpHandler (action) {
@@ -23,13 +25,18 @@ function * signUpHandler (action) {
 function * logout (action) {
   clearLocalStorage()
   const currentPath = yield select(currentPathSelector)
-  if ([signIn, signUp ].every(path => currentPath !== path)) {
+  if ([signIn, signUp, invitation ].every(path => currentPath !== path)) {
     yield put(push(welcome))
   }
 }
 
+function * activate (action) {
+  yield put(push(`/boards/${action.boardId}`))
+}
+
 export default function * AuthSaga () {
-  yield takeEvery(success(types.SIGN_UP), signUpHandler)
-  yield takeEvery([ success(types.VERIFY_ACCOUNT), success(types.SIGN_IN)], authHandler)
-  yield takeEvery(types.LOGOUT, logout)
+  yield takeEvery( success(types.SIGN_UP), signUpHandler )
+  yield takeEvery( [ success(types.VERIFY_ACCOUNT), success(types.SIGN_IN)], authHandler )
+  yield takeEvery( success(types.ACTIVATE_INVITATION_LINK), activate )
+  yield takeEvery( types.LOGOUT, logout )
 }
