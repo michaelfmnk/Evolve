@@ -1,9 +1,13 @@
 import React from 'react'
+import Message from 'components/Message'
 import FormHeader from 'components/FormHeader'
 import ApplyFormBtn from 'components/buttons/ApplyFormBtn'
 import InputWithLabelAndValidation from 'components/InputWithLabelAndValidation'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import './RegisterForm.css'
+
+const passwordRegexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
 
 class RegisterForm extends React.Component {
   constructor (props) {
@@ -31,9 +35,8 @@ class RegisterForm extends React.Component {
   // TODO : 1. Rewrite error validation from css rules to react way validation
   //        2. Add validation for password confirmation ( should match with password input )
   checkForError = (target, type) => {
-    console.log('CHECKING FOR ERRORS')
     if (!target.value) return
-    if (new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/).test(target.value)) {
+    if (passwordRegexp.test(target.value)) {
       return false
     }
   }
@@ -89,6 +92,10 @@ class RegisterForm extends React.Component {
             }
           />
 
+          <Link to="/sign_in" className="forgot_password">I already have an account</Link>
+            
+          <Message type='error' text={this.props.errorMessage} />
+          
           <ApplyFormBtn
             text='Register'
             onClick={(event) => this.handleRegisterFormSubmit(event)}

@@ -45,6 +45,10 @@ export const signInRequest = (userInfo , shouldRedirect = true) => ({
   shouldRedirect
 })
 
+export const clearAuthError = () => ({
+  type: types.CLEAR_AUTH_ERROR
+})
+
 export const refreshAuth = (tokenWithUserIdObj) => ({
   type: types.REFRESH_AUTH_FROM_STORE,
   payload: tokenWithUserIdObj

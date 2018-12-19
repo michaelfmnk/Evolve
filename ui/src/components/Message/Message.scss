@@ -1,0 +1,15 @@
+.message-wrapper {
+  padding: 0.5rem;
+
+  .error-message{
+    color: rgb(173, 29, 29)
+  }
+
+  .info-message {
+    color: rgb(62, 62, 194)
+  }
+
+  .warning-message {
+    color: rgb(199, 148, 9)
+  }
+}

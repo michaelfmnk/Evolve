@@ -17,15 +17,6 @@ export const getBoardById = (id) => ({
         boardId: data.result
       }
     }
-
-    // responseDataConverter: userData => {
-    //   const data = normalize(userData, userWithBoards)
-    //   return {
-    //     authUser: data.entities.authUser[data.result],
-    //     collaborators: data.entities.users,
-    //     boards: data.entities.boards
-    //   }
-    // }
   }
 })
 
@@ -44,6 +35,13 @@ export const inviteCollaborator = (boardId, email) => ({
     method: 'POST',
     data: {emails : [email]},
     url: `/api/boards/${boardId}/collaborators`
+  }
+})
+
+export const getBoardActivities = (boardId) => ({
+  type: types.GET_BOARD_ACTIVITIES,
+  REQUEST: {
+    url: `/api/boards/${boardId}/activities`
   }
 })
 

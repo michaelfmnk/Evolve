@@ -14,6 +14,8 @@ class AppHeader extends React.Component {
   }
 
   render () {
+    const { user, actions } = this.props
+    const profileLink = `/users/${user.id}/profile`
     return (
       <header className="page-header">
         <nav className="header-menu inline">
@@ -30,8 +32,9 @@ class AppHeader extends React.Component {
           
           />
           <UserMenuDropdown
-            user={this.props.user}
-            handleExitClick={this.props.actions.logout}
+            user={user}
+            handleExitClick={actions.logout}
+            profileLink={profileLink}
           />
         </nav>
       </header>

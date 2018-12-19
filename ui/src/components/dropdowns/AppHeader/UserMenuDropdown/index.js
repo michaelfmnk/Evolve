@@ -2,6 +2,7 @@
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import './UserMenuDropdown.css'
 
 class UserMenuDropdown extends React.Component {
@@ -26,7 +27,7 @@ class UserMenuDropdown extends React.Component {
       </div>
       <div className="divideline" />
       <ul>
-        <li><span >Profile</span></li>
+        <li> <Link to={this.props.profileLink}>  <span >  Profile </span> </Link> </li>
         <li><span >User boards</span></li>
         <div className="divideline" />
         <li><span >Settings</span></li>

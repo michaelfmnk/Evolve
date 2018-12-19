@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import HomePage from 'containers/HomePage'
 import BoardPage from 'containers/BoardPage'
+import UserProfilePage from 'containers/UserProfilePage'
 import AppHeader from 'containers/AppHeader'
 import history from './history.js'
 import { connect } from 'react-redux'
@@ -46,10 +47,9 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <Switch>
             <Route path='/' exact render={() => <Redirect to='/home' />} />
-            <Route path='/home' render={ () => <HomePage toggleCreationModal={this.toggleModal} />}/>
+            <Route path='/home' render={ () => <HomePage toggleCreationModal={this.toggleModal} />} />
             <Route path='/boards/:board_id' component={BoardPage} />
-            {/* <Route path='/users/:user_id/profile' component={ProfilePage} />  */}
-
+            <Route path='/users/:user_id/profile' component={UserProfilePage} /> 
           </Switch>
         </ConnectedRouter>
        {

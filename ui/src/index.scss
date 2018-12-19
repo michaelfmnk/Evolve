@@ -12,6 +12,11 @@
     box-sizing: border-box;
 }
 
+a, a:visited, a:active {
+  color: #17394d;
+  text-decoration: none;
+}
+
 @import 'commonStyles/variables.scss';
 
 .buttons-group {
@@ -164,6 +169,7 @@ body, html, #root {
   font-family: $base-font;
   margin: 0; padding: 0;
   height: 100vh;
+  color: #17394d;
 }
 
 .divideline {

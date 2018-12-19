@@ -4,7 +4,7 @@ import { boardByIdFromRoute, currentBoardId } from 'selectors/boards'
 import { boardColumns } from 'selectors/columns'
 import { authUserIdSelector } from 'selectors/auth'
 import { openedCardSelector } from 'selectors/cards'
-import { getBoardById, inviteCollaborator } from 'actions/boards'
+import { getBoardById, inviteCollaborator, getBoardActivities } from 'actions/boards'
 import { createColumn, deleteColumn, updateColumn } from 'actions/columns'
 import { 
   openCard, closeCard, deleteCard,
@@ -31,7 +31,8 @@ class BoardPage extends Component {
       actions.setCurrentBoard(boardId )
     }
 
-    match && actions.getBoardById(boardId)
+    actions.getBoardById(boardId);
+    actions.getBoardActivities(boardId);
   }
 
   openCard = (card) => () => this.props.actions.openCard(card.id)
@@ -81,11 +82,7 @@ class BoardPage extends Component {
               column={boardColumnsWithCards.find( col => col.id === openedCard.column_id)}
               boardUsers={[ board.owner, ...board.collaborators ]}
               updateCard={actions.updateCard}
-              assignUserToCard={this.assignUserToCard}
-
-              
-              unassignUserFromCard={this.unassignUserFromCard}
-
+              authUserId={authUserId}
               closeCard={this.closeCard}
               deleteCard={actions.deleteCard}
               handleUserAssigning={this.handleUserAssigning}
@@ -104,17 +101,6 @@ const mapStateToProps = (state, props) => ({
   boardColumnsWithCards: boardColumns(state),
   openedCard: openedCardSelector(state),
 })
-
-// const mapDispatchToProps = (dispatch) => ({
-//   actions: bindActionCreators({
-//     getBoardById,
-//     createColumn,
-//     setCurrentBoard,
-//     createCard
-//   }, dispatch)
-// })
-
-
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps
@@ -139,6 +125,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       ...bindActionCreators({
         getBoardById,
         setCurrentBoard,
+        getBoardActivities,
         openCard, 
         closeCard,
       }, dispatch)

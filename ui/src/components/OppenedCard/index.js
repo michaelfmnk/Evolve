@@ -69,8 +69,8 @@ class OppenedCard extends Component {
 
   render() {
     const { 
-			card, column, boardUsers, assignUserToCard, deleteCard,
-			closeCard, unassignUserFromCard ,handleUserAssigning 
+			card, column, boardUsers, deleteCard,
+			closeCard ,handleUserAssigning, authUserId
 		} = this.props;
     const { content, title, isEditing } = this.state;
 
@@ -106,9 +106,8 @@ class OppenedCard extends Component {
 									withLabel
 									card={card} 
 									boardUsers={boardUsers} 
-									assignUserToCard={assignUserToCard} 
-									unassignUserFromCard={unassignUserFromCard}
-									handleUserAssigning={handleUserAssigning}
+                  handleUserAssigning={handleUserAssigning}
+                  authUserId={authUserId}
                 />
                 
             </div>
@@ -158,7 +157,7 @@ class OppenedCard extends Component {
 								}
 								
 							<div className="buttons-group"> 
-                <span className={`btn delete `} onClick={() => deleteCard && deleteCard(card) || undefined}> 
+                <span className={`btn delete `} onClick={() => deleteCard ? deleteCard(card) : undefined}> 
                   Delete card
                 </span>
                 {/* <span className='btn' onClick={this.toggleActive}> 

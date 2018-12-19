@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react'
+import ToggleableMember from 'components/ToggleableMember'
+import { getProfileActivityRoute } from 'constants/routes/ui'
 
 class CardMembers extends Component {
   constructor(props) {
@@ -13,14 +15,8 @@ class CardMembers extends Component {
 
   toggleAdding = () => this.setState({isMemberAdding: !this.state.isMemberAdding})
 
-  addUserToCard = (user) => () => {
-    const { card, assignUserToCard } = this.props;
-  }
-
-  handle
-
   render() {
-    const { card, card: { users }, boardUsers, canEdit , handleUserAssigning, withLabel} = this.props;
+    const { card, card: { users }, boardUsers, canEdit , handleUserAssigning, withLabel, authUserId} = this.props;
     const { isMemberAdding, activeMember } = this.state;
 
     return (
@@ -29,11 +25,15 @@ class CardMembers extends Component {
           <div className="members">
             {
               users && users.map( user => (
-                <img 
-                  src={user.avatar_url || '/img/avatar.jpeg'} 
-                  alt='' 
+                <ToggleableMember 
+                  user={user}
                   onClick={this.handleMemberClick}
-                  title={user.first_name + ' ' + user.last_name}
+                  popupButtons = {[
+                    {
+                      content: user.id === authUserId ? 'Leave card' : 'Delete from card',
+                      onClick: handleUserAssigning ? handleUserAssigning(user) : undefined
+                    }
+                  ]}
                 />
               ))
             }

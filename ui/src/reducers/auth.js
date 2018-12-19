@@ -6,7 +6,8 @@ import axiosInstance from 'constants/axios/instance'
 
 const initialState = {
   user: {},
-  token: null
+  token: null,
+  error: null 
 }
 
 export default function authReducer (state = initialState, action) {
@@ -29,7 +30,10 @@ export default function authReducer (state = initialState, action) {
     case fail(types.SIGN_IN):
     case fail(types.SIGN_UP):
     case fail(types.VERIFY_ACCOUNT):
-      return state
+      return {
+        ...state,
+        error: action.payload
+      }
 
     case success(types.VERIFY_ACCOUNT): {
       return {
@@ -52,6 +56,13 @@ export default function authReducer (state = initialState, action) {
           ...state.user,
           own_boards: [ ...state.user.own_boards, action.payload.id ]
         }
+      }
+    }
+
+    case types.CLEAR_AUTH_ERROR: {
+      return {
+        ...state,
+        error: null
       }
     }
 

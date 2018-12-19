@@ -16,18 +16,17 @@
         .members{
             display: flex;
             align-items: center;
-            float: left;
             width: auto;        
 
-            img {
-            transition: $a_short-duration;
-            display: inline-block;
-            border-radius: 50%;
-            width: 25px; height: 25px;
-            background: $dark-color;
-            margin: 2px; 
-            cursor: pointer; 
-            }
+            // img {
+            // transition: $a_short-duration;
+            // display: inline-block;
+            // border-radius: 50%;
+            // width: 25px; height: 25px;
+            // background: $dark-color;
+            // margin: 2px; 
+            // cursor: pointer; 
+            // }
         }
 
       .header{
