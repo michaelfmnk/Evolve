@@ -26,6 +26,7 @@ class CardMembers extends Component {
             {
               users && users.map( user => (
                 <ToggleableMember 
+                  key={user.id}
                   user={user}
                   onClick={this.handleMemberClick}
                   popupButtons = {[

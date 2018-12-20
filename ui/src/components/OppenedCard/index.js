@@ -88,11 +88,11 @@ class OppenedCard extends Component {
             )}
 
             <h2 className="sectioncaption card-header">
-              <div className='input-wrp'>
+              
                 <i className="fas fa-clipboard"></i>
-								<input value={title} name="title" onChange={this.handleChange}/>
+								<textarea value={title} name="title" onChange={this.handleChange}/>
 								{/* {title} */}
-              </div>
+             
               <button className="closewindow" onClick={closeCard}>
                 <i className="fas fa-times"></i>
               </button>

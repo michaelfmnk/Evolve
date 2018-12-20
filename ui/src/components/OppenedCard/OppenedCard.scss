@@ -72,7 +72,14 @@
         .desctiption-wrp{
             min-height: 50px;
             max-width: 600px;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+
+            &:hover {
+              background-color: rgba(9,45,66,.08);
+            }
             overflow-x: hidden;
+            cursor: text;
 
             * {
                 max-width: 500px;
@@ -116,15 +123,15 @@
                     margin-bottom: 0;
 
 
-                    input {
-                        padding: 8px 10px;
+                    textarea {
+                        padding: 5px 0 0 5px;
+                        min-height: 30px;
                         font-weight: bold;
                         font-size: 1em;
-                        margin-block-start: 0em;
-                        margin-block-end: 0.83em;
-                        margin-inline-start: 0px;
-                        margin-inline-end: 0px;
+                        display: block;
+                        width: 100%;
                         color: #17394d;
+                        background: transparent;
                         
                         &:hover {
                            color: #216b96;;

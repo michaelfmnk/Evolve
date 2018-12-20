@@ -44,6 +44,7 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
           {
             collaborators && collaborators.map(user => (
               <ToggleableMember 
+                key={user.id}
                 user={user}
                 popupButtons = {[
                   {

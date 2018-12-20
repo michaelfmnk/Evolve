@@ -5,15 +5,11 @@ import { DragSource } from 'react-dnd'
 
 const knightSource = {
   beginDrag (props, dnd, element) {
-    console.log('props of knight, since these aren\'t in the docs')
     console.log(props, dnd, element)
     return {}
   },
 
   endDrag(props, monitor, component) {
-    console.log('END_DRAG')
-    console.log(props, monitor, component)
-    console.log(monitor.getDropResult())
     const column = monitor.getDropResult()
     if( column ) {
       props.moveCard(props.card, column)
@@ -65,7 +61,13 @@ const CardsList = ({cards, createCard, moveCard, openCard, column}) => (
   <div className="rowhandler">
    {
      cards.map( card => (
-        <Card card={card} moveCard={moveCard} openCard={openCard} column={column}/>
+        <Card 
+          key={card.id}
+          card={card} 
+          moveCard={moveCard} 
+          openCard={openCard} 
+          column={column}
+        />
       ))
      }
 
@@ -73,7 +75,6 @@ const CardsList = ({cards, createCard, moveCard, openCard, column}) => (
       createEntity={createCard}
       placeholder="Enter new card title"
       btnText="Add card"
-
     />
   </div>
 )

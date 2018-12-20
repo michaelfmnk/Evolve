@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 }
 
 RequireAuth.propTypes = {
-  Component: PropTypes.object.isRequired,
+  Component: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool
 }
 

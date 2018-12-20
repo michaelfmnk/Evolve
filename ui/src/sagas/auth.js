@@ -10,6 +10,7 @@ import { GET_BOARD_BY_ID } from 'constants/actionTypes/boards'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
+
 function * authHandler (action) {
   const { token, user = {} } = action.payload;
   console.log('INSIDE HANDLER')
@@ -39,25 +40,34 @@ function * activate (action) {
   yield put(push(`/boards/${action.boardId}`))
 }
 
+
+const reconnectInterval = {};
+const clients = {};
+
 function * socket ({payload: {boardId}}) {
-  // const socket = yield axiosInstance.get(`/api/ws/boards/${boardId}`)
-  console.log('INSIDE SAGA')
-  // console.log(socket)
-  // this.socket = new WebSocket(`ws://evolve-stage.com/api/ws/boards/${boardId}`)
 
-
-  http://evolve-stage.com/boards/5
-  
-  const socket = new SockJS(`/api/ws/boards/${boardId}`);
-  const client = Stomp.over(socket)
-
-  client.connect({
+  const wsPath = `/api/ws/boards/${boardId}`
+  const headers = {
     'Authorization': localStorage.getItem('token')
-  })
+  }
+
+  const onConnect = ( ) => console.log('INSIDE ONCONNECT')
+
+  const onClose = () => {
+    console.log('On CLose')
+  }
 
 
-  console.log(client)
-  console.log(socket)
+  const socket = new SockJS(`${window.location.origin}/${wsPath}`, {}, { transports: 'websocket' });
+  clients[wsPath] = Stomp.over(socket);
+  clients[wsPath].connect(headers, () => {
+      
+          if (reconnectInterval[wsPath]) {
+              clearInterval(reconnectInterval[wsPath]);
+              reconnectInterval[wsPath] = null;
+          }
+          onConnect();
+      }, onClose);
 }
 
 

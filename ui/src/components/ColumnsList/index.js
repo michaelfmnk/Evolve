@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import CardsList from 'components/CardsList'
 import AddEntityForm from 'components/AddEntityForm'
-
+import { debounce } from 'lodash'
 import { DropTarget } from 'react-dnd'
 
 
 
 const squareTarget = {
   canDrop (props) {
-    // const {canMovePiece, position: {x, y}} = props
-    // return canMovePiece(x, y)
     console.log('CAN DROP ? ')
     console.log(props)
     return true
@@ -32,20 +30,6 @@ function collect (connect, monitor) {
   return info
 }
 
-class Input extends Component {
-
-
-  textInput = React.createRef();
-
-  componentDidMount() {
-    this.textInput.current.focus()
-  }
-
-  render() {
-    const { onChange, value } = this.props;
-    return <input className="caption" name="name" onChange={onChange} value={value} ref={this.textInput}/>
-  }
-}
 
 class Column extends Component {
   state = {
@@ -64,20 +48,19 @@ class Column extends Component {
   handleChange = ({ target: {name, value }}) => {
     this.setState({
       [name]: value
-    })
+    }, this.handleUpdateName() )
   }
 
-  handleUpdateName = () => {
+  handleUpdateName = debounce(() => {
+    console.log(this.state)
     const { column, actions } = this.props;
 
-    this.props.actions.updateColumn({
+    actions.updateColumn({
       id: column.id,
       board_id: column.board_id,
       name: this.state.name
     });
-
-    this.toggleEditing();
-  }
+  }, 200)
 
   render() {
     const {column, actions, connectDropTarget , moveCard, openCard} = this.props
@@ -90,13 +73,14 @@ class Column extends Component {
           {
             isEditing
               ? <Fragment>
-                  <Input onChange={this.handleChange} value={name}/>
-                  <div 
-                    className="options" 
-                    onClick={this.handleUpdateName}
-                   >
-                  <i className="fas fa-check" />
-                </div>
+                  <textarea
+                    className='caption'
+                    name='name'
+                    onChange={this.handleChange} 
+                    value={name}
+                    autoFocus
+                    onBlur={this.toggleEditing}
+                  />
                </Fragment>
               : <Fragment>
                 <div className="caption" onClick={this.toggleEditing}>{column.name}</div>
@@ -107,8 +91,7 @@ class Column extends Component {
                   <i className="fas fa-times" />
                 </div>
               </Fragment>
-          }
-            
+          } 
         </div>
     
         <CardsList 
@@ -118,7 +101,6 @@ class Column extends Component {
           openCard={openCard}
           column={column}
         />
-    
       </div>
     )
     
@@ -131,17 +113,23 @@ const ColumnsList = ({columns, actions, openCard}) => (
   <div className="columnhandler">
   {
     columns.map( column => (
-      <Column column={column} actions={actions} moveCard={actions.moveCard} openCard={openCard}/>
+      <Column 
+        key={column.id}
+        column={column} 
+        actions={actions} 
+        openCard={openCard}
+        moveCard={actions.moveCard} 
+      />
     ))
   }
-  {/* <div className="onemore"><a href="#"><i className="fas fa-plus"></i> Add Card</a></div> */}
-  <div className="column">
-    <AddEntityForm 
-      placeholder='Enter column name'
-      btnText='Add column'
-      createEntity={(name) => actions.createColumn({name})}
-    />
-  </div>
+
+    <div className="column">
+      <AddEntityForm 
+        placeholder='Enter column name'
+        btnText='Add column'
+        createEntity={(name) => actions.createColumn({name})}
+      />
+    </div>
   </div>
 )
 

@@ -35,6 +35,10 @@ class BoardPage extends Component {
     actions.getBoardActivities(boardId);
   }
 
+  componentWillUnmount() {
+    this.props.actions.closeCard()
+  }
+
   openCard = (card) => () => this.props.actions.openCard(card.id)
   closeCard = () =>  this.props.actions.closeCard()
 
@@ -48,14 +52,12 @@ class BoardPage extends Component {
 
   render () {
     const { board, authUserId, actions, boardColumnsWithCards, openedCard } = this.props;
-
-    console.log(boardColumnsWithCards)
     
     if (!board) return null
     return (
       <main>
-        <div className='wrp' style={{ height: '100vh', }} > 
-        <div className='background' style={{backgroundImage: `url(${board.background_url})`, height: '100vh', position: 'fixed', top: 0, left: 0, right:0}} /> 
+        <div className='wrp' > 
+        <div className='background' style={{backgroundImage: `url(${board.background_url})`}} /> 
           <BoardHeader 
             boardName={board.name} 
             owner={board.owner} 
