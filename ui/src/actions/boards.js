@@ -1,4 +1,3 @@
-import { success} from 'helpers/actionsProcessTemplaters'
 import * as types from 'constants/actionTypes/boards'
 import * as endpoints from 'constants/routes/api/boards'
 import { board } from 'constants/normalizr_schemas/board'

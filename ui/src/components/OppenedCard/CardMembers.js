@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import Avatar from 'components/Avatar'
 import ToggleableMember from 'components/ToggleableMember'
-import { getProfileActivityRoute } from 'constants/routes/ui'
+import { fullNameOf } from 'helpers/stringFormatting'
 
 class CardMembers extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class CardMembers extends Component {
 
   render() {
     const { card, card: { users }, boardUsers, canEdit , handleUserAssigning, withLabel, authUserId} = this.props;
-    const { isMemberAdding, activeMember } = this.state;
+    const { isMemberAdding } = this.state;
 
     return (
       <div className='members-section'>
@@ -58,10 +59,11 @@ class CardMembers extends Component {
                         boardUsers && boardUsers.map( user => (
                           <div className='users-list-item' onClick={handleUserAssigning(user)}>
                             <div className='user-info'>
-                              <img src={user.avatar_url} alt=''/>
-                              <span> {user.first_name + ' ' + user.last_name} </span>
+                              <Avatar src={user.avatar_url}/>
+                              <span> {fullNameOf(user)} </span>
                             </div>
-                            { card.users && card.users.some( ({id}) => id === user.id) && <i className='fas fa-check '></i> }
+                            {card.users && card.users.some( ({id}) => id === user.id) && 
+                                <i className='fas fa-check '></i>}
                           </div>
                         ))
                       }

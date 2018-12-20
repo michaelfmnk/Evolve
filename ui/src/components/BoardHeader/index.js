@@ -1,6 +1,7 @@
 import React from 'react'
 import InviteCollaborator from './InviteCollaborator'
 import ToggleableMember from 'components/ToggleableMember'
+import { fullNameOf } from 'helpers/stringFormatting'
 import './BoardHeader.css'
 
 
@@ -31,7 +32,7 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
           { owner && ( 
             <ToggleableMember 
               user={owner} 
-              title={`${owner.first_name} ${owner.last_name} | board admin`}
+              title={`${fullNameOf(owner)} | board admin`}
               popupButtons = {[
                 {
                   content: 'leave board',

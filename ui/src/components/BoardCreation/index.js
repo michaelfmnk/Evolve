@@ -65,7 +65,7 @@ export default class BoardCreationModal extends Component {
 								backgrounds.map( img => (
 									<React.Fragment>
 										<div onClick={() => this.setState({...img}, () => console.log(this.state))} className="img-wrp">
-											<img key={img.background_id} src={img.background_url}/>
+											<img key={img.background_id} src={img.background_url} alt=''/>
 												{
 													background_id === img.background_id && 
 														<span className='checked-badge'> 

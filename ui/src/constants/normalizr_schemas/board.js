@@ -1,7 +1,6 @@
-import { normalize, schema } from 'normalizr'
+import { schema } from 'normalizr'
 
-// Define a users schema
-const user = new schema.Entity('users')
+// const user = new schema.Entity('users')
 const card = new schema.Entity('cards')
 
 const column = new schema.Entity('columns', {

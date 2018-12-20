@@ -42,6 +42,7 @@ const apiCaller = store => next => action => {
           store.dispatch(logout())
           break
         }
+        default: break
       }
     })
 }

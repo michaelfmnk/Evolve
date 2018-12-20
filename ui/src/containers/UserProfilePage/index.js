@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import Avatar from 'components/Avatar'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { userByIdSelector } from 'selectors/user'
 import { authUserIdSelector } from 'selectors/auth'
 import { Switch, Route, Redirect, NavLink } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
+import { fullNameOf } from 'helpers/stringFormatting'
 import { 
   profileRoot, profileCards, profileActivity, editProfile,
   getProfileActivityRoute, getProfileCardsRoute, getEditProfileRoute 
@@ -25,7 +25,7 @@ class UserProfile extends Component {
                 <Avatar src={user.avatar_url} />
               </div>
               <div className='info'>
-                <p className='user-name'> {user.first_name + ' ' + user.last_name} </p>
+                <p className='user-name'> {fullNameOf(user)} </p>
                 <p className='email'> {user.email || 'fake@email.com'} </p>
                 {/* <span className='btn edit-profile-link'> Edit profile</span> */}
               </div>

@@ -1,5 +1,5 @@
-import {start, fail, success} from 'helpers/actionsProcessTemplaters'
-import {GET_BOARD_BY_ID}  from 'constants/actionTypes/boards'
+import { success } from 'helpers/actionsProcessTemplaters'
+import { GET_BOARD_BY_ID }  from 'constants/actionTypes/boards'
 import * as types from 'constants/actionTypes/cards'
 import { combineReducers } from 'redux'
 

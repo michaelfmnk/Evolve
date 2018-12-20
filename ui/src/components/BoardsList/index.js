@@ -4,6 +4,8 @@ import forest from 'resources/images/forest.jpg'
 import lightForest from 'resources/images/lightForest.jpg'
 import white from 'resources/images/white.jpg'
 import PropTypes from 'prop-types'
+import Avatar from 'components/Avatar'
+import { fullNameOf } from 'helpers/stringFormatting'
 import './BoardsList.css'
 
 class BoardsList extends React.Component {
@@ -20,6 +22,7 @@ class BoardsList extends React.Component {
            boards && boards.map(board => (
              board &&
              <li
+               key={board.id}
                className='board-block'
                style={{backgroundImage: `url(${board.background_url})`}}
                onClick={() => this.handleBoardClick(board)}
@@ -29,10 +32,10 @@ class BoardsList extends React.Component {
                <div className="party">
                  <p className='members-header'>Members:</p>
                  <div className='members-wrp'>
-                   <img src={board.owner.avatar_url || "/img/avatar.jpeg"} />
+                   <Avatar src={board.owner.avatar_url} />
                    {
                       board.collaborators && board.collaborators.map(user => (
-                        <img src={user.avatar_url || "/img/avatar.jpeg"} />
+                        <Avatar src={user.avatar_url} key={user.id} title={fullNameOf(user)}/>
                       ))
                     }
                  </div>

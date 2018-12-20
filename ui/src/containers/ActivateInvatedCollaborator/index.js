@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { activateInvitationLink } from 'actions/auth'
 import { isLoggedInSelector } from 'selectors/auth'
 import { signInRequest } from 'actions/auth'
-import axiosInstance from 'constants/axios/instance'
 import LoginForm from 'components/LoginForm'
 
 

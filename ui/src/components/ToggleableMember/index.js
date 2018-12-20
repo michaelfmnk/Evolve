@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Avatar from 'components/Avatar'
 import { Link } from 'react-router-dom'
 import { getProfileActivityRoute } from "constants/routes/ui"
+import { fullNameOf } from 'helpers/stringFormatting'
 import './ToggleableMember.css'
 
 class ToggleableMember extends Component {
@@ -39,19 +40,17 @@ class ToggleableMember extends Component {
         <Avatar 
           onClick={this.toggleMemberPopup}
           src={user.avatar_url} 
-          title={title ? title :`${user.first_name} ${user.last_name}`} 
+          title={title ? title : fullNameOf(user)}
         />
-
         {
           isPopupOpen && (
             <div className='popup' ref={this.setWrapperRef}>
               <div className='popup-header'>
-
                 <Avatar src={user.avatar_url} />
 
                 <div className='user-info'>
                   <div className='user-name'>
-                    {`${user.first_name} ${user.last_name}`}
+                    {fullNameOf(user)}
                   </div>
                   <span className='user-email'>
                       {user.email || 'fake@email.com'}
@@ -60,7 +59,6 @@ class ToggleableMember extends Component {
 
                 <i className='fas fa-times' onClick={this.toggleMemberPopup}/>
               </div>
-
               {
                 !withoutProfileLink && (
                   <Link to={getProfileActivityRoute(user.id)}> 
@@ -74,7 +72,6 @@ class ToggleableMember extends Component {
                   if(link) {
                     res = <Link to={link}> {res} </Link>
                   }
-
                   return res
                 })
               }
@@ -87,7 +84,7 @@ class ToggleableMember extends Component {
 }
 
 ToggleableMember.defaultProps = {
-  profileLinkText: 'Go to profile',
+  profileLinkText: 'View profile',
   withoutProfileLink: false
 }
 

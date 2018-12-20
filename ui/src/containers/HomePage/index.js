@@ -6,13 +6,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import './HomePage.css'
-import Modal from 'components/Modal'
-import BoardCreation from 'components/BoardCreation'
 
 class HomePage extends React.Component {
 
   handleBoardClick = (board) => {
-    console.log(this.props)
     this.props.actions.setCurrentBoard(board.id)
     this.props.history.push(`boards/${board.id}`)
   }

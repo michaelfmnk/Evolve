@@ -92,7 +92,7 @@ class RegisterForm extends React.Component {
             }
           />
 
-          <Link to="/sign_in" className="forgot_password">I already have an account</Link>
+          <Link to="/sign_in" className="have_account">I already have an account</Link>
             
           <Message type='error' text={this.props.errorMessage} />
           

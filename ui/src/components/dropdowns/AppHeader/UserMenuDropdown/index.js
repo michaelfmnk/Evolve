@@ -2,7 +2,9 @@
 import React from 'react'
 import Dropdown from 'components/Dropdown'
 import PropTypes from 'prop-types'
+import Avatar from 'components/Avatar'
 import { Link } from 'react-router-dom'
+import { fullNameOf } from 'helpers/stringFormatting'
 import './UserMenuDropdown.css'
 
 class UserMenuDropdown extends React.Component {
@@ -19,22 +21,25 @@ class UserMenuDropdown extends React.Component {
     <i className="fas fa-user trigger" />
   )
 
-  renderDropdown = () => (
-    <div className='creation-menu-dropdown-wrp' ref={(elem) => { this.dropdown = elem }}>
-      <div className="usinfo">
-        <img src={this.props.user.avatar_url || '/img/avatar.jpeg'} className="useravatar" />
-        <p>{`${this.props.user.first_name} ${this.props.user.last_name}`}</p>
-      </div>
-      <div className="divideline" />
-      <ul>
-        <li> <Link to={this.props.profileLink}>  <span >  Profile </span> </Link> </li>
-        <li><span >User boards</span></li>
+  renderDropdown = () =>{ 
+    const { user, profileLink, handleExitClick } = this.props;
+    return (
+      <div className='creation-menu-dropdown-wrp' ref={(elem) => { this.dropdown = elem }}>
+        <div className="usinfo">
+          <Avatar src={user.avatar_url} className="useravatar" />
+          <p>{fullNameOf(user)}</p>
+        </div>
         <div className="divideline" />
-        <li><span >Settings</span></li>
-        <li onClick={this.props.handleExitClick}><span >Exit</span></li>
-      </ul>
-    </div>
-  )
+        <ul>
+          <li> <Link to={profileLink}>  <span >  Profile </span> </Link> </li>
+          <li><span >User boards</span></li>
+          <div className="divideline" />
+          <li><span >Settings</span></li>
+          <li onClick={handleExitClick}><span >Exit</span></li>
+        </ul>
+      </div>
+    )
+}
 
   render () {
     return (

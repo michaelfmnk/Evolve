@@ -1,5 +1,5 @@
 import * as types from 'constants/actionTypes/auth'
-import {start, fail, success} from 'helpers/actionsProcessTemplaters'
+import { fail, success} from 'helpers/actionsProcessTemplaters'
 import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
 import { CREATE_BOARD } from 'constants/actionTypes/boards'
 import axiosInstance from 'constants/axios/instance'
