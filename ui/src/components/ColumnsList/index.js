@@ -47,7 +47,7 @@ class Column extends Component {
 
   handleChange = ({ target: {name, value }}) => {
     this.setState({
-      [name]: value
+      [name]: value.replace('\n', '')
     }, this.handleUpdateName() )
   }
 

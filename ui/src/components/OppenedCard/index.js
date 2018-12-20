@@ -54,7 +54,12 @@ class OppenedCard extends Component {
 
   toggleEditing = () => this.setState( {isEditing: !this.state.isEditing })
 
-	handleChange = ({target: {name, value}}) => {
+	handleChange = (e) => {
+    let { target: {name, value} } = e
+
+    // disable enters
+    value = value.replace('\n', '')
+
 		this.setState({
 			[name]: value
 		}, this.handleSaveTitle())
@@ -145,26 +150,29 @@ class OppenedCard extends Component {
                       </div> 
                     </Fragment>
                   )
-                  : card.content
-										 ? <div 
-													onClick={this.toggleEditing} 
-													dangerouslySetInnerHTML={{ __html: card.content}}
-													className='desctiption-wrp'
-												/>
-                     : <p className='add-cart-content' onClick={this.toggleEditing}>
-                         Add full description for this card...
-                       </p>
-								}
-								
-							<div className="buttons-group"> 
-                <span className={`btn delete `} onClick={() => deleteCard ? deleteCard(card) : undefined}> 
-                  Delete card
-                </span>
-                {/* <span className='btn' onClick={this.toggleActive}> 
-                  Archive
-                </span> */}
-              </div> 
+                  : <Fragment>
+                     {
+                      card.content
+                      ? <div 
+                            onClick={this.toggleEditing} 
+                            dangerouslySetInnerHTML={{ __html: card.content}}
+                            className='desctiption-wrp'
+                          />
+                      : <p className='add-cart-content' onClick={this.toggleEditing}>
+                          Add full description for this card...
+                        </p>
+                     }
 
+                    <div className="buttons-group"> 
+                      <span className={`btn delete `} onClick={() => deleteCard ? deleteCard(card) : undefined}> 
+                        Delete card
+                      </span>
+                      {/* <span className='btn' onClick={this.toggleActive}> 
+                        Archive
+                      </span> */}
+                    </div> 
+                  </Fragment>
+								}
             </div>
         </div>
       </div>

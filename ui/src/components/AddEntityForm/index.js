@@ -12,8 +12,10 @@ class AddEntityForm extends Component {
   }
 
   handleInput = ({target}) => {
+    let value = target.value.replace('\n', '').trim()
+    
     this.setState({
-      [target.name]: target.value.trim()
+      [target.name]: value
     }, () => console.log(this.state))
   }
 
