@@ -16,7 +16,7 @@ export const moveCard = (boardId, card, targetColumn) => ({
   type: types.MOVE_CARD,
   REQUEST: {
     method: 'PATCH',
-    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/move/${targetColumn.id}`
+    url: endpoints.moveCard(boardId, card.column_id, card.id, targetColumn.id)
   },
   boardId, 
   card, 
@@ -28,7 +28,7 @@ export const updateCard = (boardId, card) => ({
   REQUEST: {
     method: 'PUT',
     data: card,
-    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}`
+    url: endpoints.card(boardId, card.column_id, card.id)
   },
   boardId,
   card
@@ -38,7 +38,7 @@ export const deleteCard = (boardId, card) => ({
   type: types.DELETE_CARD,
   REQUEST: {
     method: 'DELETE',
-    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}`
+    url: endpoints.card(boardId, card.column_id, card.id)
   },
   card
 })
@@ -48,7 +48,7 @@ export const openCard = (id) => ({
   payload: { id }
 })
 
-export const closeCard = (id) => ({
+export const closeCard = () => ({
   type: types.CLOSE_CARD,
 })
 
@@ -59,7 +59,7 @@ export const assignUsersToCard = (boardId, card,  userIds) => ({
     data: {
       data: userIds
     },
-    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/assignees`
+    url: endpoints.cardAssignees(boardId, card.column_id, card.id)
   }
 })
 
@@ -69,7 +69,7 @@ export const unassignUserFromCard = (boardId, card,  userId) => ({
   type: types.UNNASSIGN_USER_FROM_CARD,
   REQUEST: {
     method: 'DELETE',
-    url: `/api/boards/${boardId}/columns/${card.column_id}/cards/${card.id}/assignees/${userId}`
+    url: endpoints.concreteCardAssegnee(boardId, card.column_id, card.id, userId)
   },
   card,
   deletedUserId: userId

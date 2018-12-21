@@ -4,7 +4,7 @@ import registerServiceWorker from 'registerServiceWorker'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
-import * as routes from 'constants/routes/ui'
+import { root, welcome, signIn, signUp, invitation } from 'constants/routes/ui'
 import LoginPage from 'containers/LoginPage'
 import RegisterPage from 'containers/RegisterPage'
 import store from 'store'
@@ -23,11 +23,11 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path={routes.welcome} component={WelcomePage} />
-        <Route path={routes.signIn} component={LoginPage} />
-        <Route path={routes.signUp} component={RegisterPage} />
-        <Route path={routes.invitation} exact component={ActivateInvatedCollaborator} />
-        <Route path="/" render={() => <RequireAuth Component={App} />} />
+        <Route path={welcome} component={WelcomePage} />
+        <Route path={signIn} component={LoginPage} />
+        <Route path={signUp} component={RegisterPage} />
+        <Route path={invitation} exact component={ActivateInvatedCollaborator} />
+        <Route path={root} render={() => <RequireAuth Component={App} />} />
       </Switch>
     </ConnectedRouter>
   </Provider>,

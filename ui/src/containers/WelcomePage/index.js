@@ -7,6 +7,7 @@ import WelcomeSection from 'components/WelcomePage/WelcomeSection'
 import AboutSection from 'components/WelcomePage/AboutSection'
 import ProjectsSection from 'components/WelcomePage/ProjectsSection'
 import ContactsSection from 'components/WelcomePage/ContactsSection'
+import { signIn, signUp } from 'constants/routes/ui'
 import './WelcomePage.css'
 
 class WelcomePage extends React.Component {
@@ -23,11 +24,11 @@ class WelcomePage extends React.Component {
       <React.Fragment>
         <NavHeader
           location={this.props.location}
-          onLoginClick={() => this.redirectTo('/sign_in')}
-          onRegisterClick={() => this.redirectTo('/sign_up')}
+          onLoginClick={() => this.redirectTo(signIn)}
+          onRegisterClick={() => this.redirectTo(signUp)}
         />
         <WelcomeSection
-          onGetStartedClick={() => this.redirectTo('/sign_up')}
+          onGetStartedClick={() => this.redirectTo(signIn)}
         />
         <AboutSection />
         <ProjectsSection />

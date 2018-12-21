@@ -5,13 +5,14 @@ import { authUserBoards } from 'selectors/boards'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
+import { getBoardRoute } from 'constants/routes/ui'
 import './HomePage.css'
 
 class HomePage extends React.Component {
 
   handleBoardClick = (board) => {
     this.props.actions.setCurrentBoard(board.id)
-    this.props.history.push(`boards/${board.id}`)
+    this.props.history.push( getBoardRoute(board ))
   }
 
 
