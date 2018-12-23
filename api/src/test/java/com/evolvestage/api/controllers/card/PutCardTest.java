@@ -2,14 +2,12 @@ package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.CardBriefDto;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.io.IOException;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -22,9 +20,7 @@ public class PutCardTest extends BaseTest{
                 .title("UPDATED CARD TITLE")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(objectMapper.writeValueAsBytes(card))
                 .when()
                 .put("/api/boards/1/columns/1/cards/1")
@@ -50,9 +46,7 @@ public class PutCardTest extends BaseTest{
                 .content("UPDATED CARD")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(objectMapper.writeValueAsBytes(card))
                 .when()
                 .put("/api/boards/1/columns/1/cards/1")
@@ -70,9 +64,7 @@ public class PutCardTest extends BaseTest{
                 .title("UPDATED CARD TITLE")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(objectMapper.writeValueAsBytes(card))
                 .when()
                 .put("/api/boards/2/columns/1/cards/1")

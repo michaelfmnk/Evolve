@@ -2,15 +2,18 @@ package com.evolvestage.api.controllers.auth;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.SignUpDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.evolvestage.api.dtos.UserBriefDto;
+import com.evolvestage.api.entities.BoardInvitation;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.errors.MailjetException;
-import io.restassured.http.ContentType;
+import lombok.SneakyThrows;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
+import java.util.UUID;
+
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -20,7 +23,7 @@ import static org.mockito.Mockito.*;
 public class RegisterTest extends BaseTest {
 
 
-    @Before
+    @BeforeEach
     public void before() {
         redisTemplate.delete("invitations");
     }
@@ -43,7 +46,7 @@ public class RegisterTest extends BaseTest {
                 .lastName("LN")
                 .build();
 
-        given()
+        UserBriefDto response = given()
                 .noAuth()
                 .body(authRequest)
                 .when()
@@ -54,9 +57,7 @@ public class RegisterTest extends BaseTest {
                 .statusCode(HttpStatus.SC_CREATED)
                 .body("id", notNullValue())
                 .body("email", equalTo("meteormf99@gmail.com"))
-                .extract().response().asString();
-
-        UserBriefDto userBriefDto = objectMapper.readValue(json, UserBriefDto.class);
+                .extract().response().as(UserBriefDto.class);
 
         verify(mailjetClient, times(1)).post(any(MailjetRequest.class));
 
@@ -80,7 +81,7 @@ public class RegisterTest extends BaseTest {
                 .row(0)
                 .value("verification_code").isNotNull();
         assertThat(new Request(dataSource,
-                "select * from boards_users where board_id=2 and user_id=" + userBriefDto.getId()))
+                "select * from boards_users where board_id=2 and user_id=" + response.getId()))
                 .hasNumberOfRows(1);
     }
 

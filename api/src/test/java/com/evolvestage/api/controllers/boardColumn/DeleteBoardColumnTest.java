@@ -1,12 +1,10 @@
 package com.evolvestage.api.controllers.boardColumn;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
 
@@ -15,8 +13,7 @@ public class DeleteBoardColumnTest extends BaseTest {
     @Test
     public void shouldDeleteBoardColumn() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .delete("/api/boards/1/columns/1")
                 .then()
@@ -31,8 +28,7 @@ public class DeleteBoardColumnTest extends BaseTest {
     @Test
     public void shouldNotDeleteBoardColumn() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .delete("/api/boards/2/columns/1")
                 .then()

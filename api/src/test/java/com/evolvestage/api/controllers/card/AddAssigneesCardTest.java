@@ -2,15 +2,13 @@ package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.containers.ListContainer;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -21,9 +19,7 @@ public class AddAssigneesCardTest extends BaseTest {
         List<Integer> newAssignees = Arrays.asList(1, 2, 3);
         ListContainer<Integer> list = new ListContainer<>(newAssignees);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(list)
                 .when()
                 .post("/api/boards/1/columns/1/cards/1/assignees")
@@ -49,9 +45,7 @@ public class AddAssigneesCardTest extends BaseTest {
         List<Integer> newAssignees = Arrays.asList(2, 3, 4);
         ListContainer<Integer> list = new ListContainer<>(newAssignees);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(list)
                 .when()
                 .post("/api/boards/1/columns/1/cards/1/assignees")

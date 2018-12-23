@@ -36,8 +36,6 @@ import javax.sql.DataSource;
 public abstract class BaseTest {
 
 
-    protected Headers headers;
-    protected Headers badHeaders;
     @LocalServerPort
     protected Integer port;
     @SpyBean

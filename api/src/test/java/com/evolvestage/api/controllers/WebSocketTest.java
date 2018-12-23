@@ -15,7 +15,6 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -40,7 +39,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @CommonsLog
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class WebSocketTest extends BaseTest {
 
     private WebSocketStompClient stompClient;
