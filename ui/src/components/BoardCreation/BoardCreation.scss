@@ -1,0 +1,127 @@
+@import 'commonStyles/variables.scss';
+
+$modal-height: 80px;
+
+.modal {
+  min-width: 350px;
+  min-height: $modal-height;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #dfe3e6;
+
+  .creation-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+  }
+
+  h4{
+    margin: 5px;
+  }
+
+  .backgrounds{
+    display: flex;
+    justify-content: center;
+    width: 350px;
+    flex-wrap: wrap;
+    background-color: white;
+    height: 400px;
+    overflow-y: auto;
+
+    .img-wrp{
+
+      position: relative;
+
+      img {
+        width: 150px;
+        height: 90px;
+        padding: 3px;
+        cursor: pointer;
+        // position: relative;
+      }
+  
+      .checked-badge{
+        z-index: 1001;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+        color: white;
+        
+      }
+
+    }
+
+    
+  }
+}
+
+.board-name-input {
+  font-family: $base-font, serif;
+  padding: 10px 8px;
+  // color: white;
+  background: transparent;
+  outline: 0;
+  width: calc(100% - 18px - 16px);
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  &::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &:hover {
+    background-color: rgba(204, 204, 204, 0.2);
+  }
+
+}
+
+.close-icon {
+  // background: url('../../resources/images/close.svg') no-repeat left top;
+  // position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // right: 0.8em;
+  // height: 20px;
+  // width: 20px;
+  cursor: pointer;
+
+  i{
+    display: block;
+    padding: 5px;
+  }
+
+  &:hover{
+    color: red;
+  }
+}
+
+.submit-board-button {
+  font-family: $base-font, serif;
+  // position: absolute;
+  // top: calc(#{$modal-height} + 10px);
+  left: 0;
+  padding: 10px 10px;
+  border-radius: 4px;
+  background-color: #f5f6f7;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: default;
+
+  &.active {
+    background-color: #5aac44;
+    box-shadow: 0 1px 0 0 #3f6f21;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      background-color: #509040;
+    }
+  }
+
+}

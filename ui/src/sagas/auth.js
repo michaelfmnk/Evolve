@@ -1,60 +1,44 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
+import axiosInstance from 'constants/axios/instance'
 import { push } from 'connected-react-router'
-import * as actions from 'actions/auth'
-import * as actionTypes from 'actionsTypes/auth'
-import { userIdSelector } from 'selectors/auth'
-import saveAuthIdentifiersToStorage from 'helpers/saveAuthIdentifiersToStorage'
-import {startAction} from 'helpers/actionsProcessTemplaters'
-import AuthService from 'services/auth'
+import { saveAuthIdentifiersToStorage, clearLocalStorage } from 'helpers/localStorage'
+import { success } from 'helpers/actionsProcessTemplaters'
+import { currentPathSelector } from 'selectors/router'
+import { welcome, signIn, signUp, home, invitation } from 'constants/routes/ui'
+import * as types from 'constants/actionTypes/auth'
 
-function * signUp (action) {
-  try {
-    const user = yield AuthService.signUp(action.payload)
+function * authHandler (action) {
+  const { token, user = {} } = action.payload;
+  console.log('INSIDE HANDLER')
+  console.log(token, )
+  saveAuthIdentifiersToStorage(token, user.id)
 
-    yield put(actions.signUpSuccess(user))
-  } catch (e) {
-    console.log(e)
-    yield put(actions.signUpError(e))
+  axiosInstance.defaults.headers.Authorization = token
+
+  if(action.shouldRedirect) {
+    yield put(push(home))
   }
 }
 
-function * verifyUserAccount (action) {
-  try {
-    const userId = yield select(userIdSelector)
-    const authIdentifiers = yield AuthService.verifyUserAccount({ code: action.payload, userId })
-
-    saveAuthIdentifiersToStorage(authIdentifiers)
-
-    yield put(actions.verifyAccountSuccess(authIdentifiers))
-    yield put(push('/home'))
-  } catch (e) {
-    console.log(e)
-    yield put(actions.verifyAccountError(e))
-  }
-}
-
-function * signIn (action) {
-  try {
-    const authIdentifiers = yield AuthService.signIn(action.payload)
-
-    saveAuthIdentifiersToStorage(authIdentifiers)
-
-    yield put(actions.signInSuccess(authIdentifiers))
-    yield put(push('/home'))
-  } catch (e) {
-    console.log(e)
-    yield put(actions.signUpError(e))
-  }
+function * signUpHandler (action) {
+  yield saveAuthIdentifiersToStorage(null, action.payload.id)
 }
 
 function * logout (action) {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userId')
+  clearLocalStorage()
+  const currentPath = yield select(currentPathSelector)
+  if ([signIn, signUp, invitation ].every(path => currentPath !== path)) {
+    yield put(push(welcome))
+  }
+}
+
+function * activate (action) {
+  yield put(push(`/boards/${action.boardId}`))
 }
 
 export default function * AuthSaga () {
-  yield takeEvery( startAction(actionTypes.SIGN_UP), signUp ) 
-  yield takeEvery( startAction(actionTypes.SIGN_IN), signIn )
-  yield takeEvery( startAction(actionTypes.VERIFY_ACCOUNT), verifyUserAccount )
-  yield takeEvery( actionTypes.LOGOUT, logout )
+  yield takeEvery( success(types.SIGN_UP), signUpHandler )
+  yield takeEvery( [ success(types.VERIFY_ACCOUNT), success(types.SIGN_IN)], authHandler )
+  yield takeEvery( success(types.ACTIVATE_INVITATION_LINK), activate )
+  yield takeEvery( types.LOGOUT, logout )
 }

@@ -10,7 +10,6 @@ import ContactsSection from 'components/WelcomePage/ContactsSection'
 import './WelcomePage.css'
 
 class WelcomePage extends React.Component {
-  
   componentDidMount () {
     configureAnchors({ scrollDuration: 300 })
   }
@@ -24,11 +23,11 @@ class WelcomePage extends React.Component {
       <React.Fragment>
         <NavHeader
           location={this.props.location}
-          onLoginClick={() => this.redirectTo('/login')}
-          onRegisterClick={() => this.redirectTo('/register')}
+          onLoginClick={() => this.redirectTo('/sign_in')}
+          onRegisterClick={() => this.redirectTo('/sign_up')}
         />
         <WelcomeSection
-          onGetStartedClick={() => this.redirectTo('/register')}
+          onGetStartedClick={() => this.redirectTo('/sign_up')}
         />
         <AboutSection />
         <ProjectsSection />

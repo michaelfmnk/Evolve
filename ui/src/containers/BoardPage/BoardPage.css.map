@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,IAAI,CAAA;EACF,eAAe,EAAE,KAAK;EACtB,mBAAmB,EAAE,MAAM;CAC5B",
+    "sources": [
+        "BoardPage.scss"
+    ],
+    "names": [],
+    "file": "BoardPage.css"
+}

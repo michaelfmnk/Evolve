@@ -1,11 +1,11 @@
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 // Define a users schema
 const user = new schema.Entity('users')
 
 const board = new schema.Entity('boards', {
   owner: user,
-  collaborators: [ user ] 
+  collaborators: [ user ]
 })
 
 export const userWithBoards = new schema.Entity('authUser', {

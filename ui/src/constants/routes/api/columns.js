@@ -1,0 +1,1 @@
+export const columns = (boardId) => `/api/boards/${boardId}/columns`

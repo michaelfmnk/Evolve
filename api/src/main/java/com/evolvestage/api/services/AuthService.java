@@ -1,13 +1,13 @@
 package com.evolvestage.api.services;
 
 import com.evolvestage.api.dtos.*;
-import com.evolvestage.api.entities.Authority;
-import com.evolvestage.api.entities.User;
-import com.evolvestage.api.entities.VerificationCode;
+import com.evolvestage.api.entities.*;
 import com.evolvestage.api.exceptions.BadRequestException;
 import com.evolvestage.api.exceptions.ConflictException;
 import com.evolvestage.api.exceptions.UnauthorizedException;
 import com.evolvestage.api.properties.AuthProperties;
+import com.evolvestage.api.repositories.BoardsRepository;
+import com.evolvestage.api.repositories.InvitationsRepository;
 import com.evolvestage.api.repositories.UsersRepository;
 import com.evolvestage.api.repositories.VerificationCodeRepository;
 import com.evolvestage.api.security.JwtTokenUtil;
@@ -30,8 +30,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +50,8 @@ public class AuthService {
     private final EmailService emailService;
     private final VerificationCodeRepository verificationCodeRepository;
     private final TimeProvider timeProvider;
+    private final InvitationsRepository invitationsRepository;
+    private final BoardsRepository boardsRepository;
 
     @Transactional
     public TokenContainer createToken(AuthRequest request) {
@@ -67,6 +71,7 @@ public class AuthService {
         return new TokenContainer(token, user.getUserId());
     }
 
+    @Transactional
     public UserDto signUp(SignUpDto request) {
         Optional<User> foundUser = userRepository.findUserByEmail(request.getEmail());
 
@@ -91,13 +96,18 @@ public class AuthService {
                         .authorities(Collections.singletonList(Authority.Type.USER.getInstance()))
                         .build());
 
-        user = userRepository.save(user);
+        List<Integer> boardIds = invitationsRepository
+                .findInvitationByEmail(request.getEmail()).stream().map(BoardInvitation::getBoardId).collect(Collectors.toList());
+        if (!boardIds.isEmpty()) {
+            List<Board> boards = boardsRepository.findAllById(boardIds);
+            user.setJoinedBoards(boards);
+        }
 
+        user = userRepository.save(user);
         String code = CodeGenerator.generateCode(authProperties.getCodeLen());
         VerificationCode verificationCode
                 = new VerificationCode(new VerificationCode.VerificationCodePK(user.getUserId(), code));
         verificationCodeRepository.save(verificationCode);
-
         VerificationCodeEmail email = VerificationCodeEmail.builder()
                 .code(code)
                 .to(request.getEmail())

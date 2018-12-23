@@ -10,8 +10,6 @@ import './AppHeader.css'
 
 class AppHeader extends React.Component {
   redirectToHome = () => {
-    console.log('HEADER')
-    console.log(this.props)
     this.props.history.push('/home')
   }
 
@@ -19,15 +17,18 @@ class AppHeader extends React.Component {
     return (
       <header className="page-header">
         <nav className="header-menu inline">
-          <i className="fas fa-home nav-btn" onClick={this.redirectToHome}/>
-          <i className="fas fa-clipboard nav-btn"> boards</i>
+          <i className="fas fa-home nav-btn" onClick={this.redirectToHome} />
+          <i className="fas fa-clipboard nav-btn"> {" "} boards</i>
         </nav>
         <div className="logo-wrp">
-          {/* <img className="logo-img" /> */} 
+          {/* <img className="logo-img" /> */}
           Evolve
         </div>
         <nav className="header-menu inline">
-          <CreationMenuDropdown />
+          <CreationMenuDropdown 
+            toggleCreationModal={this.props.toggleCreationModal}
+          
+          />
           <UserMenuDropdown
             user={this.props.user}
             handleExitClick={this.props.actions.logout}

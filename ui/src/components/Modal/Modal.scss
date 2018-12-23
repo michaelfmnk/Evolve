@@ -1,0 +1,19 @@
+@import 'commonStyles/variables.scss';
+
+.fade-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #161616cc;
+  z-index: 99; // under header, above board
+}
+
+.content {
+  z-index: 100;
+  position: fixed;
+  top: 20em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

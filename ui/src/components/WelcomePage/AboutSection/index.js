@@ -9,11 +9,14 @@ const AboutSection = (props) => (
     <section className="about-section" >
       <div className="about-big">
         <div className="about-text">
-          <h2>Какие-то Слова</h2>
-          <p> Прям очень много слов.Прям очень много слов.Прям очень много слов.Прям очень много слов.Прям
-                    очень много слов.Прям очень много слов.
-            <a href="#">ссылочка</a>. Прям очень много слов.Прям очень много слов.Прям очень много
-                    слов.Прям очень много слов.Прям очень много слов.</p>
+          <h2>Our name speaks for itself...</h2>
+          <p> <a href="#">EVOLVE</a> has little in common with the work products you are used to, 
+          but it has a lot in common with the work itself. 
+          Primarily aimed at customer satisfaction, our team will not only help streamline the process of large companies, 
+          but also provide a reliable starting platform for small projects.
+          We can safely call <a href="#">EVOLVE</a> perfect blend of simplicity, convenience and, most importantly, reliability.
+          Our name speaks for itself, and it says that joining our product will take your business to a "new level of evolution".
+          </p>
         </div>
       </div>
       <img src={IpadImg} alt="" />

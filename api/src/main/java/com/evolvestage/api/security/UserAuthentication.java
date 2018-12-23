@@ -52,4 +52,8 @@ public class UserAuthentication implements Authentication {
     public Integer getId() {
         return jwtUser.getId();
     }
+
+    public String getEmail() {
+        return jwtUser.getEmail();
+    }
 }

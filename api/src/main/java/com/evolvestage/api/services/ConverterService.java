@@ -126,6 +126,20 @@ public class ConverterService {
                 .build();
     }
 
+
+    public BoardColumnDto toBriefDto(BoardColumn entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return BoardColumnDto.builder()
+                .id(entity.getColumnId())
+                .name(entity.getName())
+                .order(entity.getOrder())
+                .boardId(entity.getBoard().getBoardId())
+                .build();
+    }
+
     public LabelDto toDto(Label entity) {
         if (Objects.isNull(entity)) {
             return null;
@@ -150,6 +164,7 @@ public class ConverterService {
                 .order(entity.getOrder())
                 .title(entity.getTitle())
                 .authorId(entity.getAuthor().getUserId())
+                .columnId(entity.getColumn().getColumnId())
                 .labels(emptyIfNull(entity.getLabels()).stream()
                         .map(this::toDto)
                         .collect(Collectors.toList()))
@@ -168,6 +183,7 @@ public class ConverterService {
                 .content(entity.getContent())
                 .order(entity.getOrder())
                 .title(entity.getTitle())
+                .columnId(entity.getColumn().getColumnId())
                 .authorId(entity.getAuthor().getUserId())
                 .build();
     }
@@ -239,4 +255,5 @@ public class ConverterService {
                 .board(board)
                 .build();
     }
+
 }

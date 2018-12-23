@@ -1,0 +1,1 @@
+export const cards = (boardId, columnId) => `/api/boards/${boardId}/columns/${columnId}/cards`

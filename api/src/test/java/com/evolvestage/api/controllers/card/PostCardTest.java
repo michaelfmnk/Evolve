@@ -31,6 +31,7 @@ public class PostCardTest extends BaseTest{
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", notNullValue())
                 .body("content", equalTo("NEW CARD"))
+                .body("column_id", equalTo(1))
                 .body("title", equalTo("NEW CARD TITLE"))
                 .extract().as(CardDto.class);
         assertThat(new Request(dataSource, format("SELECT * FROM CARDS WHERE card_id=%s", response.getId())))
