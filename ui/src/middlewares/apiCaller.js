@@ -3,7 +3,7 @@ import { successActionWithType, failActionWithType } from 'helpers/actionsProces
 import { logout } from 'actions/auth'
 import { start } from '../helpers/actionsProcessTemplaters'
 
-const startAction = (action) => {
+const clearREQUESTfield = (action) => {
   let res = {
     ...action,
     payload: action.REQUEST.data || null,
@@ -17,12 +17,11 @@ const startAction = (action) => {
 const apiCaller = store => next => action => {
   const request = action.REQUEST
 
-  console.log(action)
   if (!request) return next(action)
 
   const { url, method = 'GET', data, responseDataConverter = (data) => data} = request
   const type = action.type
-  const processedAction = startAction(action)
+  const processedAction = clearREQUESTfield(action)
 
   store.dispatch(processedAction)
 

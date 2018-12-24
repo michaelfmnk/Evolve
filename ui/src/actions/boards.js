@@ -48,4 +48,3 @@ export const setCurrentBoard = (boardId) => ({
   type: types.SET_CURRENT_BOARD,
   payload: {boardId}
 })
-

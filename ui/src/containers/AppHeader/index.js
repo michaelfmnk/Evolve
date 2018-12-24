@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CreationMenuDropdown from 'components/dropdowns/AppHeader/CreationMenuDropdown'
-import UserMenuDropdown from 'components/dropdowns/AppHeader/UserMenuDropdown'
+import CreationMenuPopup from 'components/popups/AppHeader/CreationMenuPopup'
+import UserMenuPopup from 'components/popups/AppHeader/UserMenuPopup'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from 'actions/auth'
@@ -27,11 +27,11 @@ class AppHeader extends React.Component {
           Evolve
         </div>
         <nav className="header-menu inline">
-          <CreationMenuDropdown 
+          <CreationMenuPopup 
             toggleCreationModal={this.props.toggleCreationModal}
           
           />
-          <UserMenuDropdown
+          <UserMenuPopup
             user={user}
             handleExitClick={actions.logout}
             profileLink={profileLink}
