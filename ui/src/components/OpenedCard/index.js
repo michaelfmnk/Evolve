@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CardMembers from "./CardMembers"
 import CardHeader from './CardHeader'
 import CardBody from './CardBody'
+import Modal from 'components/Modal'
 import { debounce } from 'lodash'
 import './OpenedCard.css'
 
@@ -67,48 +68,49 @@ class OpenedCard extends Component {
     const saveBtnActiveClass = content !== card.content? 'active' : '' 
     
     return (
-      <div className="windowhandler">
-        <div className="fade-background" />
-        <div className="openedboard">
-          <CardHeader 
-            handleCardNameInput={this.handleChange}
-            backgroundImg={card.backgroundImg}
-            title={title}
-            closeCard={closeCard}
-          />
+      <Modal onClose={closeCard} >
+        <div className="windowhandler">
+          <div className="openedboard">
+            <CardHeader 
+              handleCardNameInput={this.handleChange}
+              backgroundImg={card.backgroundImg}
+              title={title}
+              closeCard={closeCard}
+            />
 
-          <div className="sectioncontent">
-              In column <span className='column-name'> { column.name }</span>
-              <CardMembers 
-                canEdit
-                withLabel
-                card={card} 
-                boardUsers={boardUsers} 
-                handleUserAssigning={handleUserAssigning}
-                authUserId={authUserId}
-                cancelEditing={this.cancelEditing}
-              /> 
-          </div>
-          <div className="description">
-              <div className="sectioncaption" onClick={this.toggleEditing}>
-                  <i className="fas fa-list"></i>
-                  Description
-              </div>
-              <div className="sectioncontent">
-                <CardBody 
-                  content={content}
-                  isEditing={isEditing}
-                  updateContent={this.updateContent}
-                  deleteCard={deleteCard ? () => deleteCard(card) : undefined}
-                  handleSaveCardDescription={this.handleSaveCardDescription}
-                  toggleEditing={this.toggleEditing}
+            <div className="sectioncontent">
+                In column <span className='column-name'> { column.name }</span>
+                <CardMembers 
+                  canEdit
+                  withLabel
+                  card={card} 
+                  boardUsers={boardUsers} 
+                  handleUserAssigning={handleUserAssigning}
+                  authUserId={authUserId}
                   cancelEditing={this.cancelEditing}
-                  saveBtnActiveClass={saveBtnActiveClass}
-                />
-              </div>
+                /> 
+            </div>
+            <div className="description">
+                <div className="sectioncaption" onClick={this.toggleEditing}>
+                    <i className="fas fa-list"></i>
+                    Description
+                </div>
+                <div className="sectioncontent">
+                  <CardBody 
+                    content={content}
+                    isEditing={isEditing}
+                    updateContent={this.updateContent}
+                    deleteCard={deleteCard ? () => deleteCard(card) : undefined}
+                    handleSaveCardDescription={this.handleSaveCardDescription}
+                    toggleEditing={this.toggleEditing}
+                    cancelEditing={this.cancelEditing}
+                    saveBtnActiveClass={saveBtnActiveClass}
+                  />
+                </div>
+            </div>
           </div>
-      </div>
-    </div>
+        </div>
+     </Modal>
     )
   }
 }
