@@ -6,13 +6,11 @@ import { isLoggedInSelector } from 'selectors/auth'
 import { signInRequest } from 'actions/auth'
 import LoginForm from 'components/LoginForm'
 
-
 class ActivateInvatedCollaborator extends Component {
 
   componentDidMount() {
     if(this.props.isLoggedIn) {
       const { match: { params: {boardId, code} }} = this.props;
-      console.log(boardId, code)
       this.props.actions.activateInvitationLink(boardId, code)
     }
   }
@@ -20,16 +18,11 @@ class ActivateInvatedCollaborator extends Component {
   componentDidUpdate() {
     if(this.props.isLoggedIn) {
       const { match: { params: {boardId, code} }} = this.props;
-      console.log('TOKEN IN UPDATE')
-      console.log(localStorage.getItem('token'))
-      
-      console.log(boardId, code)
       this.props.actions.activateInvitationLink(boardId, code)
     }
   }
 
   handleSubmit = (userInfo) => {
-    console.log('THERE')
     this.props.actions.signInRequest(userInfo , false)
   }
 

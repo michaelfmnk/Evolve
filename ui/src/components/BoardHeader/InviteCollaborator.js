@@ -14,7 +14,7 @@ class InviteCollaborator extends PureComponent {
 
   handleChange = ({target: {name, value}}) => {
     let error = emailReg.test(value)
-    console.log(error)
+
     this.setState({
       [name]: value,
       error,

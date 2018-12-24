@@ -1,11 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CreationMenuDropdown from 'components/dropdowns/AppHeader/CreationMenuDropdown'
 import UserMenuDropdown from 'components/dropdowns/AppHeader/UserMenuDropdown'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from 'actions/auth'
 import { authUser } from 'selectors/user'
-import PropTypes from 'prop-types'
 import './AppHeader.css'
 
 class AppHeader extends React.Component {

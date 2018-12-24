@@ -4,9 +4,7 @@ import AddEntityForm from 'components/AddEntityForm'
 import { debounce } from 'lodash'
 import { DropTarget } from 'react-dnd'
 
-
-
-const squareTarget = {
+const columnTarget = {
   canDrop (props) {
     console.log('CAN DROP ? ')
     console.log(props)
@@ -52,7 +50,6 @@ class Column extends Component {
   }
 
   handleUpdateName = debounce(() => {
-    console.log(this.state)
     const { column, actions } = this.props;
 
     actions.updateColumn({
@@ -107,7 +104,7 @@ class Column extends Component {
   }
 } 
 
-Column = DropTarget("Card", squareTarget, collect)(Column)
+Column = DropTarget("Card", columnTarget, collect)(Column)
 
 const ColumnsList = ({columns, actions, openCard}) => (
   <div className="columnhandler">

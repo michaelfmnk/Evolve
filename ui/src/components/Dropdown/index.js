@@ -3,13 +3,10 @@ import PropTypes from 'prop-types'
 import './Dropdown.css'
 
 class Dropdown extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      displayMenu: false
-    }
+  state = {
+    displayMenu: false
   }
-
+  
   showDropdownMenu = (event) => {
     event.preventDefault()
     this.setState({ displayMenu: true }, () => {

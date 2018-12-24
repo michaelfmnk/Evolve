@@ -17,6 +17,7 @@ const startAction = (action) => {
 const apiCaller = store => next => action => {
   const request = action.REQUEST
 
+  console.log(action)
   if (!request) return next(action)
 
   const { url, method = 'GET', data, responseDataConverter = (data) => data} = request

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import Message from 'components/Message'
 import FormHeader from 'components/FormHeader'
 import ApplyFormBtn from 'components/buttons/ApplyFormBtn'
@@ -9,16 +9,13 @@ import './RegisterForm.css'
 
 const passwordRegexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
 
-class RegisterForm extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
-      first_name: '',
-      last_name: '',
-      password: '',
-      password_confirm: ''
-    }
+class RegisterForm extends PureComponent {
+  state = {
+    email: '',
+    first_name: '',
+    last_name: '',
+    password: '',
+    password_confirm: ''
   }
 
   handleInput = (input) => {

@@ -15,9 +15,8 @@ import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
 import ColumnsList from 'components/ColumnsList'
-import OppenedCard from 'components/OppenedCard'
+import OpenedCard from 'components/OpenedCard'
 import './BoardPage.css'
-
 
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
@@ -27,6 +26,7 @@ class BoardPage extends Component {
   componentDidMount(){
     const { match, actions, currentBoardId} = this.props;
     const boardId = Number(match.params.board_id)
+    
     if( boardId !== currentBoardId)  {
       actions.setCurrentBoard(boardId )
     }
@@ -79,7 +79,7 @@ class BoardPage extends Component {
           />
           
          { openedCard && 
-            <OppenedCard 
+            <OpenedCard 
               card={openedCard} 
               column={boardColumnsWithCards.find( col => col.id === openedCard.column_id)}
               boardUsers={[ board.owner, ...board.collaborators ]}
@@ -96,13 +96,25 @@ class BoardPage extends Component {
   }
 }
 
+const bindActionsToCurrentBoard = (actions, boardId, dispatch) => (
+  Object.keys(actions).reduce(
+    (bindedActions, actionName) => {
+      bindedActions[actionName] = (...params)  => dispatch(
+        actions[actionName] (boardId, ...params) 
+      );
+      return bindedActions
+    },
+    {}
+  )
+);
+
 const mapStateToProps = (state, props) => ({
   board: boardByIdFromRoute(state, props),
   authUserId: authUserIdSelector(state),
   currentBoardId: currentBoardId(state),
   boardColumnsWithCards: boardColumns(state),
   openedCard: openedCardSelector(state),
-})
+})  
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps
@@ -114,24 +126,34 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...ownProps,
 
     actions: {
-      createCard: (columnId, card) => dispatch( createCard(currentBoardId, columnId, card) ),
-      createColumn: (column) => dispatch( createColumn(currentBoardId, column) ),
-      deleteColumn: (columnId) => dispatch( deleteColumn(currentBoardId, columnId) ),
-      moveCard: (card, targetColumn) => dispatch( moveCard(currentBoardId, card, targetColumn) ),
-      updateCard: (card) => dispatch( updateCard(currentBoardId, card) ),
-      updateColumn: (column) => dispatch( updateColumn(currentBoardId, column) ),
-      assignUsersToCard: (card, usersIds) => dispatch( assignUsersToCard(currentBoardId, card, usersIds) ),
-      unassignUserFromCard: (card, userId) => dispatch( unassignUserFromCard(currentBoardId, card, userId)),
-      inviteCollaborator: (email) => dispatch( inviteCollaborator(currentBoardId, email)),
-      deleteCard: (card) => dispatch( deleteCard(currentBoardId, card) ),
-      ...bindActionCreators({
-        getBoardById,
-        setCurrentBoard,
-        getBoardActivities,
-        openCard, 
-        closeCard,
-      }, dispatch)
-  }
+      ...bindActionsToCurrentBoard(
+        {
+          moveCard,
+          deleteCard,
+          createCard,
+          updateCard,   
+          createColumn, 
+          deleteColumn, 
+          updateColumn, 
+          assignUsersToCard,
+          inviteCollaborator,
+          unassignUserFromCard  
+        },
+        currentBoardId,
+        dispatch
+      ),
+      ...bindActionCreators(
+        {
+          getBoardById,
+          setCurrentBoard,
+          getBoardActivities,
+          openCard, 
+          closeCard,
+        }, 
+        dispatch
+      )
+    }
+
   }
 }
 

@@ -12,6 +12,7 @@ import { getAuthUserData } from 'actions/users'
 import { createBoardRequest } from 'actions/boards'
 import { authUserIdSelector } from 'selectors/auth'
 import { getDefaultBackgrounds } from 'actions/images'
+import { home, root, boardRoute, profileRoot } from 'constants/routes/ui'
 import Modal from 'components/Modal'
 import BoardCreation from 'components/BoardCreation'
 import './App.css'
@@ -46,10 +47,10 @@ class App extends Component {
         <AppHeader history={history} toggleCreationModal={this.toggleModal}/>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path='/' exact render={() => <Redirect to='/home' />} />
-            <Route path='/home' render={ () => <HomePage toggleCreationModal={this.toggleModal} />} />
-            <Route path='/boards/:board_id' component={BoardPage} />
-            <Route path='/users/:user_id/profile' component={UserProfilePage} /> 
+            <Route path={root} exact render={() => <Redirect to={home} />} />
+            <Route path={home} render={ () => <HomePage toggleCreationModal={this.toggleModal} />} />
+            <Route path={boardRoute} component={BoardPage} />
+            <Route path={profileRoot} component={UserProfilePage} /> 
           </Switch>
         </ConnectedRouter>
        {

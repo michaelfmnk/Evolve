@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { welcome } from 'constants/routes/ui'
 import { isLoggedInSelector } from 'selectors/auth'
 
 const RequireAuth = (props) => {
@@ -11,7 +12,7 @@ const RequireAuth = (props) => {
     return <Component {...props} />
   }
 
-  return <Redirect to='/welcome' />
+  return <Redirect to={welcome} />
 }
 
 const mapStateToProps = state => {

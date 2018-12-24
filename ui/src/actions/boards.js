@@ -33,14 +33,14 @@ export const inviteCollaborator = (boardId, email) => ({
   REQUEST: {
     method: 'POST',
     data: {emails : [email]},
-    url: `/api/boards/${boardId}/collaborators`
+    url: endpoints.collaborators(boardId)
   }
 })
 
 export const getBoardActivities = (boardId) => ({
   type: types.GET_BOARD_ACTIVITIES,
   REQUEST: {
-    url: `/api/boards/${boardId}/activities`
+    url: endpoints.boardActivities(boardId)
   }
 })
 

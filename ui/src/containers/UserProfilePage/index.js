@@ -27,7 +27,6 @@ class UserProfile extends Component {
               <div className='info'>
                 <p className='user-name'> {fullNameOf(user)} </p>
                 <p className='email'> {user.email || 'fake@email.com'} </p>
-                {/* <span className='btn edit-profile-link'> Edit profile</span> */}
               </div>
             </div>
             <nav className='profile-nav-tabs'>
@@ -38,30 +37,25 @@ class UserProfile extends Component {
                <NavLink to={getProfileCardsRoute(user.id)} activeClassName='active-link'>
                   Cards          
                </NavLink>
-               {
-                 isAuthorizedUser && (
+
+               {isAuthorizedUser && (
                   <NavLink to={getEditProfileRoute(user.id)} activeClassName='active-link'>
                     Edit profile             
                   </NavLink>
-                 )
-               }
+                )}
             </nav>
           </header>
 
           <main className='profile-content'>
-            
-
             <ConnectedRouter history={this.props.history}>
               <Switch>
-                <Route path={profileRoot} exact render={() => <Redirect to='profile/activity' />} />
+                <Route path={profileRoot} exact render={() => <Redirect to={profileActivity} />} />
                 <Route path={profileCards} render={() => 'cards'} />
                 <Route path={profileActivity} render={() => 'activity'} />
                 <Route path={editProfile} render={() => 'edit'} />
               </Switch>
             </ConnectedRouter>
-
           </main>
-          
       </div>
     )
   }
@@ -80,12 +74,5 @@ const mapStateToProps = (state, ownProps) => ({
   user: userByIdSelector(state, ownProps.match.params.user_id),
   authUserId: authUserIdSelector(state)
 })
-
-// const mapDispatchToProps = (dispatch) => ({
-//   actions: bindActionCreators({
-//     signInRequest,
-//     clearAuthError
-//   }, dispatch)
-// })
 
 export default connect(mapStateToProps, null) (UserProfile)
