@@ -28,7 +28,6 @@ class ToggleableMember extends Component {
     }
   }
 
-
   toggleMemberPopup = () => this.setState({isPopupOpen: !this.state.isPopupOpen})
 
   render() {
@@ -42,42 +41,37 @@ class ToggleableMember extends Component {
           src={user.avatar_url} 
           title={title ? title : fullNameOf(user)}
         />
-        {
-          isPopupOpen && (
-            <div className='popup' ref={this.setWrapperRef}>
-              <div className='popup-header'>
-                <Avatar src={user.avatar_url} />
+        {isPopupOpen && (
+          <div className='popup' ref={this.setWrapperRef}>
+            <div className='popup-header'>
+              <Avatar src={user.avatar_url} />
 
-                <div className='user-info'>
-                  <div className='user-name'>
-                    {fullNameOf(user)}
-                  </div>
-                  <span className='user-email'>
-                      {user.email || 'fake@email.com'}
-                  </span>
+              <div className='user-info'>
+                <div className='user-name'>
+                  {fullNameOf(user)}
                 </div>
-
-                <i className='fas fa-times' onClick={this.toggleMemberPopup}/>
+                <span className='user-email'>
+                    {user.email || 'fake@email.com'}
+                </span>
               </div>
-              {
-                !withoutProfileLink && (
-                  <Link to={getProfileActivityRoute(user.id)}> 
-                    <span className='btn action'> {profileLinkText} </span>
-                 </Link>
-                )
-              }
-              {
-                popupButtons.map( ({onClick, link, content}) => {
-                  let res = <span className='btn action' onClick={onClick}> {content} </span>
-                  if(link) {
-                    res = <Link to={link}> {res} </Link>
-                  }
-                  return res
-                })
-              }
+              <i className='fas fa-times' onClick={this.toggleMemberPopup}/>
             </div>
-          )
-        }
+            
+            {!withoutProfileLink && (
+                <Link to={getProfileActivityRoute(user.id)}> 
+                  <span className='btn action'> {profileLinkText} </span>
+                </Link>
+            )}
+
+            {popupButtons.map( ({onClick, link, content}) => {
+              let res = <span className='btn action' onClick={onClick}> {content} </span>
+              if(link) {
+                res = <Link to={link}> {res} </Link>
+              }
+              return res
+            })}
+          </div>
+        )}
       </div>
     )
   }

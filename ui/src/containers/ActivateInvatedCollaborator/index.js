@@ -6,7 +6,6 @@ import { isLoggedInSelector } from 'selectors/auth'
 import { signInRequest } from 'actions/auth'
 import LoginForm from 'components/LoginForm'
 
-
 class ActivateInvatedCollaborator extends Component {
 
   componentDidMount() {

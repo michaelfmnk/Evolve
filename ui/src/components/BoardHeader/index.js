@@ -4,32 +4,28 @@ import ToggleableMember from 'components/ToggleableMember'
 import { fullNameOf } from 'helpers/stringFormatting'
 import './BoardHeader.css'
 
-
 const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCollaborator}) => (
     <div className="board-menu">
       <div className="boardmenul">
         <div className='header'>
           <div className="caption"> <span> {boardName}</span></div>
           <nav className="mainoptions">
+            <p>
+              <span ><i className="far fa-star"></i></span>
+            </p>
 
-          <p>
-            <span ><i className="far fa-star"></i></span>
-          </p>
-
-          <p className='ownerhip'> 
-            {
-              isBoardPersonal 
-                ? <span > <i className="fas fa-lock"/> Personal </span> 
-                : <span > <i className="fas fa-users"/> Joined </span>
-            }
-          </p>
-            
-            
+            <p className='ownerhip'> 
+              {
+                isBoardPersonal 
+                  ? <span > <i className="fas fa-lock"/> Personal </span> 
+                  : <span > <i className="fas fa-users"/> Joined </span>
+              }
+            </p> 
           </nav>
         </div>
         
         <div className='members'>
-          { owner && ( 
+          {owner && ( 
             <ToggleableMember 
               user={owner} 
               title={`${fullNameOf(owner)} | board admin`}
@@ -40,10 +36,9 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
                 }
               ]}
             /> 
-          )
-          }
-          {
-            collaborators && collaborators.map(user => (
+          )}
+
+          {collaborators && collaborators.map(user => (
               <ToggleableMember 
                 key={user.id}
                 user={user}
@@ -54,8 +49,7 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
                   }
                 ]}
               />
-            ))
-          }
+          ))}
 
           <InviteCollaborator inviteCollaborator={inviteCollaborator}/>
 

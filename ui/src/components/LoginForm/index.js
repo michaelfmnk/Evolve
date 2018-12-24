@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import FormHeader from 'components/FormHeader'
 import ApplyFormBtn from 'components/buttons/ApplyFormBtn'
 import Message from 'components/Message'
@@ -7,14 +7,11 @@ import InputWithLabelAndValidation from 'components/InputWithLabelAndValidation'
 import PropTypes from 'prop-types'
 import './LoginForm.css'
 
-class LoginForm extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
-      password: '',
-      remember_me: false
-    }
+class LoginForm extends PureComponent {
+  state = {
+    email: '',
+    password: '',
+    remember_me: false
   }
 
   handleInput = (input) => {

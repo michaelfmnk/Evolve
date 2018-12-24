@@ -13,7 +13,6 @@ export const boardById = (state, id) => {
     ...board,
     owner: userById(state, board.owner || board.owner_id),
     collaborators: board.collaborators ? board.collaborators.map(id => userById(state, id)) : []
-
   }
 }
 

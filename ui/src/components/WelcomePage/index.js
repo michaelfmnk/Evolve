@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { configureAnchors } from 'react-scrollable-anchor'
-import PropTypes from 'prop-types'
 import NavHeader from 'components/WelcomePage/NavHeader'
 import WelcomeSection from 'components/WelcomePage/WelcomeSection'
 import AboutSection from 'components/WelcomePage/AboutSection'
@@ -38,13 +36,4 @@ class WelcomePage extends React.Component {
   }
 }
 
-const mapStateToprops = (state) => ({
-
-})
-
-WelcomePage.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
-}
-
-export default connect(mapStateToprops, null)(WelcomePage)
+export default WelcomePage

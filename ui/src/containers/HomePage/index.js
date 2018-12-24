@@ -15,7 +15,6 @@ class HomePage extends React.Component {
     this.props.history.push( getBoardRoute(board ))
   }
 
-
   render () {
     const { ownBoards, joinedBoards } = this.props.boards
     const { toggleCreationModal } = this.props

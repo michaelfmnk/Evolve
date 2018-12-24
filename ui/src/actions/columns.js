@@ -25,7 +25,7 @@ export const updateColumn = (boardId, column) => ({
   REQUEST: {
     method: 'PUT',
     data: {name : column.name},
-    url: endpoints.column(boardId, columnId),
+    url: endpoints.column(boardId, column.id),
   },
   column,
   boardId

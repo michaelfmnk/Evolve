@@ -14,5 +14,5 @@ export const getProfileActivityRoute = (userId) => `/users/${userId}/profile/act
 export const getProfileCardsRoute = (userId) => `/users/${userId}/profile/cards`
 export const getEditProfileRoute = (userId) => `/users/${userId}/profile/edit`
 
-export const boardRoute = 'boards/:board_id'
-export const getBoardRoute = (board) => `boards/${board.id}`
+export const boardRoute = '/boards/:board_id'
+export const getBoardRoute = (board) => `/boards/${board.id}`

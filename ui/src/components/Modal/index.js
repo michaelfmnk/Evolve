@@ -1,7 +1,6 @@
 import React, { Fragment, PureComponent } from 'react'
 import PropTypes from 'prop-types'
-
-import 'components/Modal/Modal.css'
+import './Modal.css'
 
 export default class Modal extends PureComponent {
     static propTypes = {

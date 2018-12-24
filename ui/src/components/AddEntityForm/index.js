@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class AddEntityForm extends Component {
+class AddEntityForm extends PureComponent {
 
   state = { 
     title: '',
