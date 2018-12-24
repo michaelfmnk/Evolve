@@ -31,10 +31,10 @@ class BoardsList extends PureComponent {
               <div className="party">
                 <p className='members-header'>Members:</p>
                 <div className='members-wrp'>
-                  <Avatar src={board.owner.avatar_url} />
+                  <Avatar user={board.owner} />
                   {
                     board.collaborators && board.collaborators.map(user => (
-                      <Avatar src={user.avatar_url} key={user.id} title={fullNameOf(user)}/>
+                      <Avatar user={user} key={user.id} title={fullNameOf(user)}/>
                     ))
                   }
                 </div>

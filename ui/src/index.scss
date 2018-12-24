@@ -146,12 +146,11 @@ a, a:visited, a:active {
         }
       }
 
-      img {
+      .avatar {
         transition: $a_short-duration;
         display: inline-block;
         border-radius: 50%;
         width: 25px; height: 25px;
-        background: $dark-color;
         margin: 2px; 
         cursor: pointer; 
 

@@ -12,14 +12,14 @@ const ToggleableMember = ({ user, title, popupButtons, withoutProfileLink, profi
     <Popup 
       trigger={
         <Avatar 
-          src={user.avatar_url} 
+          user={user} 
           title={title ? title : fullNameOf(user)}
         />
       }
     >
       <div className='popup'>
         <div className='popup-header'>
-          <Avatar src={user.avatar_url} />
+          <Avatar user={user} />
 
           <div className='user-info'>
             <div className='user-name'>

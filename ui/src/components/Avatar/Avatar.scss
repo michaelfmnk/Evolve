@@ -1,5 +1,17 @@
 .avatar {
+  display: block;
+
   &.circled {
     border-radius: 50%;
+  }
+
+  &.default {
+    background: white;
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

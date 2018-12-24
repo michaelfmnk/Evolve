@@ -22,7 +22,7 @@ class UserProfile extends Component {
           <header className='profile-header'>
             <div className='user-info-wrp'>
               <div className='img-wrp'>
-                <Avatar src={user.avatar_url} />
+                <Avatar user={user} />
               </div>
               <div className='info'>
                 <p className='user-name'> {fullNameOf(user)} </p>

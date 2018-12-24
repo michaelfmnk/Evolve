@@ -49,7 +49,7 @@ const CardMembers = (
                     key={user.id}
                   >
                     <div className='user-info'>
-                      <Avatar src={user.avatar_url}/>
+                      <Avatar user={user}/>
                       <span> {fullNameOf(user)} </span>
                     </div>
                     {

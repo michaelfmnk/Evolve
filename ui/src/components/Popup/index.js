@@ -85,13 +85,15 @@ class Popup extends React.Component {
       triggerComponent = trigger()
     }
 
+    triggerComponent = React.cloneElement( triggerComponent, { onClick:  this.showPopupContent})
+
     let content = children ? children : renderContent ? renderContent() : null
 
     return (
       <div className='popup-wrp' ref={this.setWrapperRef}>
-        <div onClick={this.showPopupContent}>
+       
           { triggerComponent }
-        </div>
+       
         { this.state.showContent && this.renderWithCloseTrigger(content)}
       </div>
     )
