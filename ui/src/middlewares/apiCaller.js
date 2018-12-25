@@ -19,7 +19,13 @@ const apiCaller = store => next => action => {
 
   if (!request) return next(action)
 
-  const { url, method = 'GET', data, responseDataConverter = (data) => data} = request
+  const { 
+    responseDataConverter = (data) => data,
+    url, 
+    method = 'GET', 
+    data, 
+  } = request
+
   const type = action.type
   const processedAction = clearREQUESTfield(action)
 

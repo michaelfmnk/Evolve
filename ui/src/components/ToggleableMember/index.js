@@ -41,9 +41,9 @@ const ToggleableMember = ({ user, title, popupButtons, withoutProfileLink, profi
         )}
 
         {popupButtons.map( ({onClick, link, content}) => {
-          let res = <span className='btn action' onClick={onClick}> {content} </span>
+          let res = <span key={content} className='btn action' onClick={onClick}> {content} </span>
           if (link) {
-            res = <Link to={link}> {res} </Link>
+            res = <Link to={link} key={content}> {res} </Link>
           }
           return res
         })}

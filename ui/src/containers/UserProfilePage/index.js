@@ -22,7 +22,7 @@ class UserProfile extends Component {
           <header className='profile-header'>
             <div className='user-info-wrp'>
               <div className='img-wrp'>
-                <Avatar user={user} />
+                <Avatar user={user} defaultIcon />
               </div>
               <div className='info'>
                 <p className='user-name'> {fullNameOf(user)} </p>
@@ -49,10 +49,13 @@ class UserProfile extends Component {
           <main className='profile-content'>
             <ConnectedRouter history={this.props.history}>
               <Switch>
-                <Route path={profileRoot} exact render={() => <Redirect to={profileActivity} />} />
-                <Route path={profileCards} render={() => 'cards'} />
                 <Route path={profileActivity} render={() => 'activity'} />
-                <Route path={editProfile} render={() => 'edit'} />
+                <Route path={profileCards} render={() => 'cards'} />
+                { 
+                 isAuthorizedUser && 
+                  <Route path={editProfile} render={() => 'edit'} /> 
+                }
+                <Route path={profileRoot} render={() => <Redirect to={getProfileActivityRoute(user.id)} />} />
               </Switch>
             </ConnectedRouter>
           </main>
