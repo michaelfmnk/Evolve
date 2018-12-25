@@ -6,16 +6,17 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from 'actions/auth'
 import { authUser } from 'selectors/user'
+import { getProfileActivityRoute, home } from 'constants/routes/ui'
 import './AppHeader.css'
 
 class AppHeader extends React.Component {
   redirectToHome = () => {
-    this.props.history.push('/home')
+    this.props.history.push(home)
   }
 
   render () {
-    const { user, actions } = this.props
-    const profileLink = `/users/${user.id}/profile`
+    const { user, actions } = this.props;
+ 
     return (
       <header className="page-header">
         <nav className="header-menu inline">
@@ -34,7 +35,7 @@ class AppHeader extends React.Component {
           <UserMenuPopup
             user={user}
             handleExitClick={actions.logout}
-            profileLink={profileLink}
+            profileLink={getProfileActivityRoute(user.id)}
           />
         </nav>
       </header>

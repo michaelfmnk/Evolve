@@ -12,14 +12,14 @@ const ToggleableMember = ({ user, title, popupButtons, withoutProfileLink, profi
     <Popup 
       trigger={
         <Avatar 
-          src={user.avatar_url} 
+          user={user} 
           title={title ? title : fullNameOf(user)}
         />
       }
     >
       <div className='popup'>
         <div className='popup-header'>
-          <Avatar src={user.avatar_url} />
+          <Avatar user={user} defaultIcon />
 
           <div className='user-info'>
             <div className='user-name'>
@@ -41,9 +41,9 @@ const ToggleableMember = ({ user, title, popupButtons, withoutProfileLink, profi
         )}
 
         {popupButtons.map( ({onClick, link, content}) => {
-          let res = <span className='btn action' onClick={onClick}> {content} </span>
+          let res = <span key={content} className='btn action' onClick={onClick}> {content} </span>
           if (link) {
-            res = <Link to={link}> {res} </Link>
+            res = <Link to={link} key={content}> {res} </Link>
           }
           return res
         })}

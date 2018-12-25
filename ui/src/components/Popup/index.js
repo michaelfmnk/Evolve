@@ -85,13 +85,15 @@ class Popup extends React.Component {
       triggerComponent = trigger()
     }
 
+    triggerComponent = React.cloneElement( triggerComponent, { onClick:  this.showPopupContent})
+
     let content = children ? children : renderContent ? renderContent() : null
 
     return (
       <div className='popup-wrp' ref={this.setWrapperRef}>
-        <div onClick={this.showPopupContent}>
-          { triggerComponent }
-        </div>
+       
+        { triggerComponent }
+       
         { this.state.showContent && this.renderWithCloseTrigger(content)}
       </div>
     )
@@ -112,13 +114,13 @@ CloseTrigger.displayName = POPUP_TRIGGER_DISPLAY_NAME
 
 Popup.defaultProps = {
   animatedClassName: 'animated',
-  animationTimeout: 100
+  animationTimeout: 100,
 }
 
 Popup.propTypes = {
-  renderTrigger: PropTypes.func.isRequired,
-  renderDropdown: PropTypes.func.isRequired,
-  animation: PropTypes.func
+  trigger:  PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element]),
+  renderContent: PropTypes.func,
+  animation: PropTypes.func,
 }
 
 export default Popup

@@ -16,7 +16,7 @@ const UserMenuPopup = ({ user, profileLink, handleExitClick}) =>
   >
     <div className='creation-menu-popup-wrp' >
       <div className="usinfo">
-        <Avatar src={user.avatar_url} className="useravatar" />
+        <Avatar user={user} className="useravatar" />
         <p>{fullNameOf(user)}</p>
       </div>
       <div className="divideline" />
