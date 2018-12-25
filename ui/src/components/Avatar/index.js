@@ -1,7 +1,7 @@
 import React from 'react'
 import './Avatar.css'
 
-const Avatar = ({user, alt, circled, className, ...rest}) => {
+const Avatar = ({user, alt, circled, className, defaultIcon, ...rest}) => {
   let resultClass = 'avatar';
   if( circled ) resultClass += ' circled'
   if(className) resultClass= `${resultClass} ${className}`
@@ -9,7 +9,8 @@ const Avatar = ({user, alt, circled, className, ...rest}) => {
     console.log('NONE')
     return null
   }
-  if (!user.avatar_url) return (
+
+  if (!user.avatar_url && !defaultIcon) return (
     <div className={resultClass + ' default'} {...rest}>
       { (user.first_name.charAt(0) +  user.last_name.charAt(0)).toUpperCase() }
     </div>

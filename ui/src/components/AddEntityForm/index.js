@@ -1,14 +1,41 @@
 import React, { PureComponent } from 'react'
 
+const initialFormState = {
+  title: '',
+  active: false
+}
+
 class AddEntityForm extends PureComponent {
 
-  state = { 
-    title: '',
-    active: false
+  state = initialFormState
+
+  setWrapperRef = (node) => {
+    this.formWrapper = node
   }
 
-  toggleActive = () => {
-    this.setState( { active: !this.state.active })
+  activate = (e) => {
+    if( !this.state.active) {
+      this.setState({ active: true }, () => {
+        document.addEventListener('click', this.disactivate)
+      })
+    }
+  }
+
+  disactivate = (event, hideImmediate) => {
+
+    const shouldHide = hideImmediate || this.formWrapper && !this.formWrapper.contains(event.target)
+
+    if(shouldHide) {
+      this.setState({ ...initialFormState }, () => {
+        document.removeEventListener('click', this.disactivate)
+      })
+    }
+  }
+
+  closePopupContent = () => {
+    this.setState({ active: false }, () => {
+      document.removeEventListener('click', this.disactivate)
+    })
   }
 
   handleInput = ({target}) => {
@@ -16,15 +43,15 @@ class AddEntityForm extends PureComponent {
     
     this.setState({
       [target.name]: value
-    }, () => console.log(this.state))
+    })
   }
 
   handleCreateEntity = async () => {
-    const { title } = this.state
-    if( !title.trim() ) return
+    let title = this.state.title.trim()
+    if( !title ) return;
 
     await this.props.createEntity(title);
-    this.toggleActive()
+    this.disactivate({}, true)
   }
 
   render() {
@@ -32,7 +59,7 @@ class AddEntityForm extends PureComponent {
     const { placeholder, btnText } = this.props
     const additionalClass = !!title ? 'active' : '' 
     return(
-      <div className="onemore">
+      <div className="onemore" ref={this.setWrapperRef}>
         {
          active
           ? <div className="add-card-form"> 
@@ -46,7 +73,7 @@ class AddEntityForm extends PureComponent {
                 <span className={`btn submit ${additionalClass}`} onClick={this.handleCreateEntity}> 
                   {btnText}
                 </span>
-                <span className='btn' onClick={this.toggleActive}> 
+                <span className='btn' onClick={ (e) => this.disactivate(e, true)}> 
                   Cancel 
                 </span>
               </div> 
@@ -55,7 +82,7 @@ class AddEntityForm extends PureComponent {
       
           : <span 
               className="add-button" 
-              onClick={this.toggleActive}
+              onClick={this.activate}
             >
               <i className="fas fa-plus"></i>
               { " " + btnText}

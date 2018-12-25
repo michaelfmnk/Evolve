@@ -92,7 +92,7 @@ class Popup extends React.Component {
     return (
       <div className='popup-wrp' ref={this.setWrapperRef}>
        
-          { triggerComponent }
+        { triggerComponent }
        
         { this.state.showContent && this.renderWithCloseTrigger(content)}
       </div>

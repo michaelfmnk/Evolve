@@ -19,7 +19,7 @@ const ToggleableMember = ({ user, title, popupButtons, withoutProfileLink, profi
     >
       <div className='popup'>
         <div className='popup-header'>
-          <Avatar user={user} />
+          <Avatar user={user} defaultIcon />
 
           <div className='user-info'>
             <div className='user-name'>

@@ -137,9 +137,12 @@
                 .members-section {
                     padding: 0;
                     .members {
-                        img {
+                        .avatar {
                             height: 20px;
                             width: 20px;
+                            &:hover {
+                              transform: none;
+                            }
                         }
                     }
                 }

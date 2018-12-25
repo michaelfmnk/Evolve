@@ -25,7 +25,7 @@ const apiCaller = store => next => action => {
 
   store.dispatch(processedAction)
 
-  axiosInstance.request({ url, method, data })
+  return axiosInstance.request({ url, method, data })
     .then(res => {
       const data = responseDataConverter(res.data)
       store.dispatch( { ...processedAction,  ...successActionWithType(type, data) })
@@ -34,8 +34,7 @@ const apiCaller = store => next => action => {
       console.error(err)
       const { data, status } = err.response
       store.dispatch(failActionWithType(type, { errorData: data, status }))
-      console.log(' ERROR ')
-      console.log(status)
+
       switch (status) {
         case 401:
         case 403: {
