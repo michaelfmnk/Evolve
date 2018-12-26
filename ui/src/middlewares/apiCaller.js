@@ -9,7 +9,7 @@ const clearREQUESTfield = (action) => {
   }
 
   if(action.REQUEST.data) { 
-    res.payload = { ...action.REQUEST.data } 
+    res.payload = action.REQUEST.data 
   }
 
   delete res.REQUEST
@@ -39,7 +39,7 @@ const apiCaller = (axiosInstance) => store => next => action => {
       store.dispatch( { ...processedAction,  ...successActionWithType(type, data) })
     })
     .catch(err => {
-      // console.error(err)
+      console.error(err)
       const { data, status } = err.response
       store.dispatch(failActionWithType(type, { errorData: data, status }))
 

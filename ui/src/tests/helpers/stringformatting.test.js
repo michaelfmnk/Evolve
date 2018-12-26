@@ -1,24 +1,15 @@
 import { fullNameOf } from 'helpers/stringFormatting'
 
-const mocks = [
-  {
-    user: {
-      first_name: 'Name',
-      last_name: 'Surname',
-    },
-    expectedFullName: 'Name Surname'
-  },
-  {
-    
-  }
-]
-
-describe('helpers', () => {
+describe('helpers tests', () => {
   describe('stringFormatting', () => {
-    describe('fullNameOf', () => {
-      test('should return full name of user', () => {
-        expect(fullNameOf(mocks[0].user)).toEqual(mocks[0].expectedFullName)
-      })
+    test('fullNameOf -- returns full name of user', () => {
+      const fakeUser =  {
+        first_name: 'Name',
+        last_name: 'Surname',
+      }
+      const expectedFullName = fakeUser.first_name + " " + fakeUser.last_name
+      
+      expect(fullNameOf(fakeUser)).toEqual(expectedFullName)
     })
   })
 })

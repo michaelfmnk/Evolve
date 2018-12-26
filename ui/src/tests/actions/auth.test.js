@@ -16,13 +16,13 @@ describe('Action creators tests', () => {
   describe('Auth action creators', () => {
     beforeEach(() => {
       moxios.install(instance);
-      store.clearActions(instance);
+      store.clearActions();
     });
 
     afterEach(() => moxios.uninstall());
 
 
-    test('refreshAuth -- generate correct action object', () => {
+    test('refreshAuth -- generates correct action object', () => {
       const tokenWithuser = {
         token: 'token',
         user: { id:  1 } 
@@ -39,20 +39,20 @@ describe('Action creators tests', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
-    test('clearAuthError -- generate correct action object', () => {
+    test('clearAuthError -- generates correct action object', () => {
       const expectedAction = { type: types.CLEAR_AUTH_ERROR }
       store.dispatch(actions.clearAuthError())
       expect(store.getActions()[0]).toEqual(expectedAction)
     })
 
-    test('logout -- generate correct action object', () => {
+    test('logout -- generates correct action object', () => {
       const expectedActions = [ { type: types.LOGOUT } ]
 
       store.dispatch(actions.logout())
       expect(store.getActions()).toEqual(expectedActions)
     })
 
-    test('signIn -- When response is ok, then generate start and success actions', async () => {
+    test('signIn -- When response is ok, then generates correct start and success actions', async () => {
       moxios.stubRequest(ednpoints.signIn, {
         status: 200,
         response: {
@@ -82,7 +82,7 @@ describe('Action creators tests', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })
     
-    test('signIn -- When response is bad, then generate start and fail actions', async () => {
+    test('signIn -- When response is bad, then generates correct start and fail actions', async () => {
       moxios.stubRequest(ednpoints.signIn, {
         status: 400,
         response: {
@@ -111,7 +111,7 @@ describe('Action creators tests', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })  
 
-    test('signUp -- When response is ok, then generate start and success signUp actions', async () => {
+    test('signUp -- When response is ok, then generates correct start and success signUp actions', async () => {
       moxios.stubRequest(ednpoints.signUp, {
         status: 200,
         response: {
@@ -146,7 +146,7 @@ describe('Action creators tests', () => {
     })
 
 
-    test('signUp -- When response is bad, then generate start and fail signUp actions', async () => {
+    test('signUp -- When response is bad, then generates correct start and fail signUp actions', async () => {
       moxios.stubRequest(ednpoints.signUp, {
         status: 400,
         response: {
@@ -175,7 +175,7 @@ describe('Action creators tests', () => {
     })
     
     
-    test('verifyAccountRequest -- When response is ok, then generate start and success signUp actions', async () => {
+    test('verifyAccountRequest -- When response is ok, then generates correct start and success signUp actions', async () => {
       moxios.stubRequest(ednpoints.verifyAccount(45), {
         status: 200,
         response: {
@@ -222,7 +222,7 @@ describe('Action creators tests', () => {
     })
 
 
-    test('activateInvitationLink -- ', () => {
+    test('activateInvitationLink -- When response is ok, then generates correct start and success actions ', () => {
 
     })
 

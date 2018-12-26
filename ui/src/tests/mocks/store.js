@@ -1,8 +1,10 @@
 import configureMockStore from 'redux-mock-store'
-import apiCallerMiddleware from 'middlewares/apiCaller'
+import configureApiCallerMiddleware from 'middlewares/apiCaller'
 import instance from 'constants/axios/instance'
 
-const middlewares = [ apiCallerMiddleware(instance) ]
+export const apiCallerMiddleware = configureApiCallerMiddleware(instance)
+
+const middlewares = [ apiCallerMiddleware ]
 const mockStore = configureMockStore(middlewares)
 
 export default ( initialState = {} ) => mockStore(initialState)
