@@ -39,7 +39,7 @@ class InviteCollaborator extends PureComponent {
     const { isAdding , email, error, isSent } = this.state;
     return (
       isAdding
-        ? <Modal>
+        ? <Modal onClose={this.toggleAdding}>
             <div className='invite-form'>
               <h3>
                 { isSent
