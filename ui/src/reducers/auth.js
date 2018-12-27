@@ -4,7 +4,7 @@ import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
 import { CREATE_BOARD } from 'constants/actionTypes/boards'
 import axiosInstance from 'constants/axios/instance'
 
-const initialState = {
+export const initialState = {
   user: {},
   token: null,
   error: null 

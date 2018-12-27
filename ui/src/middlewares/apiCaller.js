@@ -1,4 +1,3 @@
-import axiosInstance from 'constants/axios/instance'
 import { successActionWithType, failActionWithType } from 'helpers/actionsProcessTemplaters'
 import { logout } from 'actions/auth'
 import { start } from '../helpers/actionsProcessTemplaters'
@@ -6,15 +5,18 @@ import { start } from '../helpers/actionsProcessTemplaters'
 const clearREQUESTfield = (action) => {
   let res = {
     ...action,
-    payload: action.REQUEST.data || null,
     type: start(action.type)
+  }
+
+  if(action.REQUEST.data) { 
+    res.payload = action.REQUEST.data 
   }
 
   delete res.REQUEST
   return res
 }
 
-const apiCaller = store => next => action => {
+const apiCaller = (axiosInstance) => store => next => action => {
   const request = action.REQUEST
 
   if (!request) return next(action)

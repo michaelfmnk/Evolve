@@ -2,6 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import apiCaller from 'middlewares/apiCaller'
+import axiosInstance from 'constants/axios/instance'
 import rootReducer from 'reducers'
 import rootSaga from 'sagas'
 import History from '../history'
@@ -16,7 +17,7 @@ function configureStore (history) {
     const middleware = [
         routerMiddleware(history),
         sagaMiddleware,
-        apiCaller
+        apiCaller(axiosInstance)
     ]
 
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
