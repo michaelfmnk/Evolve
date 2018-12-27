@@ -4,9 +4,9 @@ import CardHeader from './CardHeader'
 import CardBody from './CardBody'
 import Modal from 'components/Modal'
 import { debounce } from 'lodash'
-import './OpenedCard.css'
+import './OpenedCardModal.css'
 
-class OpenedCard extends Component {
+class OpenedCardModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +60,7 @@ class OpenedCard extends Component {
   render() {
     const { 
 			card, column, boardUsers, deleteCard,
-			closeCard ,handleUserAssigning, authUserId
+			closeCard ,handleUserAssigning, authUserId, isOpen
     } = this.props;
     
     const { content, title, isEditing } = this.state;
@@ -68,7 +68,7 @@ class OpenedCard extends Component {
     const saveBtnActiveClass = content !== card.content? 'active' : '' 
     
     return (
-      <Modal onClose={closeCard} >
+      <Modal onClose={closeCard} isOpen={isOpen} >
         <div className="windowhandler">
           <div className="openedboard">
             <CardHeader 
@@ -115,4 +115,4 @@ class OpenedCard extends Component {
   }
 }
 
-export default OpenedCard
+export default OpenedCardModal

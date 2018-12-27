@@ -15,7 +15,7 @@ import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
 import ColumnsList from 'components/ColumnsList'
-import OpenedCard from 'components/OpenedCard'
+import OpenedCardModal from 'components/OpenedCardModal'
 import './BoardPage.css'
 
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -78,8 +78,9 @@ class BoardPage extends Component {
             }}
           />
           
-         { openedCard && 
-            <OpenedCard 
+          {
+            openedCard &&  
+            <OpenedCardModal 
               card={openedCard} 
               column={boardColumnsWithCards.find( col => col.id === openedCard.column_id)}
               boardUsers={[ board.owner, ...board.collaborators ]}
@@ -88,8 +89,10 @@ class BoardPage extends Component {
               closeCard={this.closeCard}
               deleteCard={actions.deleteCard}
               handleUserAssigning={this.handleUserAssigning}
+              isOpen={!!openedCard}
             />
-         }
+          }
+        
         </div>       
       </main>
     )

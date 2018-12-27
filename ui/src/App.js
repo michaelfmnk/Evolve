@@ -53,18 +53,15 @@ class App extends Component {
             <Route path={profileRoot} component={UserProfilePage} /> 
           </Switch>
         </ConnectedRouter>
-       {
-         isCreationModalOpen && (
-          <Modal onClose={this.toggleModal}>
-            <BoardCreation 
-              createBoard={this.handleBoardSubmit} 
-              toggleModal={this.toggleModal}
-              backgrounds={backgrounds}
-              getDefaultBackgrounds={actions.getDefaultBackgrounds}
-            />
-          </Modal>
-         )
-       } 
+        
+        <Modal onClose={this.toggleModal} isOpen={isCreationModalOpen}>
+          <BoardCreation 
+            createBoard={this.handleBoardSubmit} 
+            toggleModal={this.toggleModal}
+            backgrounds={backgrounds}
+            getDefaultBackgrounds={actions.getDefaultBackgrounds}
+          />
+        </Modal>
       </React.Fragment>
     )
   }

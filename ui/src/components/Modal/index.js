@@ -28,7 +28,8 @@ export default class Modal extends Component {
   }
 
   render () {
-    const { children } = this.props
+    const { children, isOpen } = this.props
+    if( !isOpen ) return null
     const childWithProps = React.cloneElement(children, { handleClose: this.onModalClose })
     return (
       <Fragment>
@@ -47,5 +48,6 @@ Modal.defaultProps = {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 };
