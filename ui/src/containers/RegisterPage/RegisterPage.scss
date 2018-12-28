@@ -1,14 +1,16 @@
 
-.register_page{
+.register_page {
   display: flex;
   justify-content: center;
   padding-top: 100px;
-    &_background{
-        position: fixed;
-        left: 0; top:0; 
-        width: 100vw;
-        height: 100vh;
-        background-image: url('../../resources/images/auth_background.jpg');
-        z-index: -100000;
-    }
+  &_background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../resources/images/auth_background.jpg');
+    background-size: cover;
+    z-index: -100000;
+  }
 }

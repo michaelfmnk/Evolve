@@ -3,22 +3,18 @@ package com.evolvestage.api.controllers;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.security.JwtUser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.restassured.http.ContentType;
+import lombok.SneakyThrows;
 import lombok.extern.apachecommons.CommonsLog;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -35,13 +31,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static com.evolvestage.api.config.ws.WebSocketConfig.WS_URL;
-import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @CommonsLog
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class WebSocketTest extends BaseTest {
 
     private WebSocketStompClient stompClient;
@@ -50,10 +47,7 @@ public class WebSocketTest extends BaseTest {
     private DefaultStompFrameHandler stompFrameHandler;
     private LinkedBlockingDeque<String> blockingQueue;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Before
+    @BeforeEach
     public void before() {
         blockingQueue = new LinkedBlockingDeque<>();
         stompClient = new WebSocketStompClient(
@@ -71,14 +65,12 @@ public class WebSocketTest extends BaseTest {
     }
 
     @Test
-    public void shouldSendMessageToSocketOnCreateBoard()
-            throws InterruptedException, ExecutionException, TimeoutException, JsonProcessingException {
+    @SneakyThrows
+    public void shouldSendMessageToSocketOnCreateBoard() {
         StompSession session = connect(wsHeaders);
         StompSession.Subscription subscription = session.subscribe("/boards/1", stompFrameHandler);
-
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/columns/1/cards/1/archive")
                 .then()
@@ -96,15 +88,16 @@ public class WebSocketTest extends BaseTest {
     }
 
     @Test
-    public void notAuthorizedUserShouldNotHaveAbilityToConnect() throws InterruptedException, ExecutionException, TimeoutException {
-        thrown.expect(ExecutionException.class);
-        thrown.expectCause(hasProperty("statusCode"));
-        thrown.expectCause(hasProperty("statusCode", equalTo(UNAUTHORIZED)));
-        connect(null);
+    public void notAuthorizedUserShouldNotHaveAbilityToConnect() {
+        ExecutionException exception = assertThrows(ExecutionException.class, () -> {
+            connect(null);
 
-        stompClient
-                .connect(String.format("ws://localhost:%s%s", port, WS_URL), new StompSessionHandlerAdapter() {})
-                .get(100, MILLISECONDS);
+            stompClient
+                    .connect(String.format("ws://localhost:%s%s", port, WS_URL), new StompSessionHandlerAdapter() {})
+                    .get(100, MILLISECONDS);
+        });
+        assertThat(exception.getCause(), hasProperty("statusCode"));
+        assertThat(exception.getCause(), hasProperty("statusCode", is(UNAUTHORIZED)));
     }
 
     @Test
@@ -120,8 +113,7 @@ public class WebSocketTest extends BaseTest {
         StompSession.Subscription subscription = session.subscribe("/boards/1", stompFrameHandler);
 
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/columns/1/cards/1/archive")
                 .then()
@@ -134,7 +126,8 @@ public class WebSocketTest extends BaseTest {
         subscription.unsubscribe();
     }
 
-    private StompSession connect(WebSocketHttpHeaders headers) throws InterruptedException, ExecutionException, TimeoutException {
+    @SneakyThrows
+    private StompSession connect(WebSocketHttpHeaders headers) {
         return stompClient
                 .connect(String.format("ws://localhost:%s%s", port, WS_URL), headers,
                         new StompSessionHandlerAdapter() {})

@@ -2,14 +2,10 @@ package com.evolvestage.api.controllers.boardColumn;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.BoardColumnDto;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import java.io.IOException;
-
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,15 +14,13 @@ import static org.hamcrest.Matchers.notNullValue;
 public class PostBoardColumnTest  extends BaseTest {
 
     @Test
-    public void shouldCreateBoardColumn() throws IOException {
+    public void shouldCreateBoardColumn() {
         BoardColumnDto column = BoardColumnDto.builder()
                 .name("NEW COLUMN")
                 .build();
-        String json = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(column))
+        BoardColumnDto response = given()
+                .auth()
+                .body(column)
                 .when()
                 .post("/api/boards/1/columns")
                 .then()
@@ -35,8 +29,7 @@ public class PostBoardColumnTest  extends BaseTest {
                 .statusCode(HttpStatus.SC_OK)
                 .body("id", notNullValue())
                 .body("name", equalTo("NEW COLUMN"))
-                .extract().response().body().asString();
-        BoardColumnDto response = objectMapper.readValue(json, BoardColumnDto.class);
+                .extract().as(BoardColumnDto.class);
         assertThat(new Request(dataSource, format("SELECT * FROM COLUMNS WHERE column_id=%s", response.getId())))
                 .hasNumberOfRows(1)
                 .row(0).value("name").isEqualTo("NEW COLUMN")
@@ -44,13 +37,11 @@ public class PostBoardColumnTest  extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateColumn() throws IOException {
+    public void shouldNotCreateColumn() {
         BoardColumnDto column = new BoardColumnDto();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(column))
+                .auth()
+                .body(column)
                 .when()
                 .post("/api/boards/1/columns")
                 .then()
@@ -61,12 +52,11 @@ public class PostBoardColumnTest  extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateColumnOnUnauthorized() throws IOException {
+    public void shouldNotCreateColumnOnUnauthorized() {
         BoardColumnDto column = new BoardColumnDto();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(column))
+                .noAuth()
+                .body(column)
                 .when()
                 .post("/api/boards/1/columns")
                 .then()
@@ -76,15 +66,13 @@ public class PostBoardColumnTest  extends BaseTest {
     }
 
     @Test
-    public void shouldNotAllowCreateColumnWithoutBorder() throws IOException {
+    public void shouldNotAllowCreateColumnWithoutBorder() {
         BoardColumnDto column = BoardColumnDto.builder()
                 .name("NEW COLUMN")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(column))
+                .auth()
+                .body(column)
                 .when()
                 .post("/api/boards/5/columns")
                 .then()

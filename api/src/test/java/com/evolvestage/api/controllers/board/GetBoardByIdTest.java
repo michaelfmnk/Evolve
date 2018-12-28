@@ -1,11 +1,9 @@
 package com.evolvestage.api.controllers.board;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -13,8 +11,7 @@ public class GetBoardByIdTest extends BaseTest {
     @Test
     public void shouldGetBoardInfo() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/boards/1")
                 .then()
@@ -39,8 +36,7 @@ public class GetBoardByIdTest extends BaseTest {
     @Test
     public void shouldNotGetBoardInfoOnAccessDenied() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/boards/6")
                 .then()

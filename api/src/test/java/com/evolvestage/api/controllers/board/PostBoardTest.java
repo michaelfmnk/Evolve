@@ -3,19 +3,16 @@ package com.evolvestage.api.controllers.board;
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.docs.DocumentDto;
 import com.evolvestage.api.dtos.BoardDto;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -25,16 +22,14 @@ import static org.mockito.Mockito.verify;
 public class PostBoardTest extends BaseTest {
 
     @Test
-    public void shouldCreateBoard() throws IOException {
+    public void shouldCreateBoard() {
         BoardDto board = BoardDto.builder()
                 .name("NEW BOARD")
                 .backgroundId(UUID.randomUUID())
                 .build();
-        String json = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(board))
+        BoardDto response = given()
+                .auth()
+                .body(board)
                 .when()
                 .post("/api/boards")
                 .then()
@@ -44,8 +39,7 @@ public class PostBoardTest extends BaseTest {
                 .body("id", notNullValue())
                 .body("name", equalTo("NEW BOARD"))
                 .body("background_url", endsWith("/docs-api/permanent/public/" + board.getBackgroundId().toString()))
-                .extract().response().body().asString();
-        BoardDto response = objectMapper.readValue(json, BoardDto.class);
+                .extract().as(BoardDto.class);
         assertThat(new Request(dataSource, format("SELECT * FROM boards WHERE board_id=%s", response.getId())))
                 .hasNumberOfRows(1)
                 .row(0).value("name").isEqualTo("NEW BOARD")
@@ -67,16 +61,14 @@ public class PostBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotSendRequestToMoveFileOnCreateBoardWithDefaulBackground() throws IOException {
+    public void shouldNotSendRequestToMoveFileOnCreateBoardWithDefaultBackground() {
         BoardDto board = BoardDto.builder()
                 .name("NEW BOARD")
                 .backgroundId(UUID.fromString("f34d29fe-2136-406b-8bf5-08c97e3eb958"))
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(board))
+                .auth()
+                .body(board)
                 .when()
                 .post("/api/boards")
                 .then()
@@ -93,15 +85,13 @@ public class PostBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateBoardOnValidation() throws IOException {
+    public void shouldNotCreateBoardOnValidation() {
         BoardDto board = BoardDto.builder()
                 .backgroundId(UUID.randomUUID())
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(board))
+                .auth()
+                .body(board)
                 .when()
                 .post("/api/boards")
                 .then()
@@ -112,14 +102,13 @@ public class PostBoardTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotCreateBoardOnUnauthorized() throws IOException {
+    public void shouldNotCreateBoardOnUnauthorized() {
         BoardDto board = BoardDto.builder()
                 .backgroundId(UUID.randomUUID())
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(board))
+                .noAuth()
+                .body(board)
                 .when()
                 .post("/api/boards")
                 .then()

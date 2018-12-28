@@ -42,16 +42,12 @@ const ContactsSection = (props) => (
 
         <div className="contacts-low">
           <a href="#">
-              VK
-          </a>
-          <a href="#">
               FB
           </a>
           <a href="https://gitlab.com/dnu-dreamteam/dolgov" target='_blank'  rel="noopener noreferrer">
               GIT
           </a>
         </div>
-
       </div>
     </section>
   </ScrollableAnchor>

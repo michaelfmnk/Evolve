@@ -35,7 +35,6 @@ class LoginForm extends PureComponent {
           <InputWithLabelAndValidation
             text='Email'
             inputName='email'
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
             onInput={({target}) => this.handleInput(target)}
             errorText='* e-mail should look like this: example@gmail.com'
           />
@@ -47,7 +46,7 @@ class LoginForm extends PureComponent {
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             onInput={({target}) => this.handleInput(target)}
             errorText={
-              `* password must be at least 8 characters long 
+              `* password must be at least 8 characters long
                * password must contain at least 1 number, 1 uppercase and lowercase letter`
             }
           />
@@ -62,8 +61,8 @@ class LoginForm extends PureComponent {
 
           {/* TODO: separate link and label, fix ui for this element */}
           {/* <label htmlFor="remember_me_checkbox">
-             
-            
+
+
           </label> */}
           <Link to="/sign_up" className="have_account">I don't have an account</Link>
           

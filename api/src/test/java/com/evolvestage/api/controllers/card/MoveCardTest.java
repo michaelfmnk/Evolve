@@ -1,12 +1,10 @@
 package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -16,9 +14,7 @@ public class MoveCardTest extends BaseTest {
     @Test
     public void shouldMoveCardToAnotherColumn() {
        given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/columns/1/cards/1/move/2")
                 .then()
@@ -38,9 +34,7 @@ public class MoveCardTest extends BaseTest {
     @Test
     public void shouldNotMoveCardToAnotherColumnWithNotFoundColumn() {
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/1/columns/1/cards/1/move/4")
                 .then()
@@ -57,9 +51,7 @@ public class MoveCardTest extends BaseTest {
     @Test
     public void shouldGetCardNotFound() {
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .patch("/api/boards/2/columns/1/cards/1/move/4")
                 .then()

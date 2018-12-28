@@ -6,18 +6,16 @@ import com.evolvestage.api.dtos.containers.EmailsContainer;
 import com.evolvestage.api.dtos.containers.ListContainer;
 import com.evolvestage.api.entities.BoardInvitation;
 import com.mailjet.client.MailjetRequest;
-import io.restassured.http.ContentType;
 import lombok.SneakyThrows;
 import org.assertj.db.type.Request;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +24,7 @@ import static org.mockito.Mockito.verify;
 
 public class InvitationsTest extends BaseTest {
 
-    @Before
+    @BeforeEach
     public void before() {
         redisTemplate.delete("invitations");
     }
@@ -37,9 +35,7 @@ public class InvitationsTest extends BaseTest {
         List<String> data = Arrays.asList("someoneelse@gmail.com", "test@test.com");
         EmailsContainer dto = new EmailsContainer(data);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(dto)
                 .when()
                 .post("/api/boards/1/collaborators")
@@ -58,9 +54,7 @@ public class InvitationsTest extends BaseTest {
         List<String> data = Arrays.asList("someoneelse@gmail.com", "testtest.com");
         ListContainer<String> dto = new ListContainer<>(data);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(dto)
                 .when()
                 .post("/api/boards/1/collaborators")
@@ -83,9 +77,7 @@ public class InvitationsTest extends BaseTest {
 
         VerificationCodeDto container = new VerificationCodeDto(code);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .body(container)
                 .when()
                 .post("/api/invitations")

@@ -4,25 +4,23 @@ import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.AuthRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.http.ContentType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginTest extends BaseTest {
 
     @Test
-    public void shouldLogin() throws JsonProcessingException {
+    public void shouldLogin() {
         AuthRequest authRequest = AuthRequest.builder()
                 .email("michaelfmnk@gmail.com")
                 .password("test")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login").prettyPeek()
                 .then()
@@ -32,15 +30,14 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotLoginWithBadCredentials() throws JsonProcessingException {
+    public void shouldNotLoginWithBadCredentials() {
         AuthRequest authRequest = AuthRequest.builder()
                 .email("michaelfmnk@gmail.com")
                 .password("badPassword")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()
@@ -55,9 +52,8 @@ public class LoginTest extends BaseTest {
 
         authRequest.setPassword(null);
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()
@@ -78,9 +74,8 @@ public class LoginTest extends BaseTest {
                 .password("test")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()
@@ -95,14 +90,13 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void shouldFailLoginOnUserNotFound() throws JsonProcessingException {
+    public void shouldFailLoginOnUserNotFound() {
         AuthRequest authRequest = AuthRequest.builder()
                 .email("fakeLogin")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .noAuth()
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()
@@ -117,14 +111,15 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void shouldFailLoginOnUnprocessableEntity() throws JsonProcessingException {
+    public void shouldFailLoginOnUnprocessableEntity() {
         AuthRequest authRequest = AuthRequest.builder()
                 .password("asldkfj;alksdjf;laksjd;flkaj")
                 .build();
         given()
+                .noAuth()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(objectMapper.writeValueAsBytes(authRequest))
+                .body(authRequest)
                 .when()
                 .post("/api/auth/login")
                 .then()

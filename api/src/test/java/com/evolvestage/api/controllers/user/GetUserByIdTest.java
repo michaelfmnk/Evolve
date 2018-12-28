@@ -1,11 +1,9 @@
 package com.evolvestage.api.controllers.user;
 
 import com.evolvestage.api.BaseTest;
-import io.restassured.http.ContentType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -15,8 +13,7 @@ public class GetUserByIdTest extends BaseTest {
     @Test
     public void shouldGetUserInfo() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/users/1")
                 .then()
@@ -40,8 +37,7 @@ public class GetUserByIdTest extends BaseTest {
     @Test
     public void shouldFailGetUserInfoOnNotFound() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/users/2000")
                 .then()
@@ -54,8 +50,7 @@ public class GetUserByIdTest extends BaseTest {
     @Test
     public void shouldGetUserBriefInfo() {
         given()
-                .accept(ContentType.JSON)
-                .headers(headers)
+                .auth()
                 .when()
                 .get("/api/users/2")
                 .then()

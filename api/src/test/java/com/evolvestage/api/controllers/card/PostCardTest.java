@@ -2,15 +2,11 @@ package com.evolvestage.api.controllers.card;
 
 import com.evolvestage.api.BaseTest;
 import com.evolvestage.api.dtos.CardBriefDto;
-import io.restassured.http.ContentType;
+import com.evolvestage.api.dtos.CardDto;
 import org.assertj.db.type.Request;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.http.HttpStatus;
 
-import java.io.IOException;
-
-import com.evolvestage.api.dtos.CardDto;
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -19,16 +15,14 @@ import static org.hamcrest.Matchers.notNullValue;
 public class PostCardTest extends BaseTest{
 
     @Test
-    public void shouldCreateCard() throws IOException {
+    public void shouldCreateCard() {
         CardBriefDto card = CardBriefDto.builder()
                 .content("NEW CARD")
                 .title("NEW CARD TITLE")
                 .build();
-        String json = given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(card))
+        CardDto response = given()
+                .auth()
+                .body(card)
                 .when()
                 .post("/api/boards/1/columns/1/cards")
                 .then()
@@ -39,8 +33,7 @@ public class PostCardTest extends BaseTest{
                 .body("content", equalTo("NEW CARD"))
                 .body("column_id", equalTo(1))
                 .body("title", equalTo("NEW CARD TITLE"))
-                .extract().response().body().asString();
-        CardDto response = objectMapper.readValue(json, CardDto.class);
+                .extract().as(CardDto.class);
         assertThat(new Request(dataSource, format("SELECT * FROM CARDS WHERE card_id=%s", response.getId())))
                 .hasNumberOfRows(1)
                 .row(0).value("content").isEqualTo("NEW CARD")
@@ -49,13 +42,11 @@ public class PostCardTest extends BaseTest{
     }
 
     @Test
-    public void shouldNotCreateCard() throws IOException {
+    public void shouldNotCreateCard() {
         CardBriefDto card = new CardBriefDto();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(card))
+                .auth()
+                .body(card)
                 .when()
                 .post("/api/boards/1/columns/1/cards")
                 .then()
@@ -66,15 +57,13 @@ public class PostCardTest extends BaseTest{
     }
 
     @Test
-    public void shouldNotCreateCardWithoutPermission() throws IOException {
+    public void shouldNotCreateCardWithoutPermission() {
         CardBriefDto card = CardBriefDto.builder()
                 .title("NEW CARD TITLE")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(card))
+                .auth()
+                .body(card)
                 .when()
                 .post("/api/boards/2/columns/4/cards")
                 .then()
@@ -85,15 +74,13 @@ public class PostCardTest extends BaseTest{
     }
 
     @Test
-    public void shouldNotCreateCardInTheNotValidColumn() throws IOException {
+    public void shouldNotCreateCardInTheNotValidColumn() {
         CardBriefDto card = CardBriefDto.builder()
                 .title("NEW CARD TITLE")
                 .build();
         given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .headers(headers)
-                .body(objectMapper.writeValueAsBytes(card))
+                .auth()
+                .body(card)
                 .when()
                 .post("/api/boards/1/columns/4/cards")
                 .then()
