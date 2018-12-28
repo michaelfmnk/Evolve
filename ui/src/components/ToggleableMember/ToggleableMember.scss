@@ -1,0 +1,87 @@
+@import 'commonStyles/variables.scss';
+
+.toggleable-member-wrp{
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .popup-wrp {
+    .avatar {
+      transition: $a_short-duration;
+      border-radius: 50%;
+      width: 25px; 
+      height: 25px;
+      margin: 2px; 
+      cursor: pointer; 
+    }
+  }
+  
+  
+    
+
+  .popup {
+    z-index: 100;
+    padding: 1rem;
+    position: absolute;
+    color: #17394d;
+    top: 2rem;
+    background-color: white;
+    min-width: 300px;
+    width: 100%;
+    max-width: 400px;
+
+    .btn.action {
+      display: block;
+      color: #17394d;
+      font-weight: bold;
+      padding: 0.3rem;
+      font-size: 15px;
+      font-family: 'Calibri';
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(8, 58, 73, 0.9);
+        color: white;
+      }
+    }
+
+    &-header {
+      display: flex;
+      padding-bottom: 0.5rem;
+
+      .avatar {
+        height: 70px;
+        width: 70px;
+      }
+
+      .user-info{
+        display: flex;
+        padding-left: 1rem;
+        flex-direction: column;
+        justify-content: center;
+  
+        .user-name {
+          color: #17394d;
+          font-weight: bold;
+          font-size: 18px;
+        }    
+      }
+  
+      i.fa-times {
+        display: block;
+        position: absolute;
+        right:  5px;
+        top: 10px;
+        padding: 10px;
+        cursor: pointer;
+  
+        &:hover {
+          color: rgb(119, 35, 35)
+        }
+      }
+    }
+
+   
+
+  }
+}

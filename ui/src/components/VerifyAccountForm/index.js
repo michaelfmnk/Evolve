@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import Message from 'components/Message'
 import FormHeader from 'components/FormHeader'
 import ApplyFormBtn from 'components/buttons/ApplyFormBtn'
 import PropTypes from 'prop-types'
 import './VerifyAccountForm.css'
 
-class VerifyAccountForm extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      code: ''
-    }
+class VerifyAccountForm extends PureComponent {
+  
+  state = {
+    code: ''
   }
 
   handleInput = (input) => {
@@ -29,7 +28,7 @@ class VerifyAccountForm extends React.Component {
         <FormHeader text="Account verifying" />
 
         <p className='explanatory_text'>
-            Check your email for secred code, we've just send it to you
+          Check your email for secred code, we've just send it to you
         </p>
 
         <input
@@ -41,11 +40,12 @@ class VerifyAccountForm extends React.Component {
           onInput={({target}) => this.handleInput(target)}
         />
 
+        <Message type='error' text={this.props.errorMessage} />
+
         <ApplyFormBtn
           text='Verify'
           onClick={(event) => this.handleSubmit(event)}
         />
-
       </form>
     )
   }

@@ -6,11 +6,16 @@ $modal-height: 80px;
   min-width: 350px;
   min-height: $modal-height;
   display: flex;
+  position: absolute;
+  left: 50%;
+  top: 40%;
   flex-direction: column;
   z-index: 1000;
   border-radius: 6px;
   padding: 10px;
   background-color: #dfe3e6;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   .creation-dialog {
     display: flex;

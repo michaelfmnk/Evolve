@@ -87,13 +87,14 @@
             right: 0;
             bottom: 6px;
 
-            img {
+            .avatar {
               transition: $a_short-duration;
-              display: inline-block;
-              border-radius: 50%;
               width: 20px; height: 20px;
-              background: $dark-color;
               margin: 3px; 
+              
+              &.default {
+                font-size: 10px;
+              }
               cursor: pointer; 
 
             &:hover {

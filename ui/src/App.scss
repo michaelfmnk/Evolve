@@ -1,1 +1,8 @@
 @import 'commonStyles/variables.scss';
+
+
+textarea {
+  resize: vertical;
+  outline: none;
+  border: none;
+}

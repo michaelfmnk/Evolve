@@ -1,19 +1,22 @@
 import React from 'react'
-import CreationMenuDropdown from 'components/dropdowns/AppHeader/CreationMenuDropdown'
-import UserMenuDropdown from 'components/dropdowns/AppHeader/UserMenuDropdown'
+import PropTypes from 'prop-types'
+import CreationMenuPopup from 'components/popups/AppHeader/CreationMenuPopup'
+import UserMenuPopup from 'components/popups/AppHeader/UserMenuPopup'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from 'actions/auth'
 import { authUser } from 'selectors/user'
-import PropTypes from 'prop-types'
+import { getProfileActivityRoute, home } from 'constants/routes/ui'
 import './AppHeader.css'
 
 class AppHeader extends React.Component {
   redirectToHome = () => {
-    this.props.history.push('/home')
+    this.props.history.push(home)
   }
 
   render () {
+    const { user, actions } = this.props;
+ 
     return (
       <header className="page-header">
         <nav className="header-menu inline">
@@ -25,13 +28,14 @@ class AppHeader extends React.Component {
           Evolve
         </div>
         <nav className="header-menu inline">
-          <CreationMenuDropdown 
+          <CreationMenuPopup 
             toggleCreationModal={this.props.toggleCreationModal}
           
           />
-          <UserMenuDropdown
-            user={this.props.user}
-            handleExitClick={this.props.actions.logout}
+          <UserMenuPopup
+            user={user}
+            handleExitClick={actions.logout}
+            profileLink={getProfileActivityRoute(user.id)}
           />
         </nav>
       </header>

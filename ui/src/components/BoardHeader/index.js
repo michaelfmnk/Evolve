@@ -1,5 +1,7 @@
 import React from 'react'
 import InviteCollaborator from './InviteCollaborator'
+import ToggleableMember from 'components/ToggleableMember'
+import { fullNameOf } from 'helpers/stringFormatting'
 import './BoardHeader.css'
 
 const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCollaborator}) => (
@@ -8,30 +10,46 @@ const BoardHeader = ({boardName, collaborators, owner, isBoardPersonal, inviteCo
         <div className='header'>
           <div className="caption"> <span> {boardName}</span></div>
           <nav className="mainoptions">
+            <p>
+              <span ><i className="far fa-star"></i></span>
+            </p>
 
-          <p>
-            <span ><i className="far fa-star"></i></span>
-          </p>
-
-          <p className='ownerhip'> 
-            {
-              isBoardPersonal 
-                ? <span > <i className="fas fa-lock"/> Personal </span> 
-                : <span > <i className="fas fa-users"/> Joined </span>
-            }
-          </p>
-            
-            
+            <p className='ownerhip'> 
+              {
+                isBoardPersonal 
+                  ? <span > <i className="fas fa-lock"/> Personal </span> 
+                  : <span > <i className="fas fa-users"/> Joined </span>
+              }
+            </p> 
           </nav>
         </div>
         
         <div className='members'>
-          { owner && <img src={owner.avatar_url || '/img/avatar.jpeg'} title={`${owner.first_name} ${owner.last_name} | board admin`}/> }
-          {
-            collaborators && collaborators.map(user => (
-              <img src={user.avatar_url || '/img/avatar.jpeg'} title={`${user.first_name} (${user.last_name})`} />
-            ))
-          }
+          {owner && ( 
+            <ToggleableMember 
+              user={owner} 
+              title={`${fullNameOf(owner)} | board admin`}
+              popupButtons = {[
+                {
+                  content: 'leave board',
+                  onClick: () => null
+                }
+              ]}
+            /> 
+          )}
+
+          {collaborators && collaborators.map(user => (
+              <ToggleableMember 
+                key={user.id}
+                user={user}
+                popupButtons = {[
+                  {
+                    content: 'Delete from board',
+                    onClick: () => null
+                  }
+                ]}
+              />
+          ))}
 
           <InviteCollaborator inviteCollaborator={inviteCollaborator}/>
 

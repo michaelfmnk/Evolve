@@ -1,5 +1,4 @@
-import {start, fail, success} from 'helpers/actionsProcessTemplaters'
-import { combineReducers } from 'redux'
+import { success } from 'helpers/actionsProcessTemplaters'
 import { GET_AUTH_USER_DATA } from 'constants/actionTypes/users'
 import { CREATE_COLUMN, DELETE_COLUMN } from 'constants/actionTypes/columns'
 import * as types from 'constants/actionTypes/boards'

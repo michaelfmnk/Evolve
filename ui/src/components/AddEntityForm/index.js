@@ -1,28 +1,57 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class AddEntityForm extends Component {
+const initialFormState = {
+  title: '',
+  active: false
+}
 
-  state = { 
-    title: '',
-    active: false
+class AddEntityForm extends PureComponent {
+
+  state = initialFormState
+
+  setWrapperRef = (node) => {
+    this.formWrapper = node
   }
 
-  toggleActive = () => {
-    this.setState( { active: !this.state.active })
+  activate = (e) => {
+    if( !this.state.active) {
+      this.setState({ active: true }, () => {
+        document.addEventListener('click', this.disactivate)
+      })
+    }
+  }
+
+  disactivate = (event, hideImmediate) => {
+
+    const shouldHide = hideImmediate || this.formWrapper && !this.formWrapper.contains(event.target)
+
+    if(shouldHide) {
+      this.setState({ ...initialFormState }, () => {
+        document.removeEventListener('click', this.disactivate)
+      })
+    }
+  }
+
+  closePopupContent = () => {
+    this.setState({ active: false }, () => {
+      document.removeEventListener('click', this.disactivate)
+    })
   }
 
   handleInput = ({target}) => {
+    let value = target.value.replace('\n', '').trim()
+    
     this.setState({
-      [target.name]: target.value.trim()
-    }, () => console.log(this.state))
+      [target.name]: value
+    })
   }
 
   handleCreateEntity = async () => {
-    const { title } = this.state
-    if( !title.trim() ) return
+    let title = this.state.title.trim()
+    if( !title ) return;
 
     await this.props.createEntity(title);
-    this.toggleActive()
+    this.disactivate({}, true)
   }
 
   render() {
@@ -30,7 +59,7 @@ class AddEntityForm extends Component {
     const { placeholder, btnText } = this.props
     const additionalClass = !!title ? 'active' : '' 
     return(
-      <div className="onemore">
+      <div className="onemore" ref={this.setWrapperRef}>
         {
          active
           ? <div className="add-card-form"> 
@@ -44,7 +73,7 @@ class AddEntityForm extends Component {
                 <span className={`btn submit ${additionalClass}`} onClick={this.handleCreateEntity}> 
                   {btnText}
                 </span>
-                <span className='btn' onClick={this.toggleActive}> 
+                <span className='btn' onClick={ (e) => this.disactivate(e, true)}> 
                   Cancel 
                 </span>
               </div> 
@@ -53,7 +82,7 @@ class AddEntityForm extends Component {
       
           : <span 
               className="add-button" 
-              onClick={this.toggleActive}
+              onClick={this.activate}
             >
               <i className="fas fa-plus"></i>
               { " " + btnText}

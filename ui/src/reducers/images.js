@@ -1,4 +1,4 @@
-import { start, fail, success } from 'helpers/actionsProcessTemplaters'
+import { success } from 'helpers/actionsProcessTemplaters'
 import * as types from 'constants/actionTypes/images'
 
 export default function (state = [], action) {

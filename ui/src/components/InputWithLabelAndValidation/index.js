@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './InputWithLabelAndValidation.css'
 
-const InputWithLabelAndValidation = (props) => {
-  const { text, id, pattern, onInput, onBlur, errorText, inputName, type } = props
-  return (
+const InputWithLabelAndValidation = ({
+   text, id, pattern, onInput, onBlur, errorText, inputName, type 
+  }) => 
+  (
     <label htmlFor={id || inputName} className='label_with_input'>
       {text}
       <input
@@ -22,7 +23,7 @@ const InputWithLabelAndValidation = (props) => {
       </p>
     </label>
   )
-}
+
 
 InputWithLabelAndValidation.propTypes = {
   id: PropTypes.string,

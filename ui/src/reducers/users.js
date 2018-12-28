@@ -1,4 +1,4 @@
-import {start, fail, success} from 'helpers/actionsProcessTemplaters'
+import { success } from 'helpers/actionsProcessTemplaters'
 import { combineReducers } from 'redux'
 import * as types from 'constants/actionTypes/users'
 

@@ -1,8 +1,5 @@
 export const boardColumnsIds = (state) => {
   const board = state.boards.byId[state.boards.current] 
-  console.log('INSIDE SELECTOR')
-  console.log(board)
-  console.log(state.boards.current)
 
   return board && board.columns ? board.columns : []
 }

@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import HomePage from 'containers/HomePage'
 import BoardPage from 'containers/BoardPage'
+import UserProfilePage from 'containers/UserProfilePage'
 import AppHeader from 'containers/AppHeader'
 import history from './history.js'
 import { connect } from 'react-redux'
@@ -11,6 +12,7 @@ import { getAuthUserData } from 'actions/users'
 import { createBoardRequest } from 'actions/boards'
 import { authUserIdSelector } from 'selectors/auth'
 import { getDefaultBackgrounds } from 'actions/images'
+import { home, root, boardRoute, profileRoot } from 'constants/routes/ui'
 import Modal from 'components/Modal'
 import BoardCreation from 'components/BoardCreation'
 import './App.css'
@@ -45,25 +47,21 @@ class App extends Component {
         <AppHeader history={history} toggleCreationModal={this.toggleModal}/>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path='/' exact render={() => <Redirect to='/home' />} />
-            <Route path='/home' render={ () => <HomePage toggleCreationModal={this.toggleModal} />}/>
-            <Route path='/boards/:board_id' component={BoardPage} />
-            {/* <Route path='/users/:user_id/profile' component={ProfilePage} />  */}
-
+            <Route path={root} exact render={() => <Redirect to={home} />} />
+            <Route path={home} render={ () => <HomePage toggleCreationModal={this.toggleModal} />} />
+            <Route path={boardRoute} component={BoardPage} />
+            <Route path={profileRoot} component={UserProfilePage} /> 
           </Switch>
         </ConnectedRouter>
-       {
-         isCreationModalOpen && (
-          <Modal onClose={this.toggleModal}>
-            <BoardCreation 
-              createBoard={this.handleBoardSubmit} 
-              toggleModal={this.toggleModal}
-              backgrounds={backgrounds}
-              getDefaultBackgrounds={actions.getDefaultBackgrounds}
-            />
-          </Modal>
-         )
-       } 
+        
+        <Modal onClose={this.toggleModal} isOpen={isCreationModalOpen}>
+          <BoardCreation 
+            createBoard={this.handleBoardSubmit} 
+            toggleModal={this.toggleModal}
+            backgrounds={backgrounds}
+            getDefaultBackgrounds={actions.getDefaultBackgrounds}
+          />
+        </Modal>
       </React.Fragment>
     )
   }

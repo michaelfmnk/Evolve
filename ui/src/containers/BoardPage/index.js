@@ -4,7 +4,7 @@ import { boardByIdFromRoute, currentBoardId } from 'selectors/boards'
 import { boardColumns } from 'selectors/columns'
 import { authUserIdSelector } from 'selectors/auth'
 import { openedCardSelector } from 'selectors/cards'
-import { getBoardById, inviteCollaborator } from 'actions/boards'
+import { getBoardById, inviteCollaborator, getBoardActivities } from 'actions/boards'
 import { createColumn, deleteColumn, updateColumn } from 'actions/columns'
 import { 
   openCard, closeCard, deleteCard,
@@ -15,9 +15,8 @@ import { bindActionCreators } from 'redux'
 import { setCurrentBoard } from 'actions/boards'
 import BoardHeader from 'components/BoardHeader'
 import ColumnsList from 'components/ColumnsList'
-import OppenedCard from 'components/OppenedCard'
+import OpenedCardModal from 'components/OpenedCardModal'
 import './BoardPage.css'
-
 
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
@@ -27,11 +26,17 @@ class BoardPage extends Component {
   componentDidMount(){
     const { match, actions, currentBoardId} = this.props;
     const boardId = Number(match.params.board_id)
+    
     if( boardId !== currentBoardId)  {
       actions.setCurrentBoard(boardId )
     }
 
-    match && actions.getBoardById(boardId)
+    actions.getBoardById(boardId);
+    actions.getBoardActivities(boardId);
+  }
+
+  componentWillUnmount() {
+    this.props.actions.closeCard()
   }
 
   openCard = (card) => () => this.props.actions.openCard(card.id)
@@ -47,14 +52,12 @@ class BoardPage extends Component {
 
   render () {
     const { board, authUserId, actions, boardColumnsWithCards, openedCard } = this.props;
-
-    console.log(boardColumnsWithCards)
     
     if (!board) return null
     return (
       <main>
-        <div className='wrp' style={{ height: '100vh', }} > 
-        <div className='background' style={{backgroundImage: `url(${board.background_url})`, height: '100vh', position: 'fixed', top: 0, left: 0, right:0}} /> 
+        <div className='wrp' > 
+        <div className='background' style={{backgroundImage: `url(${board.background_url})`}} /> 
           <BoardHeader 
             boardName={board.name} 
             owner={board.owner} 
@@ -75,27 +78,38 @@ class BoardPage extends Component {
             }}
           />
           
-         { openedCard && 
-            <OppenedCard 
+          {
+            openedCard &&  
+            <OpenedCardModal 
               card={openedCard} 
               column={boardColumnsWithCards.find( col => col.id === openedCard.column_id)}
               boardUsers={[ board.owner, ...board.collaborators ]}
               updateCard={actions.updateCard}
-              assignUserToCard={this.assignUserToCard}
-
-              
-              unassignUserFromCard={this.unassignUserFromCard}
-
+              authUserId={authUserId}
               closeCard={this.closeCard}
               deleteCard={actions.deleteCard}
               handleUserAssigning={this.handleUserAssigning}
+              isOpen={!!openedCard}
             />
-         }
+          }
+        
         </div>       
       </main>
     )
   }
 }
+
+const bindActionsToCurrentBoard = (actions, boardId, dispatch) => (
+  Object.keys(actions).reduce(
+    (bindedActions, actionName) => {
+      bindedActions[actionName] = (...params)  => dispatch(
+        actions[actionName] (boardId, ...params) 
+      );
+      return bindedActions
+    },
+    {}
+  )
+);
 
 const mapStateToProps = (state, props) => ({
   board: boardByIdFromRoute(state, props),
@@ -103,18 +117,7 @@ const mapStateToProps = (state, props) => ({
   currentBoardId: currentBoardId(state),
   boardColumnsWithCards: boardColumns(state),
   openedCard: openedCardSelector(state),
-})
-
-// const mapDispatchToProps = (dispatch) => ({
-//   actions: bindActionCreators({
-//     getBoardById,
-//     createColumn,
-//     setCurrentBoard,
-//     createCard
-//   }, dispatch)
-// })
-
-
+})  
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps
@@ -126,23 +129,34 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...ownProps,
 
     actions: {
-      createCard: (columnId, card) => dispatch( createCard(currentBoardId, columnId, card) ),
-      createColumn: (column) => dispatch( createColumn(currentBoardId, column) ),
-      deleteColumn: (columnId) => dispatch( deleteColumn(currentBoardId, columnId) ),
-      moveCard: (card, targetColumn) => dispatch( moveCard(currentBoardId, card, targetColumn) ),
-      updateCard: (card) => dispatch( updateCard(currentBoardId, card) ),
-      updateColumn: (column) => dispatch( updateColumn(currentBoardId, column) ),
-      assignUsersToCard: (card, usersIds) => dispatch( assignUsersToCard(currentBoardId, card, usersIds) ),
-      unassignUserFromCard: (card, userId) => dispatch( unassignUserFromCard(currentBoardId, card, userId)),
-      inviteCollaborator: (email) => dispatch( inviteCollaborator(currentBoardId, email)),
-      deleteCard: (card) => dispatch( deleteCard(currentBoardId, card) ),
-      ...bindActionCreators({
-        getBoardById,
-        setCurrentBoard,
-        openCard, 
-        closeCard,
-      }, dispatch)
-  }
+      ...bindActionsToCurrentBoard(
+        {
+          moveCard,
+          deleteCard,
+          createCard,
+          updateCard,   
+          createColumn, 
+          deleteColumn, 
+          updateColumn, 
+          assignUsersToCard,
+          inviteCollaborator,
+          unassignUserFromCard  
+        },
+        currentBoardId,
+        dispatch
+      ),
+      ...bindActionCreators(
+        {
+          getBoardById,
+          setCurrentBoard,
+          getBoardActivities,
+          openCard, 
+          closeCard,
+        }, 
+        dispatch
+      )
+    }
+
   }
 }
 

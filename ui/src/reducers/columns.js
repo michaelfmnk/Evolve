@@ -1,4 +1,4 @@
-import { start, fail, success } from 'helpers/actionsProcessTemplaters'
+import { success } from 'helpers/actionsProcessTemplaters'
 import { GET_BOARD_BY_ID }  from 'constants/actionTypes/boards'
 import { CREATE_CARD, MOVE_CARD, DELETE_CARD } from 'constants/actionTypes/cards'
 import { combineReducers } from 'redux'

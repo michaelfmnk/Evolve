@@ -8,71 +8,57 @@
   color: white;
 
   .boardmenul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+
+    .members{
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
+      width: auto;        
+    }
 
+    .header{
+      display: flex;
+      align-items: center;
 
-        .members{
-            display: flex;
-            align-items: center;
-            float: left;
-            width: auto;        
+      .caption {
+        font-weight: bold;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        text-overflow: ellipsis;
+        margin: 0;
+        height: 25px;
+        color: white;
+      }
 
-            img {
-            transition: $a_short-duration;
-            display: inline-block;
-            border-radius: 50%;
-            width: 25px; height: 25px;
-            background: $dark-color;
-            margin: 2px; 
-            cursor: pointer; 
-            }
-        }
-
-      .header{
-          display: flex;
-          align-items: center;
-
-          .caption {
-            font-weight: bold;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-           
-
-            text-overflow: ellipsis;
+      .mainoptions {
+        display: flex;
+        align-items: center;
+          p {
+            height: 24px;
             margin: 0;
-            height: 25px;
-            color: white;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid $light-color;
+            padding: 0 20px;
+            span {
+              font-size: 16px;
+              display: flex;
+              align-items: center;                     
+            }
           }
 
-          .mainoptions {
-            display: flex;
-            align-items: center;
-              p {
-                  height: 24px;
-                  margin: 0;
-                  display: flex;
-                  align-items: center;
-                  border-right: 1px solid $light-color;
-                  padding: 0 20px;
-                  span {
-                      font-size: 16px;
-                     
-                      display: flex;
-                      align-items: center;                     
-                  }
-              }
-
-              p.ownerhip {
-                  margin-right: 10px;
-                  i{
-                      padding-right: 6px;
-                  }
-              }
-           }          
-      }
+          p.ownerhip {
+            margin-right: 10px;
+            i{
+              padding-right: 6px;
+            }
+          }
+      }          
+    }
   }
 
   .menu-icon {
@@ -81,6 +67,6 @@
     align-items: center;
     float: right;
     padding-left: 2rem;
-    }
+  }
 }
 

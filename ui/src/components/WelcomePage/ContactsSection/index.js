@@ -23,7 +23,7 @@ const ContactsSection = (props) => (
                 <h2>Email</h2>
                 <hr className="my-4" />
                 <div className="text-small">
-                  <a href="#">info@evolve-stage.com</a>
+                  info@evolve-stage.com
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@ const ContactsSection = (props) => (
           <a href="#">
               FB
           </a>
-          <a href="#">
+          <a href="https://gitlab.com/dnu-dreamteam/dolgov" target='_blank'  rel="noopener noreferrer">
               GIT
           </a>
         </div>

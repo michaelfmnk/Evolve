@@ -1,19 +1,17 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import FormHeader from 'components/FormHeader'
 import ApplyFormBtn from 'components/buttons/ApplyFormBtn'
+import Message from 'components/Message'
 import { Link } from 'react-router-dom'
 import InputWithLabelAndValidation from 'components/InputWithLabelAndValidation'
 import PropTypes from 'prop-types'
 import './LoginForm.css'
 
-class LoginForm extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
-      password: '',
-      remember_me: false
-    }
+class LoginForm extends PureComponent {
+  state = {
+    email: '',
+    password: '',
+    remember_me: false
   }
 
   handleInput = (input) => {
@@ -58,13 +56,16 @@ class LoginForm extends React.Component {
             id="remember_me_checkbox"
             onChange={({target}) => this.setState({ remember_me: target.checked })}
           />
+
+          <Message type='error' text={this.props.errorMessage} />
+
           {/* TODO: separate link and label, fix ui for this element */}
           {/* <label htmlFor="remember_me_checkbox">
 
 
           </label> */}
-          <Link to="/sign_up" className="forgot_password">I don't have an account</Link>
-
+          <Link to="/sign_up" className="have_account">I don't have an account</Link>
+          
           <ApplyFormBtn
             text='Login'
             onClick={(event) => this.handleLoginFormSubmit(event)}

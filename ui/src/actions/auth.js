@@ -4,7 +4,7 @@ import * as endpoints from 'constants/routes/api/auth'
 export const activateInvitationLink = (boardId, code) => ({
   type: types.ACTIVATE_INVITATION_LINK,
   REQUEST: {
-    url : "/api/invitations",
+    url : endpoints.invitations,
     method: 'POST',
     data: {code}
   },
@@ -43,6 +43,10 @@ export const signInRequest = (userInfo , shouldRedirect = true) => ({
     })
   },
   shouldRedirect
+})
+
+export const clearAuthError = () => ({
+  type: types.CLEAR_AUTH_ERROR
 })
 
 export const refreshAuth = (tokenWithUserIdObj) => ({

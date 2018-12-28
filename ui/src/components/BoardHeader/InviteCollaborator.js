@@ -14,7 +14,7 @@ class InviteCollaborator extends PureComponent {
 
   handleChange = ({target: {name, value}}) => {
     let error = emailReg.test(value)
-    console.log(error)
+
     this.setState({
       [name]: value,
       error,
@@ -38,38 +38,39 @@ class InviteCollaborator extends PureComponent {
   render() {
     const { isAdding , email, error, isSent } = this.state;
     return (
-      isAdding
-        ? <Modal>
-            <div className='invite-form'>
-              <h3>
-                { isSent
-                  ? 'Invation has been sent. Another one?'
-                  : 'Invite collaborator to this board'
-                }
-              </h3>
-              <input 
-                value={email} 
-                type='email' 
-                onChange={this.handleChange} 
-                name='email' 
-                placeholder='Enter email for inviting'
-              />
-              <div className="buttons-group"> 
-                  <span 
-                    className={`btn submit ${!!error ? 'active' : ''}`} 
-                    onClick={ !!error ? this.handleInviteClick : undefined}
-                  > 
-                    Invite
-                  </span>
-                  <span className='btn cancel' onClick={this.toggleAdding}> 
-                    Cancel 
-                  </span>
-                </div> 
-            </div>
-          </Modal>
-        : <span className='add-member-btn' onClick={this.toggleAdding}> 
-            <i className='fa fa-plus'/> 
-          </span>
+      <Fragment>
+        <span className='add-member-btn' onClick={this.toggleAdding}> 
+          <i className='fa fa-plus'/> 
+        </span>
+        <Modal onClose={this.toggleAdding} isOpen={isAdding}>
+          <div className='invite-form'>
+            <h3>
+              { isSent
+                ? 'Invation has been sent. Another one?'
+                : 'Invite collaborator to this board'
+              }
+            </h3>
+            <input 
+              value={email} 
+              type='email' 
+              onChange={this.handleChange} 
+              name='email' 
+              placeholder='Enter email for inviting'
+            />
+            <div className="buttons-group"> 
+                <span 
+                  className={`btn submit ${!!error ? 'active' : ''}`} 
+                  onClick={ !!error ? this.handleInviteClick : undefined}
+                > 
+                  Invite
+                </span>
+                <span className='btn cancel' onClick={this.toggleAdding}> 
+                  Cancel 
+                </span>
+              </div> 
+          </div>
+        </Modal>
+      </Fragment>
     )
   }
 }

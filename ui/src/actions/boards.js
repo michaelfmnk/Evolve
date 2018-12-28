@@ -1,4 +1,3 @@
-import { success} from 'helpers/actionsProcessTemplaters'
 import * as types from 'constants/actionTypes/boards'
 import * as endpoints from 'constants/routes/api/boards'
 import { board } from 'constants/normalizr_schemas/board'
@@ -17,15 +16,6 @@ export const getBoardById = (id) => ({
         boardId: data.result
       }
     }
-
-    // responseDataConverter: userData => {
-    //   const data = normalize(userData, userWithBoards)
-    //   return {
-    //     authUser: data.entities.authUser[data.result],
-    //     collaborators: data.entities.users,
-    //     boards: data.entities.boards
-    //   }
-    // }
   }
 })
 
@@ -43,7 +33,14 @@ export const inviteCollaborator = (boardId, email) => ({
   REQUEST: {
     method: 'POST',
     data: {emails : [email]},
-    url: `/api/boards/${boardId}/collaborators`
+    url: endpoints.collaborators(boardId)
+  }
+})
+
+export const getBoardActivities = (boardId) => ({
+  type: types.GET_BOARD_ACTIVITIES,
+  REQUEST: {
+    url: endpoints.boardActivities(boardId)
   }
 })
 
@@ -51,4 +48,3 @@ export const setCurrentBoard = (boardId) => ({
   type: types.SET_CURRENT_BOARD,
   payload: {boardId}
 })
-
