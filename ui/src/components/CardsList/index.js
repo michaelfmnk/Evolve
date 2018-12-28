@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AddEntityForm from 'components/AddEntityForm'
-import  CardMembers from 'components/OpenedCard/CardMembers'
+import  CardMembers from 'components/OpenedCardModal/CardMembers'
 import { DragSource } from 'react-dnd'
 
 const cardSource = {
