@@ -1,7 +1,4 @@
-# Course Paper For Dolgov
- 
- ____
- 
+
 ### I. Back-end
 
 #### Настройка рабочей среды
