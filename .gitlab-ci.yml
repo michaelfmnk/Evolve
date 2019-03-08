@@ -101,7 +101,7 @@ deploy:
   - 'which sshpass || (apt-get update -y && apt-get install sshpass -y)'
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 --decode)
+  - echo "$SSH_PRIVATE_KEY" | base64 --decode | ssh-add - > /dev/null
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
