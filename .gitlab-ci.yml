@@ -17,7 +17,7 @@ services:
 - docker:dind
 
 stages:
-- build-with-containers
+#- build-with-containers
 - deploy
 
 build-ui-with-containers:
