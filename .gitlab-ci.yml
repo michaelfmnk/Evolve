@@ -109,6 +109,6 @@ deploy:
   script:
   - scp -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/evolve/balancer/
   - scp ./infrastructure/recreate.sh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/evolve/recreate.sh
-  - ssh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP} chmod +x ./evolve/recreate.sh; (&>log.txt ./evolve/recreate.sh &)
+  - ssh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP} "cd evolve/; ls;chmod +x ./recreate.sh; (&>./log.txt ./recreate.sh &)"
   only:
   - master
