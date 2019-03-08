@@ -100,7 +100,7 @@ deploy:
   - apt-get update -y && apt-get install sshpass
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 --decode)
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   script:
