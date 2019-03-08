@@ -99,8 +99,8 @@ deploy:
   before_script:
   - apt-get update -y && apt-get install sshpass
   script:
-  - scp -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_IP}:~/evolve/balancer/
-  - scp -r ./infrastructure/recreate.sh ${DEPLOYMENT_SERVER_IP}:~/evolve/recreate.sh
-  - ssh ${DEPLOYMENT_SERVER_IP} chmod +x ./evolve/recreate.sh; (&>log.txt ./evolve/recreate.sh &)
+  - scp -r ./infrastructure/balancer ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/evolve/balancer/
+  - scp -r ./infrastructure/recreate.sh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP}:~/evolve/recreate.sh
+  - ssh ${DEPLOYMENT_SERVER_USER}@${DEPLOYMENT_SERVER_IP} chmod +x ./evolve/recreate.sh; (&>log.txt ./evolve/recreate.sh &)
   only:
   - master
