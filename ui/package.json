@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://evolve-stage.com",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
     "cross-env": "^5.2.0",
